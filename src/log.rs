@@ -1,0 +1,14 @@
+#![cfg(feature = "program")]
+
+pub use trezoa_program::log::*;
+
+#[macro_export]
+#[deprecated(
+    since = "1.4.3",
+    note = "Please use `trezoa_program::log::info` instead"
+)]
+macro_rules! info {
+    ($msg:expr) => {
+        $crate::log::trz_log($msg)
+    };
+}

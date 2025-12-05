@@ -1,0 +1,47 @@
+NOTICE - Trezoa SDK
+===================
+
+This project contains software originally developed by the Solana Foundation
+and various contributors, which has been modified and adapted for the Trezoa
+Blockchain ecosystem.
+
+ORIGINAL SOFTWARE:
+- Name: solana-sdk
+- Version: v1.18.26
+- Source: https://crates.io/crates/solana-sdk
+- License: Apache License 2.0
+
+MODIFICATIONS:
+This software has been modified by the TRZ Ledger Foundation to:
+- Rebrand from Solana to Trezoa
+- Update naming conventions (SOL → TRZ, SPL → TPL)
+- Adapt for Trezoa blockchain compatibility
+- Add Trezoa-specific functionality
+
+COPYRIGHT NOTICES:
+- Original copyright notices and attributions remain intact
+- All original copyrights © belong to their respective authors
+- Modifications and adaptations © 2025 TRZ Ledger Foundation
+
+LICENSE:
+This software is licensed under the Apache License, Version 2.0
+You may obtain a copy of the License at:
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+THIRD-PARTY COMPONENTS:
+This software may include third-party components with their own copyright
+notices and license terms. Please refer to the individual component
+licenses for specific details.
+
+CONTACT:
+TRZ Ledger Foundation
+Email: foundation@trezoa.xyz
+Website: https://trezoa.io/
+
+For questions about licensing or attribution, please contact the foundation.
