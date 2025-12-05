@@ -26,7 +26,7 @@
 //! [`trezoa-client`]: https://docs.rs/trezoa-client
 //! [`trezoa-cli-config`]: https://docs.rs/trezoa-cli-config
 //! [`trezoa-clap-utils`]: https://docs.rs/trezoa-clap-utils
-//! [json]: https://trezoa.io/docs/rpc
+//! [json]: https://trezoa.xyz/docs/rpc
 //! [`clap`]: https://docs.rs/clap
 
 #![allow(incomplete_features)]

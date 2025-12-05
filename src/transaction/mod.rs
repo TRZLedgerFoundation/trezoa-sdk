@@ -43,7 +43,7 @@
 //! transactions.
 //!
 //! [`RpcClient::get_latest_blockhash`]: https://docs.rs/trezoa-rpc-client/latest/trezoa_rpc_client/rpc_client/struct.RpcClient.html#method.get_latest_blockhash
-//! [durable transaction nonce]: https://docs.trezoa.io/implemented-proposals/durable-tx-nonces
+//! [durable transaction nonce]: https://docs.trezoa.xyz/implemented-proposals/durable-tx-nonces
 //!
 //! # Examples
 //!
