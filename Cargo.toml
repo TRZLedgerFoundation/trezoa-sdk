@@ -12,7 +12,7 @@
 [package]
 edition = "2021"
 name = "trezoa-sdk"
-version = "3.2.2"
+version = "3.2.3"
 authors = ["Trezoa-team <foundation@trezoa.xyz>"]
 description = "Trezoa SDK"
 homepage = "https://trezoa.io/"
