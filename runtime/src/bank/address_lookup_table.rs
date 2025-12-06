@@ -1,6 +1,6 @@
 use {
     super::Bank,
-    solana_sdk::{
+    trezoa_sdk::{
         address_lookup_table::error::AddressLookupError,
         message::{
             v0::{LoadedAddresses, MessageAddressTableLookup},

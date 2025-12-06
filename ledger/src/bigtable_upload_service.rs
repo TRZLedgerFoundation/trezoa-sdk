@@ -3,7 +3,7 @@ use {
         bigtable_upload::{self, ConfirmedBlockUploadConfig},
         blockstore::Blockstore,
     },
-    solana_runtime::commitment::BlockCommitmentCache,
+    trezoa_runtime::commitment::BlockCommitmentCache,
     std::{
         cmp::min,
         sync::{
@@ -22,7 +22,7 @@ pub struct BigTableUploadService {
 impl BigTableUploadService {
     pub fn new(
         runtime: Arc<Runtime>,
-        bigtable_ledger_storage: solana_storage_bigtable::LedgerStorage,
+        bigtable_ledger_storage: trezoa_storage_bigtable::LedgerStorage,
         blockstore: Arc<Blockstore>,
         block_commitment_cache: Arc<RwLock<BlockCommitmentCache>>,
         max_complete_transaction_status_slot: Arc<AtomicU64>,
@@ -43,7 +43,7 @@ impl BigTableUploadService {
 
     pub fn new_with_config(
         runtime: Arc<Runtime>,
-        bigtable_ledger_storage: solana_storage_bigtable::LedgerStorage,
+        bigtable_ledger_storage: trezoa_storage_bigtable::LedgerStorage,
         blockstore: Arc<Blockstore>,
         block_commitment_cache: Arc<RwLock<BlockCommitmentCache>>,
         max_complete_transaction_status_slot: Arc<AtomicU64>,
@@ -53,7 +53,7 @@ impl BigTableUploadService {
     ) -> Self {
         info!("Starting BigTable upload service");
         let thread = Builder::new()
-            .name("solBigTUpload".to_string())
+            .name("trzBigTUpload".to_string())
             .spawn(move || {
                 Self::run(
                     runtime,
@@ -73,7 +73,7 @@ impl BigTableUploadService {
 
     fn run(
         runtime: Arc<Runtime>,
-        bigtable_ledger_storage: solana_storage_bigtable::LedgerStorage,
+        bigtable_ledger_storage: trezoa_storage_bigtable::LedgerStorage,
         blockstore: Arc<Blockstore>,
         block_commitment_cache: Arc<RwLock<BlockCommitmentCache>>,
         max_complete_transaction_status_slot: Arc<AtomicU64>,

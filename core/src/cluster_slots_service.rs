@@ -2,11 +2,11 @@ pub mod cluster_slots;
 use {
     cluster_slots::ClusterSlots,
     crossbeam_channel::{Receiver, RecvTimeoutError, Sender},
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::blockstore::Blockstore,
-    solana_measure::measure::Measure,
-    solana_runtime::bank_forks::BankForks,
-    solana_sdk::clock::Slot,
+    trezoa_gossip::cluster_info::ClusterInfo,
+    trezoa_ledger::blockstore::Blockstore,
+    trezoa_measure::measure::Measure,
+    trezoa_runtime::bank_forks::BankForks,
+    trezoa_sdk::clock::Slot,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},
@@ -49,7 +49,7 @@ impl ClusterSlotsService {
         Self::initialize_lowest_slot(&blockstore, &cluster_info);
         Self::initialize_epoch_slots(&bank_forks, &cluster_info);
         let t_cluster_slots_service = Builder::new()
-            .name("solClusterSlots".to_string())
+            .name("trzClusterSlots".to_string())
             .spawn(move || {
                 Self::run(
                     blockstore,
@@ -182,9 +182,9 @@ impl ClusterSlotsService {
 mod test {
     use {
         super::*,
-        solana_gossip::{cluster_info::Node, crds_value::LowestSlot},
-        solana_sdk::signature::{Keypair, Signer},
-        solana_streamer::socket::SocketAddrSpace,
+        trezoa_gossip::{cluster_info::Node, crds_value::LowestSlot},
+        trezoa_sdk::signature::{Keypair, Signer},
+        trezoa_streamer::socket::SocketAddrSpace,
     };
 
     #[test]

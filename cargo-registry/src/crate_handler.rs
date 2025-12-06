@@ -12,8 +12,8 @@ use {
     serde::{Deserialize, Serialize},
     serde_json::from_slice,
     sha2::{Digest, Sha256},
-    solana_cli::program_v4::{process_deploy_program, process_dump, read_and_verify_elf},
-    solana_sdk::{
+    trezoa_cli::program_v4::{process_deploy_program, process_dump, read_and_verify_elf},
+    trezoa_sdk::{
         pubkey::Pubkey,
         signature::{Keypair, Signer},
         signer::EncodableKey,
@@ -188,7 +188,7 @@ impl Program {
     }
 
     fn program_id_to_crate_name(id: Pubkey) -> String {
-        format!("sol-{}", hex::encode(id.to_bytes()))
+        format!("trz-{}", hex::encode(id.to_bytes()))
     }
 }
 

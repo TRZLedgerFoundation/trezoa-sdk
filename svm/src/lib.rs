@@ -10,7 +10,7 @@ pub mod transaction_processor;
 pub mod transaction_results;
 
 #[macro_use]
-extern crate solana_metrics;
+extern crate trezoa_metrics;
 
 #[macro_use]
-extern crate solana_frozen_abi_macro;
+extern crate trezoa_frozen_abi_macro;

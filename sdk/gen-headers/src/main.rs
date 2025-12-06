@@ -22,7 +22,7 @@ use {
  * used the call the syscall function.
  */
 fn main() {
-    let syscalls_inc_path = PathBuf::from("sdk/sbf/c/inc/sol/inc");
+    let syscalls_inc_path = PathBuf::from("sdk/sbf/c/inc/trz/inc");
 
     if syscalls_inc_path.is_dir() {
         for entry in fs::read_dir(syscalls_inc_path).expect("Can't open headers dir") {
@@ -83,7 +83,7 @@ fn transform(inc: &PathBuf) {
         let func = &caps[2].to_string();
         let args = &caps[3].to_string();
         let warn = format!("/* DO NOT MODIFY THIS GENERATED FILE. INSTEAD CHANGE {} AND RUN `cargo run --bin gen-headers` */", inc.display());
-        let ifndef = format!("#ifndef SOL_SBFV2\n{ty} {func}({args});");
+        let ifndef = format!("#ifndef TRZ_SBFV2\n{ty} {func}({args});");
         let hash = sys_hash(func);
         let typedef_statement = format!("typedef {ty}(*{func}_pointer_type)({args});");
         let mut arg = 0;

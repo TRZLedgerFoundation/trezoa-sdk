@@ -5,7 +5,7 @@ use {
     },
     bytemuck::{Pod, Zeroable},
     memmap2::Mmap,
-    solana_sdk::pubkey::Pubkey,
+    trezoa_sdk::pubkey::Pubkey,
 };
 
 /// The in-memory struct for the writing index block.

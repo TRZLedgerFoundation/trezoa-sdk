@@ -4,56 +4,56 @@ use {
         parse_token_extension::{parse_extension, UiExtension},
         StringAmount, StringDecimals,
     },
-    solana_sdk::pubkey::Pubkey,
-    spl_token_2022::{
+    trezoa_sdk::pubkey::Pubkey,
+    tpl_token_2022::{
         extension::{BaseStateWithExtensions, StateWithExtensions},
         generic_token_account::GenericTokenAccount,
-        solana_program::{
-            program_option::COption, program_pack::Pack, pubkey::Pubkey as SplTokenPubkey,
+        trezoa_program::{
+            program_option::COption, program_pack::Pack, pubkey::Pubkey as TplTokenPubkey,
         },
         state::{Account, AccountState, Mint, Multisig},
     },
     std::str::FromStr,
 };
 
-// Returns all known SPL Token program ids
-pub fn spl_token_ids() -> Vec<Pubkey> {
-    vec![spl_token::id(), spl_token_2022::id()]
+// Returns all known TPL Token program ids
+pub fn tpl_token_ids() -> Vec<Pubkey> {
+    vec![tpl_token::id(), tpl_token_2022::id()]
 }
 
-// Check if the provided program id as a known SPL Token program id
-pub fn is_known_spl_token_id(program_id: &Pubkey) -> bool {
-    *program_id == spl_token::id() || *program_id == spl_token_2022::id()
+// Check if the provided program id as a known TPL Token program id
+pub fn is_known_tpl_token_id(program_id: &Pubkey) -> bool {
+    *program_id == tpl_token::id() || *program_id == tpl_token_2022::id()
 }
 
-// A helper function to convert spl_token::native_mint::id() as spl_sdk::pubkey::Pubkey to
-// solana_sdk::pubkey::Pubkey
+// A helper function to convert tpl_token::native_mint::id() as tpl_sdk::pubkey::Pubkey to
+// trezoa_sdk::pubkey::Pubkey
 #[deprecated(
     since = "1.16.0",
-    note = "Pubkey conversions no longer needed. Please use spl_token::native_mint::id() directly"
+    note = "Pubkey conversions no longer needed. Please use tpl_token::native_mint::id() directly"
 )]
-pub fn spl_token_native_mint() -> Pubkey {
-    Pubkey::new_from_array(spl_token::native_mint::id().to_bytes())
+pub fn tpl_token_native_mint() -> Pubkey {
+    Pubkey::new_from_array(tpl_token::native_mint::id().to_bytes())
 }
 
-// The program id of the `spl_token_native_mint` account
+// The program id of the `tpl_token_native_mint` account
 #[deprecated(
     since = "1.16.0",
-    note = "Pubkey conversions no longer needed. Please use spl_token::id() directly"
+    note = "Pubkey conversions no longer needed. Please use tpl_token::id() directly"
 )]
-pub fn spl_token_native_mint_program_id() -> Pubkey {
-    spl_token::id()
+pub fn tpl_token_native_mint_program_id() -> Pubkey {
+    tpl_token::id()
 }
 
-// A helper function to convert a solana_sdk::pubkey::Pubkey to spl_sdk::pubkey::Pubkey
+// A helper function to convert a trezoa_sdk::pubkey::Pubkey to tpl_sdk::pubkey::Pubkey
 #[deprecated(since = "1.16.0", note = "Pubkey conversions no longer needed")]
-pub fn spl_token_pubkey(pubkey: &Pubkey) -> SplTokenPubkey {
-    SplTokenPubkey::new_from_array(pubkey.to_bytes())
+pub fn tpl_token_pubkey(pubkey: &Pubkey) -> TplTokenPubkey {
+    TplTokenPubkey::new_from_array(pubkey.to_bytes())
 }
 
-// A helper function to convert a spl_sdk::pubkey::Pubkey to solana_sdk::pubkey::Pubkey
+// A helper function to convert a tpl_sdk::pubkey::Pubkey to trezoa_sdk::pubkey::Pubkey
 #[deprecated(since = "1.16.0", note = "Pubkey conversions no longer needed")]
-pub fn pubkey_from_spl_token(pubkey: &SplTokenPubkey) -> Pubkey {
+pub fn pubkey_from_tpl_token(pubkey: &SplTokenPubkey) -> Pubkey {
     Pubkey::new_from_array(pubkey.to_bytes())
 }
 
@@ -64,7 +64,7 @@ pub fn parse_token(
     if let Ok(account) = StateWithExtensions::<Account>::unpack(data) {
         let decimals = mint_decimals.ok_or_else(|| {
             ParseAccountError::AdditionalDataMissing(
-                "no mint_decimals provided to parse spl-token account".to_string(),
+                "no mint_decimals provided to parse tpl-token account".to_string(),
             )
         })?;
         let extension_types = account.get_extension_types().unwrap_or_default();
@@ -124,7 +124,7 @@ pub fn parse_token(
     }
     if data.len() == Multisig::get_packed_len() {
         let multisig = Multisig::unpack(data)
-            .map_err(|_| ParseAccountError::AccountNotParsable(ParsableAccount::SplToken))?;
+            .map_err(|_| ParseAccountError::AccountNotParsable(ParsableAccount::TplToken))?;
         Ok(TokenAccountType::Multisig(UiMultisig {
             num_required_signers: multisig.m,
             num_valid_signers: multisig.n,
@@ -143,7 +143,7 @@ pub fn parse_token(
         }))
     } else {
         Err(ParseAccountError::AccountNotParsable(
-            ParsableAccount::SplToken,
+            ParsableAccount::TplToken,
         ))
     }
 }
@@ -290,8 +290,8 @@ mod test {
     use {
         super::*,
         crate::parse_token_extension::{UiMemoTransfer, UiMintCloseAuthority},
-        spl_pod::optional_keys::OptionalNonZeroPubkey,
-        spl_token_2022::extension::{
+        tpl_pod::optional_keys::OptionalNonZeroPubkey,
+        tpl_token_2022::extension::{
             immutable_owner::ImmutableOwner, memo_transfer::MemoTransfer,
             mint_close_authority::MintCloseAuthority, ExtensionType, StateWithExtensionsMut,
         },

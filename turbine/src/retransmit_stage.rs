@@ -9,19 +9,19 @@ use {
     lru::LruCache,
     rand::Rng,
     rayon::{prelude::*, ThreadPool, ThreadPoolBuilder},
-    solana_gossip::{cluster_info::ClusterInfo, contact_info::Protocol},
-    solana_ledger::{
+    trezoa_gossip::{cluster_info::ClusterInfo, contact_info::Protocol},
+    trezoa_ledger::{
         leader_schedule_cache::LeaderScheduleCache,
         shred::{self, ShredId},
     },
-    solana_measure::measure::Measure,
-    solana_perf::deduper::Deduper,
-    solana_rayon_threadlimit::get_thread_count,
-    solana_rpc::{max_slots::MaxSlots, rpc_subscriptions::RpcSubscriptions},
-    solana_rpc_client_api::response::SlotUpdate,
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
-    solana_sdk::{clock::Slot, pubkey::Pubkey, timing::timestamp},
-    solana_streamer::{
+    trezoa_measure::measure::Measure,
+    trezoa_perf::deduper::Deduper,
+    trezoa_rayon_threadlimit::get_thread_count,
+    trezoa_rpc::{max_slots::MaxSlots, rpc_subscriptions::RpcSubscriptions},
+    trezoa_rpc_client_api::response::SlotUpdate,
+    trezoa_runtime::{bank::Bank, bank_forks::BankForks},
+    trezoa_sdk::{clock::Slot, pubkey::Pubkey, timing::timestamp},
+    trezoa_streamer::{
         sendmmsg::{multi_target_send, SendPktsError},
         socket::SocketAddrSpace,
     },
@@ -390,11 +390,11 @@ pub fn retransmitter(
     let num_threads = get_thread_count().min(8).max(sockets.len());
     let thread_pool = ThreadPoolBuilder::new()
         .num_threads(num_threads)
-        .thread_name(|i| format!("solRetransmit{i:02}"))
+        .thread_name(|i| format!("trzRetransmit{i:02}"))
         .build()
         .unwrap();
     Builder::new()
-        .name("solRetransmittr".to_string())
+        .name("trzRetransmittr".to_string())
         .spawn(move || loop {
             match retransmit(
                 &thread_pool,
@@ -602,7 +602,7 @@ mod tests {
         super::*,
         rand::SeedableRng,
         rand_chacha::ChaChaRng,
-        solana_ledger::shred::{Shred, ShredFlags},
+        trezoa_ledger::shred::{Shred, ShredFlags},
     };
 
     #[test]

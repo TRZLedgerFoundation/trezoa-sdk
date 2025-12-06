@@ -276,10 +276,10 @@ cloud_FetchFile() {
   scp \
     -o "StrictHostKeyChecking=no" \
     -o "UserKnownHostsFile=/dev/null" \
-    -o "User=solana" \
+    -o "User=trezoa" \
     -o "LogLevel=ERROR" \
     -F /dev/null \
-    "solana@${publicIp}:${remoteFile}" "${localFile}"
+    "trezoa@${publicIp}:${remoteFile}" "${localFile}"
 }
 
 cloud_StatusAll() {

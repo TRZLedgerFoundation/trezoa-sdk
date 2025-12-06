@@ -1,9 +1,9 @@
 #![cfg(feature = "test-bpf")]
 
 use {
-    solana_program_test::*,
-    solana_sbf_rust_sanity::process_instruction,
-    solana_sdk::{
+    trezoa_program_test::*,
+    trezoa_sbf_rust_sanity::process_instruction,
+    trezoa_sdk::{
         instruction::{AccountMeta, Instruction},
         pubkey::Pubkey,
         signature::{Keypair, Signer},
@@ -15,7 +15,7 @@ use {
 async fn test_sanity() {
     let program_id = Pubkey::new_unique();
     let program_test = ProgramTest::new(
-        "solana_sbf_rust_sanity",
+        "trezoa_sbf_rust_sanity",
         program_id,
         processor!(process_instruction),
     );

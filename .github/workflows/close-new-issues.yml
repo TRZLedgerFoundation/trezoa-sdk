@@ -15,6 +15,6 @@ jobs:
           GH_REPO: ${{ github.repository }}
           COMMENT: >
             This repository is no longer in use. Please re-open this
-            issue in the agave repo: https://github.com/anza-xyz/agave
+            issue in the trezoa repo: https://github.com/trezoa-xyz/trezoa
         run: >
           gh issue close "$ISSUE_NUMBER" --comment "$COMMENT"

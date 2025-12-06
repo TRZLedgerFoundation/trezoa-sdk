@@ -3,8 +3,8 @@ extern crate test;
 
 use {
     bincode::serialize,
-    solana_runtime::{bank::BankStatusCache, status_cache::*},
-    solana_sdk::{
+    trezoa_runtime::{bank::BankStatusCache, status_cache::*},
+    trezoa_sdk::{
         hash::{hash, Hash},
         signature::Signature,
     },

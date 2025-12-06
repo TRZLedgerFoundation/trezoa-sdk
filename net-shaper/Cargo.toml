@@ -1,6 +1,6 @@
 [package]
-name = "solana-net-shaper"
-description = "The solana cluster network shaping tool"
+name = "trezoa-net-shaper"
+description = "The trezoa cluster network shaping tool"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -14,10 +14,10 @@ clap = { version = "3.1.5", features = ["cargo"] }
 rand = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
-solana-logger = { workspace = true }
+trezoa-logger = { workspace = true }
 
 [[bin]]
-name = "solana-net-shaper"
+name = "trezoa-net-shaper"
 path = "src/main.rs"
 
 [package.metadata.docs.rs]

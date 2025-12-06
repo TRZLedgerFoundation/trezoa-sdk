@@ -5,25 +5,25 @@ use {
     log::*,
     rand::{thread_rng, Rng},
     rayon::prelude::*,
-    solana_client::connection_cache::ConnectionCache,
-    solana_core::{
+    trezoa_client::connection_cache::ConnectionCache,
+    trezoa_core::{
         banking_stage::BankingStage,
         banking_trace::{BankingPacketBatch, BankingTracer, BANKING_TRACE_DIR_DEFAULT_BYTE_LIMIT},
     },
-    solana_gossip::cluster_info::{ClusterInfo, Node},
-    solana_ledger::{
+    trezoa_gossip::cluster_info::{ClusterInfo, Node},
+    trezoa_ledger::{
         blockstore::Blockstore,
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
         get_tmp_ledger_path_auto_delete,
         leader_schedule_cache::LeaderScheduleCache,
     },
-    solana_measure::measure::Measure,
-    solana_perf::packet::{to_packet_batches, PacketBatch},
-    solana_poh::poh_recorder::{create_test_recorder, PohRecorder, WorkingBankEntry},
-    solana_runtime::{
+    trezoa_measure::measure::Measure,
+    trezoa_perf::packet::{to_packet_batches, PacketBatch},
+    trezoa_poh::poh_recorder::{create_test_recorder, PohRecorder, WorkingBankEntry},
+    trezoa_runtime::{
         bank::Bank, bank_forks::BankForks, prioritization_fee_cache::PrioritizationFeeCache,
     },
-    solana_sdk::{
+    trezoa_sdk::{
         compute_budget::ComputeBudgetInstruction,
         hash::Hash,
         message::Message,
@@ -33,8 +33,8 @@ use {
         timing::{duration_as_us, timestamp},
         transaction::Transaction,
     },
-    solana_streamer::socket::SocketAddrSpace,
-    solana_tpu_client::tpu_client::DEFAULT_TPU_CONNECTION_POOL_SIZE,
+    trezoa_streamer::socket::SocketAddrSpace,
+    trezoa_tpu_client::tpu_client::DEFAULT_TPU_CONNECTION_POOL_SIZE,
     std::{
         sync::{atomic::Ordering, Arc, RwLock},
         thread::sleep,
@@ -229,11 +229,11 @@ impl PacketsPerIteration {
 
 #[allow(clippy::cognitive_complexity)]
 fn main() {
-    solana_logger::setup();
+    trezoa_logger::setup();
 
     let matches = Command::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(trezoa_version::version!())
         .arg(
             Arg::new("iterations")
                 .long("iterations")
@@ -471,7 +471,7 @@ fn main() {
     let mut tx_total_us = 0;
     let base_tx_count = bank.transaction_count();
     let mut txs_processed = 0;
-    let collector = solana_sdk::pubkey::new_rand();
+    let collector = trezoa_sdk::pubkey::new_rand();
     let mut total_sent = 0;
     for current_iteration_index in 0..iterations {
         trace!("RUNNING ITERATION {}", current_iteration_index);

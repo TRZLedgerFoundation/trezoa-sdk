@@ -7,7 +7,7 @@ use num_enum::{IntoPrimitive, TryFromPrimitive};
 #[cfg(target_os = "linux")]
 use std::{fs::File, io::BufReader};
 use {
-    solana_sdk::timing::AtomicInterval,
+    trezoa_sdk::timing::AtomicInterval,
     std::{
         collections::HashMap,
         io::BufRead,
@@ -420,7 +420,7 @@ impl SystemMonitorService {
     pub fn new(exit: Arc<AtomicBool>, config: SystemMonitorStatsReportConfig) -> Self {
         info!("Starting SystemMonitorService");
         let thread_hdl = Builder::new()
-            .name("solSystemMonitr".to_string())
+            .name("trzSystemMonitr".to_string())
             .spawn(move || {
                 Self::run(exit, config);
             })

@@ -5,10 +5,10 @@
 #[allow(deprecated)]
 use {
     crate::connection_cache::{dispatch, ConnectionCache},
-    solana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::config::RpcProgramAccountsConfig,
-    solana_sdk::{
+    trezoa_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
+    trezoa_rpc_client::rpc_client::RpcClient,
+    trezoa_rpc_client_api::config::RpcProgramAccountsConfig,
+    trezoa_sdk::{
         account::Account,
         client::{AsyncClient, Client, SyncClient},
         clock::Slot,
@@ -24,8 +24,8 @@ use {
         transaction::{self, Transaction, VersionedTransaction},
         transport::Result as TransportResult,
     },
-    solana_thin_client::thin_client::ThinClient as BackendThinClient,
-    solana_udp_client::{UdpConfig, UdpConnectionManager, UdpPool},
+    trezoa_thin_client::thin_client::ThinClient as BackendThinClient,
+    trezoa_udp_client::{UdpConfig, UdpConnectionManager, UdpPool},
     std::{net::SocketAddr, sync::Arc, time::Duration},
 };
 

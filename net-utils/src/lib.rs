@@ -143,7 +143,7 @@ fn do_verify_reachable_ports(
         let (sender, receiver) = unbounded();
         let listening_addr = tcp_listener.local_addr().unwrap();
         let thread_handle = std::thread::Builder::new()
-            .name(format!("solVrfyTcp{port:05}"))
+            .name(format!("trzVrfyTcp{port:05}"))
             .spawn(move || {
                 debug!("Waiting for incoming connection on tcp/{}", port);
                 match tcp_listener.incoming().next() {
@@ -225,7 +225,7 @@ fn do_verify_reachable_ports(
                     let reachable_ports = reachable_ports.clone();
 
                     std::thread::Builder::new()
-                        .name(format!("solVrfyUdp{port:05}"))
+                        .name(format!("trzVrfyUdp{port:05}"))
                         .spawn(move || {
                             let start = Instant::now();
 
@@ -463,7 +463,7 @@ pub fn multi_bind_in_range(
     mut num: usize,
 ) -> io::Result<(u16, Vec<UdpSocket>)> {
     if cfg!(windows) && num != 1 {
-        // See https://github.com/solana-labs/solana/issues/4607
+        // See https://github.com/trezoa-team/trezoa/issues/4607
         warn!(
             "multi_bind_in_range() only supports 1 socket in windows ({} requested)",
             num
@@ -739,7 +739,7 @@ mod tests {
 
     #[test]
     fn test_get_public_ip_addr_none() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let ip_addr = IpAddr::V4(Ipv4Addr::UNSPECIFIED);
         let (_server_port, (server_udp_socket, server_tcp_listener)) =
             bind_common_in_range(ip_addr, (3200, 3250)).unwrap();
@@ -757,7 +757,7 @@ mod tests {
 
     #[test]
     fn test_get_public_ip_addr_reachable() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let ip_addr = IpAddr::V4(Ipv4Addr::UNSPECIFIED);
         let (_server_port, (server_udp_socket, server_tcp_listener)) =
             bind_common_in_range(ip_addr, (3200, 3250)).unwrap();
@@ -781,7 +781,7 @@ mod tests {
 
     #[test]
     fn test_get_public_ip_addr_tcp_unreachable() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let ip_addr = IpAddr::V4(Ipv4Addr::UNSPECIFIED);
         let (_server_port, (server_udp_socket, _server_tcp_listener)) =
             bind_common_in_range(ip_addr, (3200, 3250)).unwrap();
@@ -804,7 +804,7 @@ mod tests {
 
     #[test]
     fn test_get_public_ip_addr_udp_unreachable() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let ip_addr = IpAddr::V4(Ipv4Addr::UNSPECIFIED);
         let (_server_port, (server_udp_socket, _server_tcp_listener)) =
             bind_common_in_range(ip_addr, (3200, 3250)).unwrap();
@@ -827,7 +827,7 @@ mod tests {
 
     #[test]
     fn test_bind_two_in_range_with_offset() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let ip_addr = IpAddr::V4(Ipv4Addr::UNSPECIFIED);
         let offset = 6;
         if let Ok(((port1, _), (port2, _))) =

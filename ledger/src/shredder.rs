@@ -10,10 +10,10 @@ use {
         galois_8::ReedSolomon,
         Error::{InvalidIndex, TooFewDataShards, TooFewShardsPresent},
     },
-    solana_entry::entry::Entry,
-    solana_measure::measure::Measure,
-    solana_rayon_threadlimit::get_thread_count,
-    solana_sdk::{clock::Slot, hash::Hash, signature::Keypair},
+    trezoa_entry::entry::Entry,
+    trezoa_measure::measure::Measure,
+    trezoa_rayon_threadlimit::get_thread_count,
+    trezoa_sdk::{clock::Slot, hash::Hash, signature::Keypair},
     std::{
         borrow::Borrow,
         fmt::Debug,
@@ -24,7 +24,7 @@ use {
 lazy_static! {
     static ref PAR_THREAD_POOL: ThreadPool = rayon::ThreadPoolBuilder::new()
         .num_threads(get_thread_count())
-        .thread_name(|i| format!("solShredder{i:02}"))
+        .thread_name(|i| format!("trzShredder{i:02}"))
         .build()
         .unwrap();
 }
@@ -494,7 +494,7 @@ mod tests {
         assert_matches::assert_matches,
         bincode::serialized_size,
         rand::{seq::SliceRandom, Rng},
-        solana_sdk::{
+        trezoa_sdk::{
             hash::{hash, Hash},
             pubkey::Pubkey,
             shred_version,
@@ -1017,13 +1017,13 @@ mod tests {
         let mut rng = rand::thread_rng();
         let txs = repeat_with(|| {
             let from_pubkey = Pubkey::new_unique();
-            let instruction = solana_sdk::system_instruction::transfer(
+            let instruction = trezoa_sdk::system_instruction::transfer(
                 &from_pubkey,
                 &Pubkey::new_unique(), // to
                 rng.gen(),             // lamports
             );
-            let message = solana_sdk::message::Message::new(&[instruction], Some(&from_pubkey));
-            let mut tx = solana_sdk::transaction::Transaction::new_unsigned(message);
+            let message = trezoa_sdk::message::Message::new(&[instruction], Some(&from_pubkey));
+            let mut tx = trezoa_sdk::transaction::Transaction::new_unsigned(message);
             // Also randomize the signatre bytes.
             let mut signature = [0u8; 64];
             rng.fill(&mut signature[..]);

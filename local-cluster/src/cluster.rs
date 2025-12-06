@@ -1,10 +1,10 @@
 use {
-    solana_client::{thin_client::ThinClient, tpu_client::QuicTpuClient},
-    solana_core::validator::{Validator, ValidatorConfig},
-    solana_gossip::{cluster_info::Node, contact_info::ContactInfo},
-    solana_ledger::shred::Shred,
-    solana_sdk::{commitment_config::CommitmentConfig, pubkey::Pubkey, signature::Keypair},
-    solana_streamer::socket::SocketAddrSpace,
+    trezoa_client::{thin_client::ThinClient, tpu_client::QuicTpuClient},
+    trezoa_core::validator::{Validator, ValidatorConfig},
+    trezoa_gossip::{cluster_info::Node, contact_info::ContactInfo},
+    trezoa_ledger::shred::Shred,
+    trezoa_sdk::{commitment_config::CommitmentConfig, pubkey::Pubkey, signature::Keypair},
+    trezoa_streamer::socket::SocketAddrSpace,
     std::{io::Result, path::PathBuf, sync::Arc},
 };
 

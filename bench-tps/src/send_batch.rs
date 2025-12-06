@@ -2,9 +2,9 @@ use {
     crate::bench_tps_client::*,
     log::*,
     rayon::prelude::*,
-    solana_core::gen_keys::GenKeys,
-    solana_measure::measure::Measure,
-    solana_sdk::{
+    trezoa_core::gen_keys::GenKeys,
+    trezoa_measure::measure::Measure,
+    trezoa_sdk::{
         commitment_config::CommitmentConfig,
         compute_budget::ComputeBudgetInstruction,
         hash::Hash,

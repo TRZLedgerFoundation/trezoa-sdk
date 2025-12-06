@@ -5,18 +5,18 @@ use {
     bytes::Bytes,
     crossbeam_channel::{unbounded, Receiver, RecvTimeoutError, Sender},
     itertools::Itertools,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::shred::{should_discard_shred, ShredFetchStats},
-    solana_perf::packet::{PacketBatch, PacketBatchRecycler, PacketFlags, PACKETS_PER_BATCH},
-    solana_runtime::bank_forks::BankForks,
-    solana_sdk::{
+    trezoa_gossip::cluster_info::ClusterInfo,
+    trezoa_ledger::shred::{should_discard_shred, ShredFetchStats},
+    trezoa_perf::packet::{PacketBatch, PacketBatchRecycler, PacketFlags, PACKETS_PER_BATCH},
+    trezoa_runtime::bank_forks::BankForks,
+    trezoa_sdk::{
         clock::{Slot, DEFAULT_MS_PER_SLOT},
         epoch_schedule::EpochSchedule,
         feature_set::{self, FeatureSet},
         packet::{Meta, PACKET_DATA_SIZE},
         pubkey::Pubkey,
     },
-    solana_streamer::streamer::{self, PacketBatchReceiver, StreamerReceiveStats},
+    trezoa_streamer::streamer::{self, PacketBatchReceiver, StreamerReceiveStats},
     std::{
         net::{SocketAddr, UdpSocket},
         sync::{
@@ -215,8 +215,8 @@ impl ShredFetchStage {
         let recycler = PacketBatchRecycler::warmed(100, 1024);
 
         let (mut tvu_threads, tvu_filter) = Self::packet_modifier(
-            "solRcvrShred",
-            "solTvuPktMod",
+            "trzRcvrShred",
+            "trzTvuPktMod",
             sockets,
             exit.clone(),
             sender.clone(),
@@ -230,8 +230,8 @@ impl ShredFetchStage {
         );
 
         let (repair_receiver, repair_handler) = Self::packet_modifier(
-            "solRcvrShredRep",
-            "solTvuRepPktMod",
+            "trzRcvrShredRep",
+            "trzTvuRepPktMod",
             vec![repair_socket.clone()],
             exit.clone(),
             sender.clone(),
@@ -257,7 +257,7 @@ impl ShredFetchStage {
             let turbine_disabled = turbine_disabled.clone();
             tvu_threads.extend([
                 Builder::new()
-                    .name("solTvuRecvRpr".to_string())
+                    .name("trzTvuRecvRpr".to_string())
                     .spawn(|| {
                         receive_repair_quic_packets(
                             repair_quic_endpoint_receiver,
@@ -268,7 +268,7 @@ impl ShredFetchStage {
                     })
                     .unwrap(),
                 Builder::new()
-                    .name("solTvuFetchRpr".to_string())
+                    .name("trzTvuFetchRpr".to_string())
                     .spawn(move || {
                         Self::modify_packets(
                             packet_receiver,
@@ -288,7 +288,7 @@ impl ShredFetchStage {
         let (packet_sender, packet_receiver) = unbounded();
         tvu_threads.extend([
             Builder::new()
-                .name("solTvuRecvQuic".to_string())
+                .name("trzTvuRecvQuic".to_string())
                 .spawn(|| {
                     receive_quic_datagrams(
                         turbine_quic_endpoint_receiver,
@@ -299,7 +299,7 @@ impl ShredFetchStage {
                 })
                 .unwrap(),
             Builder::new()
-                .name("solTvuFetchQuic".to_string())
+                .name("trzTvuFetchQuic".to_string())
                 .spawn(move || {
                     Self::modify_packets(
                         packet_receiver,
@@ -439,16 +439,16 @@ fn check_feature_activation(
 mod tests {
     use {
         super::*,
-        solana_ledger::{
+        trezoa_ledger::{
             blockstore::MAX_DATA_SHREDS_PER_SLOT,
             shred::{ReedSolomonCache, Shred, ShredFlags},
         },
-        solana_sdk::packet::Packet,
+        trezoa_sdk::packet::Packet,
     };
 
     #[test]
     fn test_data_code_same_index() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let mut packet = Packet::default();
         let mut stats = ShredFetchStats::default();
 
@@ -479,7 +479,7 @@ mod tests {
             |_| true,  // enable_chained_merkle_shreds
             &mut stats,
         ));
-        let coding = solana_ledger::shred::Shredder::generate_coding_shreds(
+        let coding = trezoa_ledger::shred::Shredder::generate_coding_shreds(
             &[shred],
             3, // next_code_index
             &ReedSolomonCache::default(),
@@ -498,7 +498,7 @@ mod tests {
 
     #[test]
     fn test_shred_filter() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let mut packet = Packet::default();
         let mut stats = ShredFetchStats::default();
         let last_root = 0;

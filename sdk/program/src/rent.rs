@@ -1,10 +1,10 @@
 //! Configuration for network [rent].
 //!
-//! [rent]: https://docs.solanalabs.com/implemented-proposals/rent
+//! [rent]: https://docs.trezoa.xyz/implemented-proposals/rent
 
 #![allow(clippy::arithmetic_side_effects)]
 
-use {crate::clock::DEFAULT_SLOTS_PER_EPOCH, solana_sdk_macro::CloneZeroed};
+use {crate::clock::DEFAULT_SLOTS_PER_EPOCH, trezoa_sdk_macro::CloneZeroed};
 
 /// Configuration of network rent.
 #[repr(C)]
@@ -27,8 +27,8 @@ pub struct Rent {
 /// Default rental rate in lamports/byte-year.
 ///
 /// This calculation is based on:
-/// - 10^9 lamports per SOL
-/// - $1 per SOL
+/// - 10^9 lamports per TRZ
+/// - $1 per TRZ
 /// - $0.01 per megabyte day
 /// - $3.65 per megabyte year
 pub const DEFAULT_LAMPORTS_PER_BYTE_YEAR: u64 = 1_000_000_000 / 100 * 365 / (1024 * 1024);

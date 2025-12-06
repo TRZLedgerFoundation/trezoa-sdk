@@ -1,5 +1,5 @@
 use {
-    solana_sdk::pubkey::Pubkey,
+    trezoa_sdk::pubkey::Pubkey,
     std::{
         collections::{hash_map::Entry, HashMap},
         fmt::{Debug, Display},

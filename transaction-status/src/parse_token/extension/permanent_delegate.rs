@@ -1,4 +1,4 @@
-use {super::*, spl_token_2022::solana_program::pubkey::Pubkey};
+use {super::*, tpl_token_2022::trezoa_program::pubkey::Pubkey};
 
 pub(in crate::parse_token) fn parse_initialize_permanent_delegate_instruction(
     delegate: Pubkey,
@@ -19,8 +19,8 @@ pub(in crate::parse_token) fn parse_initialize_permanent_delegate_instruction(
 mod test {
     use {
         super::*,
-        solana_sdk::pubkey::Pubkey,
-        spl_token_2022::{instruction::*, solana_program::message::Message},
+        trezoa_sdk::pubkey::Pubkey,
+        tpl_token_2022::{instruction::*, trezoa_program::message::Message},
     };
 
     #[test]
@@ -28,7 +28,7 @@ mod test {
         let mint_pubkey = Pubkey::new_unique();
         let delegate = Pubkey::new_unique();
         let permanent_delegate_ix =
-            initialize_permanent_delegate(&spl_token_2022::id(), &mint_pubkey, &delegate).unwrap();
+            initialize_permanent_delegate(&tpl_token_2022::id(), &mint_pubkey, &delegate).unwrap();
         let message = Message::new(&[permanent_delegate_ix], None);
         let compiled_instruction = &message.instructions[0];
         assert_eq!(

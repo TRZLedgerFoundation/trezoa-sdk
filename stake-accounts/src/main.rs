@@ -10,19 +10,19 @@ use {
             resolve_command, AuthorizeArgs, Command, MoveArgs, NewArgs, RebaseArgs, SetLockupArgs,
         },
     },
-    solana_cli_config::Config,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::client_error::Error as ClientError,
-    solana_sdk::{
+    trezoa_cli_config::Config,
+    trezoa_rpc_client::rpc_client::RpcClient,
+    trezoa_rpc_client_api::client_error::Error as ClientError,
+    trezoa_sdk::{
         message::Message,
-        native_token::lamports_to_sol,
+        native_token::lamports_to_trz,
         pubkey::Pubkey,
         signature::{unique_signers, Signature, Signer},
         signers::Signers,
         stake::{instruction::LockupArgs, state::Lockup},
         transaction::Transaction,
     },
-    solana_stake_program::stake_state,
+    trezoa_stake_program::stake_state,
     std::{env, error::Error},
 };
 
@@ -263,8 +263,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             );
             let balances = get_balances(&client, addresses)?;
             let lamports: u64 = balances.into_iter().map(|(_, bal)| bal).sum();
-            let sol = lamports_to_sol(lamports);
-            println!("{sol} SOL");
+            let trz = lamports_to_trz(lamports);
+            println!("{trz} TRZ");
         }
         Command::Authorize(args) => {
             process_authorize_stake_accounts(&client, &args)?;

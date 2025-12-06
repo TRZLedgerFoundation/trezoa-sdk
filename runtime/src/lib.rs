@@ -15,7 +15,7 @@ pub mod compute_budget_details;
 mod epoch_rewards_hasher;
 pub mod epoch_stakes;
 pub mod genesis_utils;
-pub mod inline_spl_associated_token_account;
+pub mod inline_tpl_associated_token_account;
 pub mod installed_scheduler_pool;
 pub mod loader_utils;
 pub mod non_circulating_supply;
@@ -39,9 +39,9 @@ pub mod status_cache;
 pub mod transaction_batch;
 
 #[macro_use]
-extern crate solana_metrics;
+extern crate trezoa_metrics;
 #[macro_use]
 extern crate serde_derive;
 
 #[macro_use]
-extern crate solana_frozen_abi_macro;
+extern crate trezoa_frozen_abi_macro;

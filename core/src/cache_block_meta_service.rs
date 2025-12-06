@@ -1,9 +1,9 @@
-pub use solana_ledger::blockstore_processor::CacheBlockMetaSender;
+pub use trezoa_ledger::blockstore_processor::CacheBlockMetaSender;
 use {
     crossbeam_channel::{Receiver, RecvTimeoutError},
-    solana_ledger::blockstore::Blockstore,
-    solana_measure::measure::Measure,
-    solana_runtime::bank::Bank,
+    trezoa_ledger::blockstore::Blockstore,
+    trezoa_measure::measure::Measure,
+    trezoa_runtime::bank::Bank,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},
@@ -29,7 +29,7 @@ impl CacheBlockMetaService {
         exit: Arc<AtomicBool>,
     ) -> Self {
         let thread_hdl = Builder::new()
-            .name("solCacheBlkTime".to_string())
+            .name("trzCacheBlkTime".to_string())
             .spawn(move || loop {
                 if exit.load(Ordering::Relaxed) {
                     break;

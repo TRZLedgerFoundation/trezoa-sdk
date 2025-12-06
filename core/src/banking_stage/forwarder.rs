@@ -9,14 +9,14 @@ use {
         next_leader::{next_leader, next_leader_tpu_vote},
         tracer_packet_stats::TracerPacketStats,
     },
-    solana_client::{connection_cache::ConnectionCache, tpu_connection::TpuConnection},
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_measure::measure_us,
-    solana_perf::{data_budget::DataBudget, packet::Packet},
-    solana_poh::poh_recorder::PohRecorder,
-    solana_runtime::bank_forks::BankForks,
-    solana_sdk::{pubkey::Pubkey, transport::TransportError},
-    solana_streamer::sendmmsg::batch_send,
+    trezoa_client::{connection_cache::ConnectionCache, tpu_connection::TpuConnection},
+    trezoa_gossip::cluster_info::ClusterInfo,
+    trezoa_measure::measure_us,
+    trezoa_perf::{data_budget::DataBudget, packet::Packet},
+    trezoa_poh::poh_recorder::PohRecorder,
+    trezoa_runtime::bank_forks::BankForks,
+    trezoa_sdk::{pubkey::Pubkey, transport::TransportError},
+    trezoa_streamer::sendmmsg::batch_send,
     std::{
         iter::repeat,
         net::{SocketAddr, UdpSocket},
@@ -166,7 +166,7 @@ impl Forwarder {
             .collect();
 
         let packet_vec_len = packet_vec.len();
-        // TODO: see https://github.com/solana-labs/solana/issues/23819
+        // TODO: see https://github.com/trezoa-team/trezoa/issues/23819
         // fix this so returns the correct number of succeeded packets
         // when there's an error sending the batch. This was left as-is for now
         // in favor of shipping Quic support, which was considered higher-priority
@@ -276,16 +276,16 @@ mod tests {
             unprocessed_packet_batches::{DeserializedPacket, UnprocessedPacketBatches},
             unprocessed_transaction_storage::ThreadType,
         },
-        solana_gossip::cluster_info::Node,
-        solana_ledger::{blockstore::Blockstore, genesis_utils::GenesisConfigInfo},
-        solana_perf::packet::PacketFlags,
-        solana_poh::{poh_recorder::create_test_recorder, poh_service::PohService},
-        solana_runtime::bank::Bank,
-        solana_sdk::{
+        trezoa_gossip::cluster_info::Node,
+        trezoa_ledger::{blockstore::Blockstore, genesis_utils::GenesisConfigInfo},
+        trezoa_perf::packet::PacketFlags,
+        trezoa_poh::{poh_recorder::create_test_recorder, poh_service::PohService},
+        trezoa_runtime::bank::Bank,
+        trezoa_sdk::{
             hash::Hash, poh_config::PohConfig, signature::Keypair, signer::Signer,
             system_transaction, transaction::VersionedTransaction,
         },
-        solana_streamer::recvmmsg::recv_mmsg,
+        trezoa_streamer::recvmmsg::recv_mmsg,
         std::sync::atomic::AtomicBool,
         tempfile::TempDir,
     };
@@ -340,7 +340,7 @@ mod tests {
     #[test]
     #[ignore]
     fn test_forwarder_budget() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let TestSetup {
             bank_forks,
             poh_recorder,
@@ -354,7 +354,7 @@ mod tests {
         // Create `PacketBatch` with 1 unprocessed packet
         let tx = system_transaction::transfer(
             &Keypair::new(),
-            &solana_sdk::pubkey::new_rand(),
+            &trezoa_sdk::pubkey::new_rand(),
             1,
             Hash::new_unique(),
         );
@@ -407,7 +407,7 @@ mod tests {
     #[test]
     #[ignore]
     fn test_handle_forwarding() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let TestSetup {
             bank_forks,
             poh_recorder,
@@ -421,7 +421,7 @@ mod tests {
         // packets are deserialized upon receiving, failed packets will not be
         // forwarded; Therefore need to create real packets here.
         let keypair = Keypair::new();
-        let pubkey = solana_sdk::pubkey::new_rand();
+        let pubkey = trezoa_sdk::pubkey::new_rand();
 
         let fwd_block_hash = Hash::new_unique();
         let forwarded_packet = {

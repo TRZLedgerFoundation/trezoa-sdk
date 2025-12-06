@@ -1,9 +1,9 @@
 use {
     crate::cli::CliError,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::client_error::{Error as ClientError, Result as ClientResult},
-    solana_sdk::{
-        commitment_config::CommitmentConfig, message::Message, native_token::lamports_to_sol,
+    trezoa_rpc_client::rpc_client::RpcClient,
+    trezoa_rpc_client_api::client_error::{Error as ClientError, Result as ClientResult},
+    trezoa_sdk::{
+        commitment_config::CommitmentConfig, message::Message, native_token::lamports_to_trz,
         pubkey::Pubkey,
     },
 };
@@ -92,13 +92,13 @@ pub fn check_account_for_spend_and_fee_with_commitment(
     {
         if balance > 0 {
             return Err(CliError::InsufficientFundsForSpendAndFee(
-                lamports_to_sol(balance),
-                lamports_to_sol(fee),
+                lamports_to_trz(balance),
+                lamports_to_trz(fee),
                 *account_pubkey,
             ));
         } else {
             return Err(CliError::InsufficientFundsForFee(
-                lamports_to_sol(fee),
+                lamports_to_trz(fee),
                 *account_pubkey,
             ));
         }
@@ -165,11 +165,11 @@ mod tests {
     use {
         super::*,
         serde_json::json,
-        solana_rpc_client_api::{
+        trezoa_rpc_client_api::{
             request::RpcRequest,
             response::{Response, RpcResponseContext},
         },
-        solana_sdk::system_instruction,
+        trezoa_sdk::system_instruction,
         std::collections::HashMap,
     };
 
@@ -183,7 +183,7 @@ mod tests {
             },
             value: json!(account_balance),
         });
-        let pubkey = solana_sdk::pubkey::new_rand();
+        let pubkey = trezoa_sdk::pubkey::new_rand();
 
         let pubkey0 = Pubkey::from([0; 32]);
         let pubkey1 = Pubkey::from([1; 32]);
@@ -262,7 +262,7 @@ mod tests {
             },
             value: json!(account_balance),
         });
-        let pubkey = solana_sdk::pubkey::new_rand();
+        let pubkey = trezoa_sdk::pubkey::new_rand();
 
         let mut mocks = HashMap::new();
         mocks.insert(RpcRequest::GetBalance, account_balance_response);
@@ -316,9 +316,9 @@ mod tests {
 
     #[test]
     fn test_check_unique_pubkeys() {
-        let pubkey0 = solana_sdk::pubkey::new_rand();
+        let pubkey0 = trezoa_sdk::pubkey::new_rand();
         let pubkey_clone = pubkey0;
-        let pubkey1 = solana_sdk::pubkey::new_rand();
+        let pubkey1 = trezoa_sdk::pubkey::new_rand();
 
         check_unique_pubkeys((&pubkey0, "foo".to_string()), (&pubkey1, "bar".to_string()))
             .expect("unexpected result");

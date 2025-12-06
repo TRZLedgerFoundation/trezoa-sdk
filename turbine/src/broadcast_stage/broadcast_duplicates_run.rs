@@ -3,9 +3,9 @@ use {
     crate::cluster_nodes::ClusterNodesCache,
     crossbeam_channel::Sender,
     itertools::Itertools,
-    solana_entry::entry::Entry,
-    solana_ledger::shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
-    solana_sdk::{
+    trezoa_entry::entry::Entry,
+    trezoa_ledger::shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
+    trezoa_sdk::{
         hash::Hash,
         signature::{Keypair, Signature, Signer},
         system_transaction,

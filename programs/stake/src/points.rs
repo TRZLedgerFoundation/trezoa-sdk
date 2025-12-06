@@ -1,15 +1,15 @@
 //! Information about points calculation based on stake state.
-//! Used by `solana-runtime`.
+//! Used by `trezoa-runtime`.
 
 use {
-    solana_sdk::{
+    trezoa_sdk::{
         clock::Epoch,
         instruction::InstructionError,
         pubkey::Pubkey,
         stake::state::{Delegation, Stake, StakeStateV2},
         stake_history::StakeHistory,
     },
-    solana_vote_program::vote_state::VoteState,
+    trezoa_vote_program::vote_state::VoteState,
     std::cmp::Ordering,
 };
 
@@ -127,7 +127,7 @@ pub(crate) fn calculate_stake_points_and_credits(
             //    history sysvar. And properly handling all the cases
             //    regarding deactivation epoch/warm-up/cool-down without
             //    introducing incentive skew is hard.
-            //  - Conceptually, it should be acceptable for the staked SOLs at
+            //  - Conceptually, it should be acceptable for the staked TRZs at
             //    the recreated vote to receive rewards again immediately after
             //    rewind even if it looks like instant activation. That's
             //    because it must have passed the required warmed-up at least
@@ -212,16 +212,16 @@ pub(crate) fn calculate_stake_points_and_credits(
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::stake_state::new_stake, solana_sdk::native_token};
+    use {super::*, crate::stake_state::new_stake, trezoa_sdk::native_token};
 
     #[test]
     fn test_stake_state_calculate_points_with_typical_values() {
         let mut vote_state = VoteState::default();
 
         // bootstrap means fully-vested stake at epoch 0 with
-        //  10_000_000 SOL is a big but not unreasaonable stake
+        //  10_000_000 TRZ is a big but not unreasaonable stake
         let stake = new_stake(
-            native_token::sol_to_lamports(10_000_000f64),
+            native_token::trz_to_lamports(10_000_000f64),
             &Pubkey::default(),
             &vote_state,
             std::u64::MAX,

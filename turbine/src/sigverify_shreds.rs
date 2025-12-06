@@ -1,14 +1,14 @@
 use {
     crossbeam_channel::{Receiver, RecvTimeoutError, SendError, Sender},
     rayon::{prelude::*, ThreadPool, ThreadPoolBuilder},
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::{
+    trezoa_gossip::cluster_info::ClusterInfo,
+    trezoa_ledger::{
         leader_schedule_cache::LeaderScheduleCache, shred, sigverify_shreds::verify_shreds_gpu,
     },
-    solana_perf::{self, deduper::Deduper, packet::PacketBatch, recycler_cache::RecyclerCache},
-    solana_rayon_threadlimit::get_thread_count,
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
-    solana_sdk::{clock::Slot, pubkey::Pubkey},
+    trezoa_perf::{self, deduper::Deduper, packet::PacketBatch, recycler_cache::RecyclerCache},
+    trezoa_rayon_threadlimit::get_thread_count,
+    trezoa_runtime::{bank::Bank, bank_forks::BankForks},
+    trezoa_sdk::{clock::Slot, pubkey::Pubkey},
     std::{
         collections::HashMap,
         sync::{Arc, RwLock},
@@ -40,7 +40,7 @@ pub fn spawn_shred_sigverify(
     let mut stats = ShredSigVerifyStats::new(Instant::now());
     let thread_pool = ThreadPoolBuilder::new()
         .num_threads(get_thread_count())
-        .thread_name(|i| format!("solSvrfyShred{i:02}"))
+        .thread_name(|i| format!("trzSvrfyShred{i:02}"))
         .build()
         .unwrap();
     let run_shred_sigverify = move || {
@@ -73,7 +73,7 @@ pub fn spawn_shred_sigverify(
         }
     };
     Builder::new()
-        .name("solShredVerifr".to_string())
+        .name("trzShredVerifr".to_string())
         .spawn(run_shred_sigverify)
         .unwrap()
 }
@@ -154,7 +154,7 @@ fn verify_packets(
             .chain(std::iter::once((Slot::MAX, Pubkey::default())))
             .collect();
     let out = verify_shreds_gpu(thread_pool, packets, &leader_slots, recycler_cache);
-    solana_perf::sigverify::mark_disabled(packets, &out);
+    trezoa_perf::sigverify::mark_disabled(packets, &out);
 }
 
 // Returns pubkey of leaders for shred slots refrenced in the packets.
@@ -267,13 +267,13 @@ impl ShredSigVerifyStats {
 mod tests {
     use {
         super::*,
-        solana_ledger::{
+        trezoa_ledger::{
             genesis_utils::create_genesis_config_with_leader,
             shred::{Shred, ShredFlags},
         },
-        solana_perf::packet::Packet,
-        solana_runtime::bank::Bank,
-        solana_sdk::signature::{Keypair, Signer},
+        trezoa_perf::packet::Packet,
+        trezoa_runtime::bank::Bank,
+        trezoa_sdk::signature::{Keypair, Signer},
     };
 
     #[test]

@@ -1,4 +1,4 @@
-//! Solana precompiled programs.
+//! Trezoa precompiled programs.
 
 #![cfg(feature = "full")]
 

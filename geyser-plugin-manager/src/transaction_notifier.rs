@@ -2,14 +2,14 @@
 use {
     crate::geyser_plugin_manager::GeyserPluginManager,
     log::*,
-    solana_geyser_plugin_interface::geyser_plugin_interface::{
+    trezoa_geyser_plugin_interface::geyser_plugin_interface::{
         ReplicaTransactionInfoV2, ReplicaTransactionInfoVersions,
     },
-    solana_measure::measure::Measure,
-    solana_metrics::*,
-    solana_rpc::transaction_notifier_interface::TransactionNotifier,
-    solana_sdk::{clock::Slot, signature::Signature, transaction::SanitizedTransaction},
-    solana_transaction_status::TransactionStatusMeta,
+    trezoa_measure::measure::Measure,
+    trezoa_metrics::*,
+    trezoa_rpc::transaction_notifier_interface::TransactionNotifier,
+    trezoa_sdk::{clock::Slot, signature::Signature, transaction::SanitizedTransaction},
+    trezoa_transaction_status::TransactionStatusMeta,
     std::sync::{Arc, RwLock},
 };
 

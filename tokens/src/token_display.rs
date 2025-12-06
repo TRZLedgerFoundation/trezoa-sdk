@@ -1,18 +1,18 @@
 use {
-    solana_account_decoder::parse_token::real_number_string_trimmed,
-    solana_sdk::native_token::lamports_to_sol,
+    trezoa_account_decoder::parse_token::real_number_string_trimmed,
+    trezoa_sdk::native_token::lamports_to_trz,
     std::{
         fmt::{Debug, Display, Formatter, Result},
         ops::Add,
     },
 };
 
-const SOL_SYMBOL: &str = "◎";
+const TRZ_SYMBOL: &str = "◎";
 
 #[derive(PartialEq, Eq)]
 pub enum TokenType {
-    Sol,
-    SplToken,
+    Trz,
+    TplToken,
 }
 
 pub struct Token {
@@ -24,30 +24,30 @@ pub struct Token {
 impl Token {
     fn write_with_symbol(&self, f: &mut Formatter) -> Result {
         match &self.token_type {
-            TokenType::Sol => {
-                let amount = lamports_to_sol(self.amount);
-                write!(f, "{SOL_SYMBOL}{amount}")
+            TokenType::trz => {
+                let amount = lamports_to_trz(self.amount);
+                write!(f, "{TRZ_SYMBOL}{amount}")
             }
-            TokenType::SplToken => {
+            TokenType::TplToken => {
                 let amount = real_number_string_trimmed(self.amount, self.decimals);
                 write!(f, "{amount} tokens")
             }
         }
     }
 
-    pub fn sol(amount: u64) -> Self {
+    pub fn trz(amount: u64) -> Self {
         Self {
             amount,
             decimals: 9,
-            token_type: TokenType::Sol,
+            token_type: TokenType::trz,
         }
     }
 
-    pub fn spl_token(amount: u64, decimals: u8) -> Self {
+    pub fn tpl_token(amount: u64, decimals: u8) -> Self {
         Self {
             amount,
             decimals,
-            token_type: TokenType::SplToken,
+            token_type: TokenType::TplToken,
         }
     }
 }

@@ -1,8 +1,8 @@
 //! Fee structures.
 
-use crate::native_token::sol_to_lamports;
-#[cfg(not(target_os = "solana"))]
-use solana_program::message::SanitizedMessage;
+use crate::native_token::trz_to_lamports;
+#[cfg(not(target_os = "trezoa"))]
+use trezoa_program::message::SanitizedMessage;
 
 /// A fee and its associated compute unit limit
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
@@ -59,14 +59,14 @@ impl FeeStructure {
     ) -> Self {
         let compute_fee_bins = compute_fee_bins
             .iter()
-            .map(|(limit, sol)| FeeBin {
+            .map(|(limit, trz)| FeeBin {
                 limit: *limit,
-                fee: sol_to_lamports(*sol),
+                fee: trz_to_lamports(*trz),
             })
             .collect::<Vec<_>>();
         FeeStructure {
-            lamports_per_signature: sol_to_lamports(sol_per_signature),
-            lamports_per_write_lock: sol_to_lamports(sol_per_write_lock),
+            lamports_per_signature: trz_to_lamports(sol_per_signature),
+            lamports_per_write_lock: trz_to_lamports(sol_per_write_lock),
             compute_fee_bins,
         }
     }
@@ -94,7 +94,7 @@ impl FeeStructure {
     }
 
     /// Calculate fee for `SanitizedMessage`
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     pub fn calculate_fee(
         &self,
         message: &SanitizedMessage,
@@ -120,7 +120,7 @@ impl FeeStructure {
     }
 
     /// Calculate fee details for `SanitizedMessage`
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     pub fn calculate_fee_details(
         &self,
         message: &SanitizedMessage,
@@ -174,7 +174,7 @@ impl Default for FeeStructure {
 }
 
 #[cfg(RUSTC_WITH_SPECIALIZATION)]
-impl ::solana_frozen_abi::abi_example::AbiExample for FeeStructure {
+impl ::trezoa_frozen_abi::abi_example::AbiExample for FeeStructure {
     fn example() -> Self {
         FeeStructure::default()
     }

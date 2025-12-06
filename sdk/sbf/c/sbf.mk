@@ -16,7 +16,7 @@ OS := $(shell uname)
 
 LLVM_DIR = $(LOCAL_PATH)../dependencies/platform-tools/llvm
 LLVM_SYSTEM_INC_DIRS := $(LLVM_DIR)/lib/clang/17/include
-COMPILER_RT_DIR = $(LOCAL_PATH)../dependencies/platform-tools/rust/lib/rustlib/sbf-solana-solana/lib
+COMPILER_RT_DIR = $(LOCAL_PATH)../dependencies/platform-tools/rust/lib/rustlib/sbf-trezoa-trezoa/lib
 STD_INC_DIRS := $(LLVM_DIR)/include
 STD_LIB_DIRS := $(LLVM_DIR)/lib
 
@@ -41,10 +41,10 @@ C_FLAGS := \
   $(addprefix -I,$(STD_INC_DIRS)) \
   $(addprefix -I,$(INC_DIRS)) \
 
-ifeq ($(SOL_SBFV2),1)
+ifeq ($(TRZ_SBFV2),1)
 C_FLAGS := \
   $(C_FLAGS) \
-  -DSOL_SBFV2=1
+  -DTRZ_SBFV2=1
 endif
 
 CXX_FLAGS := \
@@ -74,7 +74,7 @@ SBF_LLD_FLAGS := \
   -L $(STD_LIB_DIRS) \
   -lc \
 
-ifeq ($(SOL_SBFV2),1)
+ifeq ($(TRZ_SBFV2),1)
 SBF_LLD_FLAGS := \
   $(SBF_LLD_FLAGS) \
   --pack-dyn-relocs=relr
@@ -89,7 +89,7 @@ READ_ELF_FLAGS := \
 
 TESTFRAMEWORK_RPATH := $(abspath $(LOCAL_PATH)../dependencies/criterion/lib)
 TESTFRAMEWORK_FLAGS := \
-  -DSOL_TEST \
+  -DTRZ_TEST \
   -isystem $(LOCAL_PATH)../dependencies/criterion/include \
   -L $(LOCAL_PATH)../dependencies/criterion/lib \
   -rpath $(TESTFRAMEWORK_RPATH) \
@@ -111,9 +111,9 @@ TEST_CXX_FLAGS := \
 
 help:
 	@echo ''
-	@echo 'Solana VM Program makefile'
+	@echo 'Trezoa VM Program makefile'
 	@echo ''
-	@echo 'This makefile will build Solana Programs from C or C++ source files into ELFs'
+	@echo 'This makefile will build Trezoa Programs from C or C++ source files into ELFs'
 	@echo ''
 	@echo 'Assumptions:'
 	@echo '  - Programs are located in the source directory: $(SRC_DIR)/<program name>'
@@ -203,10 +203,10 @@ $1: $2
 	$(_@)mkdir -p $(dir $1)
 	$(_@)$(LLD) $(SBF_LLD_FLAGS) -o $1 $2 $(COMPILER_RT_DIR)/libcompiler_builtins-*.rlib
 ifeq (,$(wildcard $(subst .so,-keypair.json,$1)))
-	$(_@)solana-keygen new --no-passphrase --silent -o $(subst .so,-keypair.json,$1)
+	$(_@)trezoa-keygen new --no-passphrase --silent -o $(subst .so,-keypair.json,$1)
 endif
 	@echo To deploy this program:
-	@echo $$$$ solana program deploy $(abspath $1)
+	@echo $$$$ trezoa program deploy $(abspath $1)
 endef
 
 define TEST_C_RULE

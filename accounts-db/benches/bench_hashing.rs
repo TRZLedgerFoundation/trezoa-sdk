@@ -1,11 +1,11 @@
 use {
     criterion::{criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion, Throughput},
     rand::seq::SliceRandom,
-    solana_accounts_db::{
+    trezoa_accounts_db::{
         accounts_db::AccountsDb,
         accounts_hash::{AccountHash, AccountsHasher},
     },
-    solana_sdk::{account::AccountSharedData, hash::Hash, pubkey::Pubkey},
+    trezoa_sdk::{account::AccountSharedData, hash::Hash, pubkey::Pubkey},
 };
 
 const KB: usize = 1024;
@@ -13,7 +13,7 @@ const MB: usize = KB * KB;
 
 const DATA_SIZES: [usize; 6] = [
     0,       // the smallest account
-    165,     // the size of an spl token account
+    165,     // the size of an tpl token account
     200,     // the size of a stake account
     KB,      // a medium sized account
     MB,      // a large sized account

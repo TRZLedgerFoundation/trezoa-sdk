@@ -1,6 +1,6 @@
 use {
-    solana_runtime::bank::Bank,
-    solana_sdk::{account::AccountSharedData, pubkey::Pubkey},
+    trezoa_runtime::bank::Bank,
+    trezoa_sdk::{account::AccountSharedData, pubkey::Pubkey},
     std::collections::HashMap,
 };
 

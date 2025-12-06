@@ -1,5 +1,5 @@
 [package]
-name = "solana-banking-bench"
+name = "trezoa-banking-bench"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -14,19 +14,19 @@ crossbeam-channel = { workspace = true }
 log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
-solana-client = { workspace = true }
-solana-core = { workspace = true }
-solana-gossip = { workspace = true }
-solana-ledger = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-perf = { workspace = true }
-solana-poh = { workspace = true, features = ["dev-context-only-utils"] }
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
-solana-tpu-client = { workspace = true }
-solana-version = { workspace = true }
+trezoa-client = { workspace = true }
+trezoa-core = { workspace = true }
+trezoa-gossip = { workspace = true }
+trezoa-ledger = { workspace = true }
+trezoa-logger = { workspace = true }
+trezoa-measure = { workspace = true }
+trezoa-perf = { workspace = true }
+trezoa-poh = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-sdk = { workspace = true }
+trezoa-streamer = { workspace = true }
+trezoa-tpu-client = { workspace = true }
+trezoa-version = { workspace = true }
 
 [features]
 dev-context-only-utils = []

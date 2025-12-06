@@ -7,8 +7,8 @@ use {
     pem::Pem,
     quinn::{Endpoint, IdleTimeout, ServerConfig},
     rustls::{server::ClientCertVerified, Certificate, DistinguishedName},
-    solana_perf::packet::PacketBatch,
-    solana_sdk::{
+    trezoa_perf::packet::PacketBatch,
+    trezoa_sdk::{
         packet::PACKET_DATA_SIZE,
         quic::{NotifyKeyUpdate, QUIC_MAX_TIMEOUT, QUIC_MAX_UNSTAKED_CONCURRENT_STREAMS},
         signature::Keypair,
@@ -485,7 +485,7 @@ mod test {
         super::*,
         crate::nonblocking::quic::{test::*, DEFAULT_WAIT_FOR_CHUNK_TIMEOUT},
         crossbeam_channel::unbounded,
-        solana_sdk::net::DEFAULT_TPU_COALESCE,
+        trezoa_sdk::net::DEFAULT_TPU_COALESCE,
         std::net::SocketAddr,
     };
 
@@ -506,7 +506,7 @@ mod test {
             thread: t,
             key_updater: _,
         } = spawn_server(
-            "solQuicTest",
+            "trzQuicTest",
             "quic_streamer_test",
             s,
             &keypair,
@@ -532,9 +532,9 @@ mod test {
 
     #[test]
     fn test_quic_timeout() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let (t, exit, receiver, server_address) = setup_quic_server();
-        let runtime = rt("solQuicTestRt".to_string());
+        let runtime = rt("trzQuicTestRt".to_string());
         runtime.block_on(check_timeout(receiver, server_address));
         exit.store(true, Ordering::Relaxed);
         t.join().unwrap();
@@ -542,10 +542,10 @@ mod test {
 
     #[test]
     fn test_quic_server_block_multiple_connections() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let (t, exit, _receiver, server_address) = setup_quic_server();
 
-        let runtime = rt("solQuicTestRt".to_string());
+        let runtime = rt("trzQuicTestRt".to_string());
         runtime.block_on(check_block_multiple_connections(server_address));
         exit.store(true, Ordering::Relaxed);
         t.join().unwrap();
@@ -553,7 +553,7 @@ mod test {
 
     #[test]
     fn test_quic_server_multiple_streams() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let s = UdpSocket::bind("127.0.0.1:0").unwrap();
         let exit = Arc::new(AtomicBool::new(false));
         let (sender, receiver) = unbounded();
@@ -565,7 +565,7 @@ mod test {
             thread: t,
             key_updater: _,
         } = spawn_server(
-            "solQuicTest",
+            "trzQuicTest",
             "quic_streamer_test",
             s,
             &keypair,
@@ -580,7 +580,7 @@ mod test {
         )
         .unwrap();
 
-        let runtime = rt("solQuicTestRt".to_string());
+        let runtime = rt("trzQuicTestRt".to_string());
         runtime.block_on(check_multiple_streams(receiver, server_address));
         exit.store(true, Ordering::Relaxed);
         t.join().unwrap();
@@ -588,10 +588,10 @@ mod test {
 
     #[test]
     fn test_quic_server_multiple_writes() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let (t, exit, receiver, server_address) = setup_quic_server();
 
-        let runtime = rt("solQuicTestRt".to_string());
+        let runtime = rt("trzQuicTestRt".to_string());
         runtime.block_on(check_multiple_writes(receiver, server_address, None));
         exit.store(true, Ordering::Relaxed);
         t.join().unwrap();
@@ -599,7 +599,7 @@ mod test {
 
     #[test]
     fn test_quic_server_unstaked_node_connect_failure() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let s = UdpSocket::bind("127.0.0.1:0").unwrap();
         let exit = Arc::new(AtomicBool::new(false));
         let (sender, _) = unbounded();
@@ -611,7 +611,7 @@ mod test {
             thread: t,
             key_updater: _,
         } = spawn_server(
-            "solQuicTest",
+            "trzQuicTest",
             "quic_streamer_test",
             s,
             &keypair,
@@ -626,7 +626,7 @@ mod test {
         )
         .unwrap();
 
-        let runtime = rt("solQuicTestRt".to_string());
+        let runtime = rt("trzQuicTestRt".to_string());
         runtime.block_on(check_unstaked_node_connect_failure(server_address));
         exit.store(true, Ordering::Relaxed);
         t.join().unwrap();

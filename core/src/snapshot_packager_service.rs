@@ -2,10 +2,10 @@ mod snapshot_gossip_manager;
 use {
     crossbeam_channel::{Receiver, Sender},
     snapshot_gossip_manager::SnapshotGossipManager,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_measure::measure_us,
-    solana_perf::thread::renice_this_thread,
-    solana_runtime::{
+    trezoa_gossip::cluster_info::ClusterInfo,
+    trezoa_measure::measure_us,
+    trezoa_perf::thread::renice_this_thread,
+    trezoa_runtime::{
         snapshot_archive_info::SnapshotArchiveInfoGetter,
         snapshot_config::SnapshotConfig,
         snapshot_hash::StartingSnapshotHashes,
@@ -40,7 +40,7 @@ impl SnapshotPackagerService {
         enable_gossip_push: bool,
     ) -> Self {
         let t_snapshot_packager = Builder::new()
-            .name("solSnapshotPkgr".to_string())
+            .name("trzSnapshotPkgr".to_string())
             .spawn(move || {
                 info!("SnapshotPackagerService has started");
                 renice_this_thread(snapshot_config.packager_thread_niceness_adj).unwrap();
@@ -194,14 +194,14 @@ mod tests {
     use {
         super::*,
         rand::seq::SliceRandom,
-        solana_runtime::{
+        trezoa_runtime::{
             snapshot_archive_info::SnapshotArchiveInfo,
             snapshot_bank_utils,
             snapshot_hash::SnapshotHash,
             snapshot_package::{SnapshotKind, SnapshotPackage},
             snapshot_utils::{self, ArchiveFormat, SnapshotVersion},
         },
-        solana_sdk::{clock::Slot, genesis_config::GenesisConfig, hash::Hash},
+        trezoa_sdk::{clock::Slot, genesis_config::GenesisConfig, hash::Hash},
         std::{
             fs::{self, remove_dir_all},
             path::{Path, PathBuf},

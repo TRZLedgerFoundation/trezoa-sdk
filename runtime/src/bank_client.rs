@@ -1,7 +1,7 @@
 use {
     crate::bank::Bank,
     crossbeam_channel::{unbounded, Receiver, Sender},
-    solana_sdk::{
+    trezoa_sdk::{
         account::Account,
         client::{AsyncClient, Client, SyncClient},
         commitment_config::CommitmentConfig,
@@ -26,7 +26,7 @@ use {
     },
 };
 #[cfg(feature = "dev-context-only-utils")]
-use {crate::bank_forks::BankForks, solana_sdk::clock, std::sync::RwLock};
+use {crate::bank_forks::BankForks, trezoa_sdk::clock, std::sync::RwLock};
 
 pub struct BankClient {
     bank: Arc<Bank>,
@@ -195,7 +195,7 @@ impl SyncClient for BankClient {
         signature: &Signature,
         min_confirmed_blocks: usize,
     ) -> Result<usize> {
-        // https://github.com/solana-labs/solana/issues/7199
+        // https://github.com/trezoa-team/trezoa/issues/7199
         assert_eq!(min_confirmed_blocks, 1, "BankClient cannot observe the passage of multiple blocks, so min_confirmed_blocks must be 1");
         let now = Instant::now();
         let confirmed_blocks;
@@ -313,7 +313,7 @@ impl BankClient {
         let transaction_sender = Mutex::new(transaction_sender);
         let thread_bank = bank.clone();
         Builder::new()
-            .name("solBankClient".to_string())
+            .name("trzBankClient".to_string())
             .spawn(move || Self::run(&thread_bank, transaction_receiver))
             .unwrap();
         Self {
@@ -360,15 +360,15 @@ impl BankClient {
 mod tests {
     use {
         super::*,
-        solana_sdk::{
+        trezoa_sdk::{
             genesis_config::create_genesis_config, instruction::AccountMeta,
-            native_token::sol_to_lamports,
+            native_token::trz_to_lamports,
         },
     };
 
     #[test]
     fn test_bank_client_new_with_keypairs() {
-        let (genesis_config, john_doe_keypair) = create_genesis_config(sol_to_lamports(1.0));
+        let (genesis_config, john_doe_keypair) = create_genesis_config(trz_to_lamports(1.0));
         let john_pubkey = john_doe_keypair.pubkey();
         let jane_doe_keypair = Keypair::new();
         let jane_pubkey = jane_doe_keypair.pubkey();
@@ -378,7 +378,7 @@ mod tests {
         let amount = genesis_config.rent.minimum_balance(0);
 
         // Create 2-2 Multisig Transfer instruction.
-        let bob_pubkey = solana_sdk::pubkey::new_rand();
+        let bob_pubkey = trezoa_sdk::pubkey::new_rand();
         let mut transfer_instruction =
             system_instruction::transfer(&john_pubkey, &bob_pubkey, amount);
         transfer_instruction

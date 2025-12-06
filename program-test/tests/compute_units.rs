@@ -1,6 +1,6 @@
 use {
-    solana_program_test::ProgramTest,
-    solana_sdk::{
+    trezoa_program_test::ProgramTest,
+    trezoa_sdk::{
         instruction::{AccountMeta, Instruction},
         pubkey::Pubkey,
         signature::{Keypair, Signer},

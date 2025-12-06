@@ -1,7 +1,7 @@
 [package]
-name = "solana-turbine"
+name = "trezoa-turbine"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana-turbine"
+documentation = "https://docs.rs/trezoa-turbine"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -22,27 +22,27 @@ rand = { workspace = true }
 rand_chacha = { workspace = true }
 rayon = { workspace = true }
 rustls = { workspace = true }
-solana-entry = { workspace = true }
-solana-gossip = { workspace = true }
-solana-ledger = { workspace = true }
-solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
-solana-perf = { workspace = true }
-solana-poh = { workspace = true }
-solana-quic-client = { workspace = true }
-solana-rayon-threadlimit = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
+trezoa-entry = { workspace = true }
+trezoa-gossip = { workspace = true }
+trezoa-ledger = { workspace = true }
+trezoa-measure = { workspace = true }
+trezoa-metrics = { workspace = true }
+trezoa-perf = { workspace = true }
+trezoa-poh = { workspace = true }
+trezoa-quic-client = { workspace = true }
+trezoa-rayon-threadlimit = { workspace = true }
+trezoa-rpc = { workspace = true }
+trezoa-rpc-client-api = { workspace = true }
+trezoa-runtime = { workspace = true }
+trezoa-sdk = { workspace = true }
+trezoa-streamer = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
-solana-logger = { workspace = true }
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-logger = { workspace = true }
+trezoa-runtime = { workspace = true, features = ["dev-context-only-utils"] }
 test-case = { workspace = true }
 
 [[bench]]

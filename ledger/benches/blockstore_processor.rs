@@ -6,16 +6,16 @@ use {
         iter::IndexedParallelIterator,
         prelude::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator},
     },
-    solana_ledger::{
+    trezoa_ledger::{
         blockstore_processor::{execute_batch, TransactionBatchWithIndexes},
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
     },
-    solana_program_runtime::timings::ExecuteTimings,
-    solana_runtime::{
+    trezoa_program_runtime::timings::ExecuteTimings,
+    trezoa_runtime::{
         bank::Bank, prioritization_fee_cache::PrioritizationFeeCache,
         transaction_batch::TransactionBatch,
     },
-    solana_sdk::{
+    trezoa_sdk::{
         account::Account, feature_set::apply_cost_tracker_during_replay, signature::Keypair,
         signer::Signer, stake_history::Epoch, system_program, system_transaction,
         transaction::SanitizedTransaction,

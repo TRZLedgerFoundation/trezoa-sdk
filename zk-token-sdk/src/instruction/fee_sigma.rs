@@ -1,14 +1,14 @@
 //! The fee sigma proof instruction.
 //!
-//! A fee sigma proof certifies that a Pedersen commitment to a transfer fee for SPL Token 2022 is
+//! A fee sigma proof certifies that a Pedersen commitment to a transfer fee for TPL Token 2022 is
 //! well-formed.
 //!
 //! A formal documentation of how transfer fees and fee sigma proof are computed can be found in
 //! the [`ZK Token proof`] program documentation.
 //!
-//! [`ZK Token proof`]: https://docs.solanalabs.com/runtime/zk-token-proof
+//! [`ZK Token proof`]: https://docs.trezoa.xyz/runtime/zk-token-proof
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 use {
     crate::{
         encryption::pedersen::{PedersenCommitment, PedersenOpening},
@@ -43,7 +43,7 @@ pub struct FeeSigmaProofData {
 ///
 /// We refer to [`ZK Token proof`] for the formal details on how the fee sigma proof is computed.
 ///
-/// [`ZK Token proof`]: https://docs.solanalabs.com/runtime/zk-token-proof
+/// [`ZK Token proof`]: https://docs.trezoa.xyz/runtime/zk-token-proof
 #[derive(Clone, Copy, Pod, Zeroable)]
 #[repr(C)]
 pub struct FeeSigmaProofContext {
@@ -60,7 +60,7 @@ pub struct FeeSigmaProofContext {
     pub max_fee: pod::PodU64,
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl FeeSigmaProofData {
     pub fn new(
         fee_commitment: &PedersenCommitment,
@@ -107,7 +107,7 @@ impl ZkProofData<FeeSigmaProofContext> for FeeSigmaProofData {
         &self.context
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     fn verify_proof(&self) -> Result<(), ProofVerificationError> {
         let mut transcript = self.context.new_transcript();
 
@@ -129,7 +129,7 @@ impl ZkProofData<FeeSigmaProofContext> for FeeSigmaProofData {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl FeeSigmaProofContext {
     fn new_transcript(&self) -> Transcript {
         let mut transcript = Transcript::new(b"FeeSigmaProof");

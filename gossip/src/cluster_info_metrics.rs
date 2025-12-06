@@ -1,8 +1,8 @@
 use {
     crate::crds_gossip::CrdsGossip,
     itertools::Itertools,
-    solana_measure::measure::Measure,
-    solana_sdk::{clock::Slot, pubkey::Pubkey},
+    trezoa_measure::measure::Measure,
+    trezoa_sdk::{clock::Slot, pubkey::Pubkey},
     std::{
         cmp::Reverse,
         collections::HashMap,

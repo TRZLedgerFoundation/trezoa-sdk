@@ -3,17 +3,17 @@
 use {
     crate::result::{Error, Result},
     crossbeam_channel::{unbounded, RecvTimeoutError},
-    solana_metrics::{inc_new_counter_debug, inc_new_counter_info},
-    solana_perf::{packet::PacketBatchRecycler, recycler::Recycler},
-    solana_poh::poh_recorder::PohRecorder,
-    solana_sdk::{
+    trezoa_metrics::{inc_new_counter_debug, inc_new_counter_info},
+    trezoa_perf::{packet::PacketBatchRecycler, recycler::Recycler},
+    trezoa_poh::poh_recorder::PohRecorder,
+    trezoa_sdk::{
         clock::{DEFAULT_TICKS_PER_SLOT, HOLD_TRANSACTIONS_SLOT_OFFSET},
         packet::{Packet, PacketFlags},
     },
-    solana_streamer::streamer::{
+    trezoa_streamer::streamer::{
         self, PacketBatchReceiver, PacketBatchSender, StreamerReceiveStats,
     },
-    solana_tpu_client::tpu_client::DEFAULT_TPU_ENABLE_UDP,
+    trezoa_tpu_client::tpu_client::DEFAULT_TPU_ENABLE_UDP,
     std::{
         net::UdpSocket,
         sync::{
@@ -162,7 +162,7 @@ impl FetchStage {
                 .enumerate()
                 .map(|(i, socket)| {
                     streamer::receiver(
-                        format!("solRcvrTpu{i:02}"),
+                        format!("trzRcvrTpu{i:02}"),
                         socket,
                         exit.clone(),
                         sender.clone(),
@@ -185,7 +185,7 @@ impl FetchStage {
                 .enumerate()
                 .map(|(i, socket)| {
                     streamer::receiver(
-                        format!("solRcvrTpuFwd{i:02}"),
+                        format!("trzRcvrTpuFwd{i:02}"),
                         socket,
                         exit.clone(),
                         forward_sender.clone(),
@@ -207,7 +207,7 @@ impl FetchStage {
             .enumerate()
             .map(|(i, socket)| {
                 streamer::receiver(
-                    format!("solRcvrTpuVot{i:02}"),
+                    format!("trzRcvrTpuVot{i:02}"),
                     socket,
                     exit.clone(),
                     vote_sender.clone(),
@@ -224,7 +224,7 @@ impl FetchStage {
         let poh_recorder = poh_recorder.clone();
 
         let fwd_thread_hdl = Builder::new()
-            .name("solFetchStgFwRx".to_string())
+            .name("trzFetchStgFwRx".to_string())
             .spawn(move || loop {
                 if let Err(e) =
                     Self::handle_forwarded_packets(&forward_receiver, &sender, &poh_recorder)
@@ -241,7 +241,7 @@ impl FetchStage {
             .unwrap();
 
         let metrics_thread_hdl = Builder::new()
-            .name("solFetchStgMetr".to_string())
+            .name("trzFetchStgMetr".to_string())
             .spawn(move || loop {
                 sleep(Duration::from_secs(1));
 

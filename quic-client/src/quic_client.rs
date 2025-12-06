@@ -7,12 +7,12 @@ use {
     },
     lazy_static::lazy_static,
     log::*,
-    solana_connection_cache::{
+    trezoa_connection_cache::{
         client_connection::{ClientConnection, ClientStats},
         connection_cache_stats::ConnectionCacheStats,
         nonblocking::client_connection::ClientConnection as NonblockingClientConnection,
     },
-    solana_sdk::transport::{Result as TransportResult, TransportError},
+    trezoa_sdk::transport::{Result as TransportResult, TransportError},
     std::{
         net::SocketAddr,
         sync::{atomic::Ordering, Arc, Condvar, Mutex, MutexGuard},
@@ -69,7 +69,7 @@ lazy_static! {
     static ref ASYNC_TASK_SEMAPHORE: AsyncTaskSemaphore =
         AsyncTaskSemaphore::new(MAX_OUTSTANDING_TASK);
     static ref RUNTIME: Runtime = tokio::runtime::Builder::new_multi_thread()
-        .thread_name("solQuicClientRt")
+        .thread_name("trzQuicClientRt")
         .enable_all()
         .build()
         .unwrap();

@@ -4,16 +4,16 @@ use {
     log::*,
     rand::{thread_rng, Rng},
     rayon::prelude::*,
-    solana_accounts_db::inline_spl_token,
-    solana_clap_utils::{
+    trezoa_accounts_db::inline_tpl_token,
+    trezoa_clap_utils::{
         hidden_unless_forced, input_parsers::pubkey_of, input_validators::is_url_or_moniker,
     },
-    solana_cli_config::{ConfigInput, CONFIG_FILE},
-    solana_client::{rpc_request::TokenAccountsFilter, transaction_executor::TransactionExecutor},
-    solana_gossip::gossip_service::discover,
-    solana_measure::measure::Measure,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_sdk::{
+    trezoa_cli_config::{ConfigInput, CONFIG_FILE},
+    trezoa_client::{rpc_request::TokenAccountsFilter, transaction_executor::TransactionExecutor},
+    trezoa_gossip::gossip_service::discover,
+    trezoa_measure::measure::Measure,
+    trezoa_rpc_client::rpc_client::RpcClient,
+    trezoa_sdk::{
         commitment_config::CommitmentConfig,
         hash::Hash,
         instruction::{AccountMeta, Instruction},
@@ -23,7 +23,7 @@ use {
         system_instruction, system_program,
         transaction::Transaction,
     },
-    solana_streamer::socket::SocketAddrSpace,
+    trezoa_streamer::socket::SocketAddrSpace,
     std::{
         cmp::min,
         process::exit,
@@ -143,7 +143,7 @@ fn make_create_message(
     let instructions: Vec<_> = (0..num_instructions)
         .flat_map(|_| {
             let program_id = if mint.is_some() {
-                inline_spl_token::id()
+                inline_tpl_token::id()
             } else {
                 system_program::id()
             };
@@ -161,8 +161,8 @@ fn make_create_message(
             )];
             if let Some(mint_address) = mint {
                 instructions.push(
-                    spl_token::instruction::initialize_account(
-                        &spl_token::id(),
+                    tpl_token::instruction::initialize_account(
+                        &tpl_token::id(),
                         &to_pubkey,
                         &mint_address,
                         &base_keypair.pubkey(),
@@ -185,12 +185,12 @@ fn make_close_message(
     max_closed: &AtomicU64,
     num_instructions: usize,
     balance: u64,
-    spl_token: bool,
+    tpl_token: bool,
 ) -> Message {
     let instructions: Vec<_> = (0..num_instructions)
         .filter_map(|_| {
-            let program_id = if spl_token {
-                inline_spl_token::id()
+            let program_id = if tpl_token {
+                inline_tpl_token::id()
             } else {
                 system_program::id()
             };
@@ -202,10 +202,10 @@ fn make_close_message(
             let seed = max_closed.fetch_add(1, Ordering::Relaxed).to_string();
             let address =
                 Pubkey::create_with_seed(&base_keypair.pubkey(), &seed, &program_id).unwrap();
-            if spl_token {
+            if tpl_token {
                 Some(
-                    spl_token::instruction::close_account(
-                        &spl_token::id(),
+                    tpl_token::instruction::close_account(
+                        &tpl_token::id(),
                         &address,
                         &keypair.pubkey(),
                         &base_keypair.pubkey(),
@@ -465,7 +465,7 @@ fn make_rpc_bench_threads(
     num_rpc_bench_threads: usize,
 ) -> Vec<JoinHandle<()>> {
     let program_id = if mint.is_some() {
-        inline_spl_token::id()
+        inline_tpl_token::id()
     } else {
         system_program::id()
     };
@@ -798,10 +798,10 @@ fn run_accounts_bench(
 }
 
 fn main() {
-    solana_logger::setup_with_default("solana=info");
+    trezoa_logger::setup_with_default("trezoa=info");
     let matches = App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(trezoa_version::version!())
         .arg({
             let arg = Arg::with_name("config_file")
                 .short("C")
@@ -824,7 +824,7 @@ fn main() {
                 .validator(is_url_or_moniker)
                 .conflicts_with("entrypoint")
                 .help(
-                    "URL for Solana's JSON RPC or moniker (or their first letter): \
+                    "URL for Trezoa's JSON RPC or moniker (or their first letter): \
                        [mainnet-beta, testnet, devnet, localhost]",
                 ),
         )
@@ -984,7 +984,7 @@ fn main() {
     }
 
     let client = if let Some(addr) = matches.value_of("entrypoint") {
-        let entrypoint_addr = solana_net_utils::parse_host_port(addr).unwrap_or_else(|e| {
+        let entrypoint_addr = trezoa_net_utils::parse_host_port(addr).unwrap_or_else(|e| {
             eprintln!("failed to parse entrypoint address: {e}");
             exit(1)
         });
@@ -1020,9 +1020,9 @@ fn main() {
         ))
     } else {
         let config = if let Some(config_file) = matches.value_of("config_file") {
-            solana_cli_config::Config::load(config_file).unwrap_or_default()
+            trezoa_cli_config::Config::load(config_file).unwrap_or_default()
         } else {
-            solana_cli_config::Config::default()
+            trezoa_cli_config::Config::default()
         };
         let (_, json_rpc_url) = ConfigInput::compute_json_rpc_url_setting(
             matches.value_of("json_rpc_url").unwrap_or(""),
@@ -1055,34 +1055,34 @@ fn main() {
 pub mod test {
     use {
         super::*,
-        solana_accounts_db::{
+        trezoa_accounts_db::{
             accounts_index::{AccountIndex, AccountSecondaryIndexes},
-            inline_spl_token,
+            inline_tpl_token,
         },
-        solana_core::validator::ValidatorConfig,
-        solana_faucet::faucet::run_local_faucet,
-        solana_local_cluster::{
+        trezoa_core::validator::ValidatorConfig,
+        trezoa_faucet::faucet::run_local_faucet,
+        trezoa_local_cluster::{
             local_cluster::{ClusterConfig, LocalCluster},
             validator_configs::make_identical_validator_configs,
         },
-        solana_measure::measure::Measure,
-        solana_sdk::{native_token::sol_to_lamports, poh_config::PohConfig},
-        solana_test_validator::TestValidator,
-        spl_token::{
-            solana_program::program_pack::Pack,
+        trezoa_measure::measure::Measure,
+        trezoa_sdk::{native_token::trz_to_lamports, poh_config::PohConfig},
+        trezoa_test_validator::TestValidator,
+        tpl_token::{
+            trezoa_program::program_pack::Pack,
             state::{Account, Mint},
         },
     };
 
     fn add_secondary_indexes(indexes: &mut AccountSecondaryIndexes) {
-        indexes.indexes.insert(AccountIndex::SplTokenOwner);
-        indexes.indexes.insert(AccountIndex::SplTokenMint);
+        indexes.indexes.insert(AccountIndex::TplTokenOwner);
+        indexes.indexes.insert(AccountIndex::TplTokenMint);
         indexes.indexes.insert(AccountIndex::ProgramId);
     }
 
     #[test]
     fn test_accounts_cluster_bench() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let mut validator_config = ValidatorConfig::default_for_test();
         let num_nodes = 1;
         add_secondary_indexes(&mut validator_config.account_indexes);
@@ -1133,7 +1133,7 @@ pub mod test {
 
     #[test]
     fn test_halt_accounts_creation_at_max() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let mut validator_config = ValidatorConfig::default_for_test();
         let num_nodes = 1;
         add_secondary_indexes(&mut validator_config.account_indexes);
@@ -1183,8 +1183,8 @@ pub mod test {
     }
 
     #[test]
-    fn test_create_then_reclaim_spl_token_accounts() {
-        solana_logger::setup();
+    fn test_create_then_reclaim_tpl_token_accounts() {
+        trezoa_logger::setup();
         let mint_keypair = Keypair::new();
         let mint_pubkey = mint_keypair.pubkey();
         let faucet_addr = run_local_faucet(mint_keypair, None);
@@ -1205,7 +1205,7 @@ pub mod test {
         let signature = rpc_client
             .request_airdrop_with_blockhash(
                 &funder.pubkey(),
-                sol_to_lamports(1.0),
+                trz_to_lamports(1.0),
                 &latest_blockhash,
             )
             .unwrap();
@@ -1218,31 +1218,31 @@ pub mod test {
             .unwrap();
 
         // Create Mint
-        let spl_mint_keypair = Keypair::new();
-        let spl_mint_len = Mint::get_packed_len();
-        let spl_mint_rent = rpc_client
-            .get_minimum_balance_for_rent_exemption(spl_mint_len)
+        let tpl_mint_keypair = Keypair::new();
+        let tpl_mint_len = Mint::get_packed_len();
+        let tpl_mint_rent = rpc_client
+            .get_minimum_balance_for_rent_exemption(tpl_mint_len)
             .unwrap();
         let transaction = Transaction::new_signed_with_payer(
             &[
                 system_instruction::create_account(
                     &funder.pubkey(),
-                    &spl_mint_keypair.pubkey(),
-                    spl_mint_rent,
-                    spl_mint_len as u64,
-                    &inline_spl_token::id(),
+                    &tpl_mint_keypair.pubkey(),
+                    tpl_mint_rent,
+                    tpl_mint_len as u64,
+                    &inline_tpl_token::id(),
                 ),
-                spl_token::instruction::initialize_mint(
-                    &spl_token::id(),
-                    &spl_mint_keypair.pubkey(),
-                    &spl_mint_keypair.pubkey(),
+                tpl_token::instruction::initialize_mint(
+                    &tpl_token::id(),
+                    &tpl_mint_keypair.pubkey(),
+                    &tpl_mint_keypair.pubkey(),
                     None,
                     2,
                 )
                 .unwrap(),
             ],
             Some(&funder.pubkey()),
-            &[&funder, &spl_mint_keypair],
+            &[&funder, &tpl_mint_keypair],
             latest_blockhash,
         );
         let _sig = rpc_client
@@ -1272,7 +1272,7 @@ pub mod test {
             Some(minimum_balance),
             num_instructions,
             None,
-            Some(spl_mint_keypair.pubkey()),
+            Some(tpl_mint_keypair.pubkey()),
             true,
             None,
             0,

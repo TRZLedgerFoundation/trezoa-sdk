@@ -1,6 +1,6 @@
-//! Implementations of syscalls used when `solana-program` is built for non-SBF targets.
+//! Implementations of syscalls used when `trezoa-program` is built for non-SBF targets.
 
-#![cfg(not(target_os = "solana"))]
+#![cfg(not(target_os = "trezoa"))]
 
 use {
     crate::{

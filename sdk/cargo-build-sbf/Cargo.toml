@@ -1,6 +1,6 @@
 [package]
-name = "solana-cargo-build-sbf"
-description = "Compile a local package and all of its dependencies using the Solana SBF SDK"
+name = "trezoa-cargo-build-sbf"
+description = "Compile a local package and all of its dependencies using the Trezoa SBF SDK"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -18,16 +18,16 @@ log = { workspace = true, features = ["std"] }
 regex = { workspace = true }
 reqwest = { workspace = true, features = ["blocking", "rustls-tls"] }
 semver = { workspace = true }
-solana-download-utils = { workspace = true }
-solana-logger = { workspace = true }
-solana-sdk = { workspace = true }
+trezoa-download-utils = { workspace = true }
+trezoa-logger = { workspace = true }
+trezoa-sdk = { workspace = true }
 tar = { workspace = true }
 
 [dev-dependencies]
 assert_cmd = { workspace = true }
 predicates = { workspace = true }
 serial_test = { workspace = true }
-solana-sdk = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-sdk = { workspace = true, features = ["dev-context-only-utils"] }
 
 [features]
 program = []

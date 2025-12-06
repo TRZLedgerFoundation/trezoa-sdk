@@ -1,7 +1,7 @@
 [package]
-name = "solana-account-decoder"
-description = "Solana account decoder"
-documentation = "https://docs.rs/solana-account-decoder"
+name = "trezoa-account-decoder"
+description = "Trezoa account decoder"
+documentation = "https://docs.rs/trezoa-account-decoder"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -19,18 +19,18 @@ lazy_static = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-config-program = { workspace = true }
-solana-sdk = { workspace = true }
-spl-token = { workspace = true, features = ["no-entrypoint"] }
-spl-token-2022 = { workspace = true, features = ["no-entrypoint"] }
-spl-token-group-interface = { workspace = true }
-spl-token-metadata-interface = { workspace = true }
+trezoa-config-program = { workspace = true }
+trezoa-sdk = { workspace = true }
+tpl-token = { workspace = true, features = ["no-entrypoint"] }
+tpl-token-2022 = { workspace = true, features = ["no-entrypoint"] }
+tpl-token-group-interface = { workspace = true }
+tpl-token-metadata-interface = { workspace = true }
 thiserror = { workspace = true }
 zstd = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
-spl-pod = { workspace = true }
+tpl-pod = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

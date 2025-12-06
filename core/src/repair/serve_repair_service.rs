@@ -1,9 +1,9 @@
 use {
     crate::repair::{quic_endpoint::RemoteRequest, serve_repair::ServeRepair},
     crossbeam_channel::{unbounded, Receiver, Sender},
-    solana_ledger::blockstore::Blockstore,
-    solana_perf::{packet::PacketBatch, recycler::Recycler},
-    solana_streamer::{
+    trezoa_ledger::blockstore::Blockstore,
+    trezoa_perf::{packet::PacketBatch, recycler::Recycler},
+    trezoa_streamer::{
         socket::SocketAddrSpace,
         streamer::{self, StreamerReceiveStats},
     },
@@ -38,7 +38,7 @@ impl ServeRepairService {
             serve_repair_socket.local_addr().unwrap()
         );
         let t_receiver = streamer::receiver(
-            "solRcvrServeRep".to_string(),
+            "trzRcvrServeRep".to_string(),
             serve_repair_socket.clone(),
             exit.clone(),
             request_sender,
@@ -49,7 +49,7 @@ impl ServeRepairService {
             None,                     // in_vote_only_mode
         );
         let t_packet_adapter = Builder::new()
-            .name(String::from("solServRAdapt"))
+            .name(String::from("trzServRAdapt"))
             .spawn(|| adapt_repair_requests_packets(request_receiver, remote_request_sender))
             .unwrap();
         let (response_sender, response_receiver) = unbounded();

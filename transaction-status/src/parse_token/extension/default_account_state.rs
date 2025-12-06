@@ -1,6 +1,6 @@
 use {
     super::*,
-    spl_token_2022::extension::default_account_state::instruction::{
+    tpl_token_2022::extension::default_account_state::instruction::{
         decode_instruction, DefaultAccountStateInstruction,
     },
 };
@@ -53,12 +53,12 @@ pub(in crate::parse_token) fn parse_default_account_state_instruction(
 mod test {
     use {
         super::*,
-        solana_sdk::pubkey::Pubkey,
-        spl_token_2022::{
+        trezoa_sdk::pubkey::Pubkey,
+        tpl_token_2022::{
             extension::default_account_state::instruction::{
                 initialize_default_account_state, update_default_account_state,
             },
-            solana_program::message::Message,
+            trezoa_program::message::Message,
             state::AccountState,
         },
     };
@@ -67,7 +67,7 @@ mod test {
     fn test_parse_default_account_state_instruction() {
         let mint_pubkey = Pubkey::new_unique();
         let init_default_account_state_ix = initialize_default_account_state(
-            &spl_token_2022::id(),
+            &tpl_token_2022::id(),
             &mint_pubkey,
             &AccountState::Frozen,
         )
@@ -92,7 +92,7 @@ mod test {
         // Single mint freeze_authority
         let mint_freeze_authority = Pubkey::new_unique();
         let update_default_account_state_ix = update_default_account_state(
-            &spl_token_2022::id(),
+            &tpl_token_2022::id(),
             &mint_pubkey,
             &mint_freeze_authority,
             &[],
@@ -122,7 +122,7 @@ mod test {
         let multisig_signer0 = Pubkey::new_unique();
         let multisig_signer1 = Pubkey::new_unique();
         let update_default_account_state_ix = update_default_account_state(
-            &spl_token_2022::id(),
+            &tpl_token_2022::id(),
             &mint_pubkey,
             &multisig_pubkey,
             &[&multisig_signer0, &multisig_signer1],

@@ -4,23 +4,23 @@ use {
     chrono::{Local, NaiveDateTime, SecondsFormat, TimeZone, Utc},
     console::style,
     indicatif::{ProgressBar, ProgressStyle},
-    solana_cli_config::SettingType,
-    solana_sdk::{
+    trezoa_cli_config::SettingType,
+    trezoa_sdk::{
         clock::UnixTimestamp,
         hash::Hash,
         instruction::CompiledInstruction,
         message::v0::MessageAddressTableLookup,
-        native_token::lamports_to_sol,
+        native_token::lamports_to_trz,
         program_utils::limited_deserialize,
         pubkey::Pubkey,
         signature::Signature,
         stake,
         transaction::{TransactionError, TransactionVersion, VersionedTransaction},
     },
-    solana_transaction_status::{
+    trezoa_transaction_status::{
         Rewards, UiReturnDataEncoding, UiTransactionReturnData, UiTransactionStatusMeta,
     },
-    spl_memo::{id as spl_memo_id, v1::id as spl_memo_v1_id},
+    tpl_memo::{id as tpl_memo_id, v1::id as tpl_memo_v1_id},
     std::{collections::HashMap, fmt, io, time::Duration},
 };
 
@@ -43,7 +43,7 @@ impl Default for BuildBalanceMessageConfig {
 
 fn is_memo_program(k: &Pubkey) -> bool {
     let k_str = k.to_string();
-    (k_str == spl_memo_v1_id().to_string()) || (k_str == spl_memo_id().to_string())
+    (k_str == tpl_memo_v1_id().to_string()) || (k_str == tpl_memo_id().to_string())
 }
 
 pub fn build_balance_message_with_config(
@@ -53,15 +53,15 @@ pub fn build_balance_message_with_config(
     let value = if config.use_lamports_unit {
         lamports.to_string()
     } else {
-        let sol = lamports_to_sol(lamports);
-        let sol_str = format!("{sol:.9}");
+        let trz = lamports_to_trz(lamports);
+        let trz_str = format!("{trz:.9}");
         if config.trim_trailing_zeros {
-            sol_str
+            trz_str
                 .trim_end_matches('0')
                 .trim_end_matches('.')
                 .to_string()
         } else {
-            sol_str
+            trz_str
         }
     };
     let unit = if config.show_unit {
@@ -69,7 +69,7 @@ pub fn build_balance_message_with_config(
             let ess = if lamports == 1 { "" } else { "s" };
             format!(" lamport{ess}")
         } else {
-            " SOL".to_string()
+            " TRZ".to_string()
         }
     } else {
         "".to_string()
@@ -441,9 +441,9 @@ fn write_instruction<'a, W: io::Write>(
 
     let mut raw = true;
     if let AccountKeyType::Known(program_pubkey) = program_pubkey {
-        if program_pubkey == &solana_vote_program::id() {
+        if program_pubkey == &trezoa_vote_program::id() {
             if let Ok(vote_instruction) = limited_deserialize::<
-                solana_vote_program::vote_instruction::VoteInstruction,
+                trezoa_vote_program::vote_instruction::VoteInstruction,
             >(&instruction.data)
             {
                 writeln!(w, "{prefix}  {vote_instruction:?}")?;
@@ -456,9 +456,9 @@ fn write_instruction<'a, W: io::Write>(
                 writeln!(w, "{prefix}  {stake_instruction:?}")?;
                 raw = false;
             }
-        } else if program_pubkey == &solana_sdk::system_program::id() {
+        } else if program_pubkey == &trezoa_sdk::system_program::id() {
             if let Ok(system_instruction) = limited_deserialize::<
-                solana_sdk::system_instruction::SystemInstruction,
+                trezoa_sdk::system_instruction::SystemInstruction,
             >(&instruction.data)
             {
                 writeln!(w, "{prefix}  {system_instruction:?}")?;
@@ -529,8 +529,8 @@ fn write_rewards<W: io::Write>(
                         "-".to_string()
                     },
                     sign,
-                    lamports_to_sol(reward.lamports.unsigned_abs()),
-                    lamports_to_sol(reward.post_balance)
+                    lamports_to_trz(reward.lamports.unsigned_abs()),
+                    lamports_to_trz(reward.post_balance)
                 )?;
             }
         }
@@ -555,7 +555,7 @@ fn write_status<W: io::Write>(
 }
 
 fn write_fees<W: io::Write>(w: &mut W, transaction_fee: u64, prefix: &str) -> io::Result<()> {
-    writeln!(w, "{}  Fee: ◎{}", prefix, lamports_to_sol(transaction_fee))
+    writeln!(w, "{}  Fee: ◎{}", prefix, lamports_to_trz(transaction_fee))
 }
 
 fn write_balances<W: io::Write>(
@@ -579,7 +579,7 @@ fn write_balances<W: io::Write>(
                 "{}  Account {} balance: ◎{}",
                 prefix,
                 i,
-                lamports_to_sol(*pre)
+                lamports_to_trz(*pre)
             )?;
         } else {
             writeln!(
@@ -587,8 +587,8 @@ fn write_balances<W: io::Write>(
                 "{}  Account {} balance: ◎{} -> ◎{}",
                 prefix,
                 i,
-                lamports_to_sol(*pre),
-                lamports_to_sol(*post)
+                lamports_to_trz(*pre),
+                lamports_to_trz(*post)
             )?;
         }
     }
@@ -727,7 +727,7 @@ pub fn unix_timestamp_to_string(unix_timestamp: UnixTimestamp) -> String {
 mod test {
     use {
         super::*,
-        solana_sdk::{
+        trezoa_sdk::{
             message::{
                 v0::{self, LoadedAddresses},
                 Message as LegacyMessage, MessageHeader, VersionedMessage,
@@ -737,7 +737,7 @@ mod test {
             transaction::Transaction,
             transaction_context::TransactionReturnData,
         },
-        solana_transaction_status::{Reward, RewardType, TransactionStatusMeta},
+        trezoa_transaction_status::{Reward, RewardType, TransactionStatusMeta},
         std::io::BufWriter,
     };
 

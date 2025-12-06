@@ -4,14 +4,14 @@ use {
     },
     borsh::BorshDeserialize,
     serde_json::json,
-    solana_sdk::{instruction::CompiledInstruction, message::AccountKeys, pubkey::Pubkey},
-    spl_associated_token_account::instruction::AssociatedTokenAccountInstruction,
+    trezoa_sdk::{instruction::CompiledInstruction, message::AccountKeys, pubkey::Pubkey},
+    tpl_associated_token_account::instruction::AssociatedTokenAccountInstruction,
 };
 
-// A helper function to convert spl_associated_token_account::id() as spl_sdk::pubkey::Pubkey
-// to solana_sdk::pubkey::Pubkey
-pub fn spl_associated_token_id() -> Pubkey {
-    Pubkey::new_from_array(spl_associated_token_account::id().to_bytes())
+// A helper function to convert tpl_associated_token_account::id() as tpl_sdk::pubkey::Pubkey
+// to trezoa_sdk::pubkey::Pubkey
+pub fn tpl_associated_token_id() -> Pubkey {
+    Pubkey::new_from_array(tpl_associated_token_account::id().to_bytes())
 }
 
 pub fn parse_associated_token(
@@ -91,11 +91,11 @@ fn check_num_associated_token_accounts(
 #[cfg(test)]
 mod test {
     #[allow(deprecated)]
-    use spl_associated_token_account::create_associated_token_account as create_associated_token_account_deprecated;
+    use tpl_associated_token_account::create_associated_token_account as create_associated_token_account_deprecated;
     use {
         super::*,
-        solana_sdk::{message::Message, sysvar},
-        spl_associated_token_account::{
+        trezoa_sdk::{message::Message, sysvar},
+        tpl_associated_token_account::{
             get_associated_token_address, get_associated_token_address_with_program_id,
             instruction::{
                 create_associated_token_account, create_associated_token_account_idempotent,
@@ -121,8 +121,8 @@ mod test {
                 "account": associated_account_address.to_string(),
                 "wallet": wallet_address.to_string(),
                 "mint": mint.to_string(),
-                "systemProgram": solana_sdk::system_program::id().to_string(),
-                "tokenProgram": spl_token::id().to_string(),
+                "systemProgram": trezoa_sdk::system_program::id().to_string(),
+                "tokenProgram": tpl_token::id().to_string(),
             }),
         };
         assert_eq!(
@@ -184,7 +184,7 @@ mod test {
                     "account": associated_account_address.to_string(),
                     "wallet": wallet_address.to_string(),
                     "mint": mint.to_string(),
-                    "systemProgram": solana_sdk::system_program::id().to_string(),
+                    "systemProgram": trezoa_sdk::system_program::id().to_string(),
                     "tokenProgram": token_program_id.to_string(),
                 })
             }
@@ -226,7 +226,7 @@ mod test {
                     "account": associated_account_address.to_string(),
                     "wallet": wallet_address.to_string(),
                     "mint": mint.to_string(),
-                    "systemProgram": solana_sdk::system_program::id().to_string(),
+                    "systemProgram": trezoa_sdk::system_program::id().to_string(),
                     "tokenProgram": token_program_id.to_string(),
                 })
             }

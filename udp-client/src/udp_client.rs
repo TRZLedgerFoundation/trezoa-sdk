@@ -3,9 +3,9 @@
 
 use {
     core::iter::repeat,
-    solana_connection_cache::client_connection::ClientConnection,
-    solana_sdk::transport::Result as TransportResult,
-    solana_streamer::sendmmsg::batch_send,
+    trezoa_connection_cache::client_connection::ClientConnection,
+    trezoa_sdk::transport::Result as TransportResult,
+    trezoa_streamer::sendmmsg::batch_send,
     std::{
         net::{SocketAddr, UdpSocket},
         sync::Arc,

@@ -1,6 +1,6 @@
 //! The [stake native program][np].
 //!
-//! [np]: https://docs.solanalabs.com/runtime/sysvars#stakehistory
+//! [np]: https://docs.trezoa.xyz/runtime/sysvars#stakehistory
 
 #[allow(deprecated)]
 pub mod config;

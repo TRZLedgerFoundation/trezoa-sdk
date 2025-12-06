@@ -1,11 +1,11 @@
 use {
     crate::filter::RpcFilterType,
-    solana_account_decoder::{UiAccountEncoding, UiDataSliceConfig},
-    solana_sdk::{
+    trezoa_account_decoder::{UiAccountEncoding, UiDataSliceConfig},
+    trezoa_sdk::{
         clock::{Epoch, Slot},
         commitment_config::{CommitmentConfig, CommitmentLevel},
     },
-    solana_transaction_status::{TransactionDetails, UiTransactionEncoding},
+    trezoa_transaction_status::{TransactionDetails, UiTransactionEncoding},
 };
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -143,8 +143,8 @@ pub struct RpcEpochConfig {
 #[serde(rename_all = "camelCase")]
 pub enum RpcAccountIndex {
     ProgramId,
-    SplTokenMint,
-    SplTokenOwner,
+    TplTokenMint,
+    TplTokenOwner,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]

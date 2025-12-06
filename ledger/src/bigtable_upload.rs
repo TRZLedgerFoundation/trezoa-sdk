@@ -2,8 +2,8 @@ use {
     crate::blockstore::Blockstore,
     crossbeam_channel::{bounded, unbounded},
     log::*,
-    solana_measure::measure::Measure,
-    solana_sdk::clock::Slot,
+    trezoa_measure::measure::Measure,
+    trezoa_sdk::clock::Slot,
     std::{
         cmp::{max, min},
         collections::HashSet,
@@ -46,7 +46,7 @@ struct BlockstoreLoadStats {
 /// ending_slot]` are found in Blockstore, this value is equal to `ending_slot`.
 pub async fn upload_confirmed_blocks(
     blockstore: Arc<Blockstore>,
-    bigtable: solana_storage_bigtable::LedgerStorage,
+    bigtable: trezoa_storage_bigtable::LedgerStorage,
     starting_slot: Slot,
     ending_slot: Slot,
     config: ConfirmedBlockUploadConfig,
@@ -168,7 +168,7 @@ pub async fn upload_confirmed_blocks(
                     let slot_receiver = slot_receiver.clone();
                     let exit = exit.clone();
                     std::thread::Builder::new()
-                        .name(format!("solBigTGetBlk{i:02}"))
+                        .name(format!("trzBigTGetBlk{i:02}"))
                         .spawn(move || {
                             let start = Instant::now();
                             let mut num_blocks_read = 0;

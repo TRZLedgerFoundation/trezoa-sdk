@@ -1,7 +1,7 @@
 [package]
-name = "solana-runtime"
-description = "Solana runtime"
-documentation = "https://docs.rs/solana-runtime"
+name = "trezoa-runtime"
+description = "Trezoa runtime"
+documentation = "https://docs.rs/trezoa-runtime"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -46,30 +46,30 @@ regex = { workspace = true }
 serde = { workspace = true, features = ["rc"] }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-accounts-db = { workspace = true }
-solana-address-lookup-table-program = { workspace = true }
-solana-bpf-loader-program = { workspace = true }
-solana-bucket-map = { workspace = true }
-solana-compute-budget-program = { workspace = true }
-solana-config-program = { workspace = true }
-solana-cost-model = { workspace = true }
-solana-frozen-abi = { workspace = true }
-solana-frozen-abi-macro = { workspace = true }
-solana-loader-v4-program = { workspace = true }
-solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
-solana-perf = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-rayon-threadlimit = { workspace = true }
-solana-sdk = { workspace = true }
-solana-stake-program = { workspace = true }
-solana-svm = { workspace = true }
-solana-system-program = { workspace = true }
-solana-version = { workspace = true }
-solana-vote = { workspace = true }
-solana-vote-program = { workspace = true }
-solana-zk-token-proof-program = { workspace = true }
-solana-zk-token-sdk = { workspace = true }
+trezoa-accounts-db = { workspace = true }
+trezoa-address-lookup-table-program = { workspace = true }
+trezoa-bpf-loader-program = { workspace = true }
+trezoa-bucket-map = { workspace = true }
+trezoa-compute-budget-program = { workspace = true }
+trezoa-config-program = { workspace = true }
+trezoa-cost-model = { workspace = true }
+trezoa-frozen-abi = { workspace = true }
+trezoa-frozen-abi-macro = { workspace = true }
+trezoa-loader-v4-program = { workspace = true }
+trezoa-measure = { workspace = true }
+trezoa-metrics = { workspace = true }
+trezoa-perf = { workspace = true }
+trezoa-program-runtime = { workspace = true }
+trezoa-rayon-threadlimit = { workspace = true }
+trezoa-sdk = { workspace = true }
+trezoa-stake-program = { workspace = true }
+trezoa-svm = { workspace = true }
+trezoa-system-program = { workspace = true }
+trezoa-version = { workspace = true }
+trezoa-vote = { workspace = true }
+trezoa-vote-program = { workspace = true }
+trezoa-zk-token-proof-program = { workspace = true }
+trezoa-zk-token-sdk = { workspace = true }
 static_assertions = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
 strum_macros = { workspace = true }
@@ -81,7 +81,7 @@ zstd = { workspace = true }
 
 [lib]
 crate-type = ["lib"]
-name = "solana_runtime"
+name = "trezoa_runtime"
 
 [dev-dependencies]
 assert_matches = { workspace = true }
@@ -89,11 +89,11 @@ ed25519-dalek = { workspace = true }
 libsecp256k1 = { workspace = true }
 memoffset = { workspace = true }
 rand_chacha = { workspace = true }
-solana-accounts-db = { workspace = true, features = ["dev-context-only-utils"] }
-solana-logger = { workspace = true }
+trezoa-accounts-db = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-logger = { workspace = true }
 # See order-crates-for-publishing.py for using this unusual `path = "."`
-solana-runtime = { path = ".", features = ["dev-context-only-utils"] }
-solana-sdk = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-runtime = { path = ".", features = ["dev-context-only-utils"] }
+trezoa-sdk = { workspace = true, features = ["dev-context-only-utils"] }
 static_assertions = { workspace = true }
 test-case = { workspace = true }
 

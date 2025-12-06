@@ -1,9 +1,9 @@
 use {
     crate::rpc_subscriptions::RpcSubscriptions,
     crossbeam_channel::RecvTimeoutError,
-    solana_ledger::blockstore::CompletedSlotsReceiver,
-    solana_rpc_client_api::response::SlotUpdate,
-    solana_sdk::timing::timestamp,
+    trezoa_ledger::blockstore::CompletedSlotsReceiver,
+    trezoa_rpc_client_api::response::SlotUpdate,
+    trezoa_sdk::timing::timestamp,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},
@@ -24,7 +24,7 @@ impl RpcCompletedSlotsService {
         exit: Arc<AtomicBool>,
     ) -> JoinHandle<()> {
         Builder::new()
-            .name("solRpcComplSlot".to_string())
+            .name("trzRpcComplSlot".to_string())
             .spawn(move || loop {
                 // received exit signal, shutdown the service
                 if exit.load(Ordering::Relaxed) {

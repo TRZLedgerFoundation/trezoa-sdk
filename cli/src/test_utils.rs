@@ -1,6 +1,6 @@
 use {
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_sdk::{
+    trezoa_rpc_client::rpc_client::RpcClient,
+    trezoa_sdk::{
         clock::{Epoch, DEFAULT_MS_PER_SLOT},
         commitment_config::CommitmentConfig,
     },

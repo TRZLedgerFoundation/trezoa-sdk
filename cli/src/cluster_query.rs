@@ -9,14 +9,14 @@ use {
     console::style,
     crossbeam_channel::unbounded,
     serde::{Deserialize, Serialize},
-    solana_clap_utils::{
+    trezoa_clap_utils::{
         compute_unit_price::{compute_unit_price_arg, COMPUTE_UNIT_PRICE_ARG},
         input_parsers::*,
         input_validators::*,
         keypair::DefaultSigner,
         offline::{blockhash_arg, BLOCKHASH_ARG},
     },
-    solana_cli_output::{
+    trezoa_cli_output::{
         cli_version::CliVersion,
         display::{
             build_balance_message, format_labeled_address, new_spinner_progress_bar,
@@ -24,10 +24,10 @@ use {
         },
         *,
     },
-    solana_pubsub_client::pubsub_client::PubsubClient,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::{GetConfirmedSignaturesForAddress2Config, RpcClient},
-    solana_rpc_client_api::{
+    trezoa_pubsub_client::pubsub_client::PubsubClient,
+    trezoa_remote_wallet::remote_wallet::RemoteWalletManager,
+    trezoa_rpc_client::rpc_client::{GetConfirmedSignaturesForAddress2Config, RpcClient},
+    trezoa_rpc_client_api::{
         client_error::ErrorKind as ClientErrorKind,
         config::{
             RpcAccountInfoConfig, RpcBlockConfig, RpcGetVoteAccountsConfig,
@@ -38,7 +38,7 @@ use {
         request::DELINQUENT_VALIDATOR_SLOT_DISTANCE,
         response::SlotInfo,
     },
-    solana_sdk::{
+    trezoa_sdk::{
         account::from_account,
         account_utils::StateMut,
         clock::{self, Clock, Slot},
@@ -47,7 +47,7 @@ use {
         feature_set,
         hash::Hash,
         message::Message,
-        native_token::lamports_to_sol,
+        native_token::lamports_to_trz,
         nonce::State as NonceState,
         pubkey::Pubkey,
         rent::Rent,
@@ -63,10 +63,10 @@ use {
         },
         transaction::Transaction,
     },
-    solana_transaction_status::{
+    trezoa_transaction_status::{
         EncodableWithMeta, EncodedConfirmedTransactionWithStatusMeta, UiTransactionEncoding,
     },
-    solana_vote_program::vote_state::VoteState,
+    trezoa_vote_program::vote_state::VoteState,
     std::{
         collections::{BTreeMap, HashMap, VecDeque},
         fmt,
@@ -228,7 +228,7 @@ impl ClusterQuerySubCommands for App<'_, '_> {
         )
         .subcommand(
             SubCommand::with_name("supply")
-                .about("Get information about the cluster supply of SOL")
+                .about("Get information about the cluster supply of TRZ")
                 .arg(
                     Arg::with_name("print_accounts")
                         .long("print-accounts")
@@ -238,7 +238,7 @@ impl ClusterQuerySubCommands for App<'_, '_> {
         )
         .subcommand(
             SubCommand::with_name("total-supply")
-                .about("Get total number of SOL")
+                .about("Get total number of TRZ")
                 .setting(AppSettings::Hidden),
         )
         .subcommand(
@@ -340,7 +340,7 @@ impl ClusterQuerySubCommands for App<'_, '_> {
                     Arg::with_name("lamports")
                         .long("lamports")
                         .takes_value(false)
-                        .help("Display balance in lamports instead of SOL"),
+                        .help("Display balance in lamports instead of TRZ"),
                 )
                 .arg(pubkey!(
                     Arg::with_name("vote_account_pubkeys")
@@ -364,7 +364,7 @@ impl ClusterQuerySubCommands for App<'_, '_> {
                     Arg::with_name("lamports")
                         .long("lamports")
                         .takes_value(false)
-                        .help("Display balance in lamports instead of SOL"),
+                        .help("Display balance in lamports instead of TRZ"),
                 )
                 .arg(
                     Arg::with_name("number")
@@ -499,7 +499,7 @@ impl ClusterQuerySubCommands for App<'_, '_> {
                     Arg::with_name("lamports")
                         .long("lamports")
                         .takes_value(false)
-                        .help("Display rent in lamports instead of SOL"),
+                        .help("Display rent in lamports instead of TRZ"),
                 ),
         )
     }
@@ -870,7 +870,7 @@ pub fn process_catchup(
     let mut total_sleep_interval = 0;
     loop {
         // humbly retry; the reference node (rpc_client) could be spotty,
-        // especially if pointing to api.meinnet-beta.solana.com at times
+        // especially if pointing to api.meinnet-beta.trezoa.com at times
         let rpc_slot = get_slot_while_retrying(rpc_client)?;
         let node_slot = get_slot_while_retrying(&node_client)?;
         if !follow && node_slot > std::cmp::min(previous_rpc_slot, rpc_slot) {
@@ -1400,7 +1400,7 @@ pub fn process_supply(
 
 pub fn process_total_supply(rpc_client: &RpcClient, _config: &CliConfig) -> ProcessResult {
     let supply = rpc_client.supply()?.value;
-    Ok(format!("{} SOL", lamports_to_sol(supply.total)))
+    Ok(format!("{} TRZ", lamports_to_trz(supply.total)))
 }
 
 pub fn process_get_transaction_count(rpc_client: &RpcClient, _config: &CliConfig) -> ProcessResult {
@@ -1783,7 +1783,7 @@ pub fn process_show_stakes(
 
     let mut program_accounts_config = RpcProgramAccountsConfig {
         account_config: RpcAccountInfoConfig {
-            encoding: Some(solana_account_decoder::UiAccountEncoding::Base64),
+            encoding: Some(trezoa_account_decoder::UiAccountEncoding::Base64),
             ..RpcAccountInfoConfig::default()
         },
         ..RpcProgramAccountsConfig::default()
@@ -2230,7 +2230,7 @@ mod tests {
     use {
         super::*,
         crate::{clap_app::get_clap_app, cli::parse_command},
-        solana_sdk::signature::{write_keypair, Keypair},
+        trezoa_sdk::signature::{write_keypair, Keypair},
         std::str::FromStr,
         tempfile::NamedTempFile,
     };

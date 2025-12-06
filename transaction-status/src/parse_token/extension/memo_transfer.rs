@@ -1,6 +1,6 @@
 use {
     super::*,
-    spl_token_2022::{
+    tpl_token_2022::{
         extension::memo_transfer::instruction::RequiredMemoTransfersInstruction,
         instruction::decode_instruction_type,
     },
@@ -40,12 +40,12 @@ pub(in crate::parse_token) fn parse_memo_transfer_instruction(
 mod test {
     use {
         super::*,
-        solana_sdk::pubkey::Pubkey,
-        spl_token_2022::{
+        trezoa_sdk::pubkey::Pubkey,
+        tpl_token_2022::{
             extension::memo_transfer::instruction::{
                 disable_required_transfer_memos, enable_required_transfer_memos,
             },
-            solana_program::message::Message,
+            trezoa_program::message::Message,
         },
     };
 
@@ -56,7 +56,7 @@ mod test {
         // Enable, single owner
         let owner_pubkey = Pubkey::new_unique();
         let enable_memo_transfers_ix = enable_required_transfer_memos(
-            &spl_token_2022::id(),
+            &tpl_token_2022::id(),
             &account_pubkey,
             &owner_pubkey,
             &[],
@@ -84,7 +84,7 @@ mod test {
         let multisig_signer0 = Pubkey::new_unique();
         let multisig_signer1 = Pubkey::new_unique();
         let enable_memo_transfers_ix = enable_required_transfer_memos(
-            &spl_token_2022::id(),
+            &tpl_token_2022::id(),
             &account_pubkey,
             &multisig_pubkey,
             &[&multisig_signer0, &multisig_signer1],
@@ -113,7 +113,7 @@ mod test {
 
         // Disable, single owner
         let enable_memo_transfers_ix = disable_required_transfer_memos(
-            &spl_token_2022::id(),
+            &tpl_token_2022::id(),
             &account_pubkey,
             &owner_pubkey,
             &[],
@@ -141,7 +141,7 @@ mod test {
         let multisig_signer0 = Pubkey::new_unique();
         let multisig_signer1 = Pubkey::new_unique();
         let enable_memo_transfers_ix = disable_required_transfer_memos(
-            &spl_token_2022::id(),
+            &tpl_token_2022::id(),
             &account_pubkey,
             &multisig_pubkey,
             &[&multisig_signer0, &multisig_signer1],

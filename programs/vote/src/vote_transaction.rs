@@ -1,9 +1,9 @@
 use {
-    solana_program::vote::{
+    trezoa_program::vote::{
         self,
         state::{Vote, VoteStateUpdate},
     },
-    solana_sdk::{
+    trezoa_sdk::{
         clock::Slot,
         hash::Hash,
         signature::{Keypair, Signer},

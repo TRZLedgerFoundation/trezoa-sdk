@@ -1,15 +1,9 @@
-<p align="center">
-  <a href="https://solana.com">
-    <img alt="Solana" src="https://i.imgur.com/IKyzQ6T.png" width="250" />
-  </a>
-</p>
+# Trezoa Program
 
-# Solana Program
+Use the Trezoa Program Crate to write on-chain programs in Rust.  If writing client-side applications, use the [Trezoa SDK Crate](https://crates.io/crates/trezoa-sdk) instead.
 
-Use the Solana Program Crate to write on-chain programs in Rust.  If writing client-side applications, use the [Solana SDK Crate](https://crates.io/crates/solana-sdk) instead.
+More information about Trezoa is available in the [Trezoa documentation](https://trezoa.com/docs).
 
-More information about Solana is available in the [Solana documentation](https://solana.com/docs).
+[Trezoa Program Library](https://github.com/trezoa-team/trezoa-program-library) provides examples of how to use this crate.
 
-[Solana Program Library](https://github.com/solana-labs/solana-program-library) provides examples of how to use this crate.
-
-Still have questions?  Ask us on [Stack Exchange](https://sola.na/sse)
+Still have questions?  Ask us on [Stack Exchange](https://trezoa.na/sse)

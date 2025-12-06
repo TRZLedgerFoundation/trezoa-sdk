@@ -1,6 +1,6 @@
 use {
-    solana_sdk::{instruction::Instruction, pubkey::Pubkey},
-    spl_memo::id,
+    trezoa_sdk::{instruction::Instruction, pubkey::Pubkey},
+    tpl_memo::id,
 };
 
 pub trait WithMemo {

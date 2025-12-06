@@ -10,16 +10,16 @@ use {
     core::time::Duration,
     crossbeam_channel::{Receiver, RecvTimeoutError, SendError},
     itertools::Itertools,
-    solana_measure::measure::Measure,
-    solana_perf::{
+    trezoa_measure::measure::Measure,
+    trezoa_perf::{
         deduper::{self, Deduper},
         packet::{Packet, PacketBatch},
         sigverify::{
             count_discarded_packets, count_packets_in_batches, count_valid_packets, shrink_batches,
         },
     },
-    solana_sdk::timing,
-    solana_streamer::streamer::{self, StreamerError},
+    trezoa_sdk::timing,
+    trezoa_streamer::streamer::{self, StreamerError},
     std::{
         thread::{self, Builder, JoinHandle},
         time::Instant,
@@ -308,7 +308,7 @@ impl SigVerifyStage {
         );
 
         let mut discard_random_time = Measure::start("sigverify_discard_random_time");
-        let non_discarded_packets = solana_perf::discard::discard_batches_randomly(
+        let non_discarded_packets = trezoa_perf::discard::discard_batches_randomly(
             &mut batches,
             MAX_DEDUP_BATCH,
             num_packets,
@@ -466,11 +466,11 @@ mod tests {
             sigverify_stage::timing::duration_as_ms,
         },
         crossbeam_channel::unbounded,
-        solana_perf::{
+        trezoa_perf::{
             packet::{to_packet_batches, Packet},
             test_tx::test_tx,
         },
-        solana_sdk::packet::PacketFlags,
+        trezoa_sdk::packet::PacketFlags,
     };
 
     fn count_non_discard(packet_batches: &[PacketBatch]) -> usize {
@@ -483,7 +483,7 @@ mod tests {
 
     #[test]
     fn test_packet_discard() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let batch_size = 10;
         let mut batch = PacketBatch::with_capacity(batch_size);
         let mut tracer_packet = Packet::default();
@@ -542,12 +542,12 @@ mod tests {
     }
 
     fn test_sigverify_stage(use_same_tx: bool) {
-        solana_logger::setup();
+        trezoa_logger::setup();
         trace!("start");
         let (packet_s, packet_r) = unbounded();
         let (verified_s, verified_r) = BankingTracer::channel_for_test();
         let verifier = TransactionSigVerifier::new(verified_s);
-        let stage = SigVerifyStage::new(packet_r, verifier, "solSigVerTest", "test");
+        let stage = SigVerifyStage::new(packet_r, verifier, "trzSigVerTest", "test");
 
         let now = Instant::now();
         let packets_per_batch = 128;

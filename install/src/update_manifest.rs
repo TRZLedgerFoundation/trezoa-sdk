@@ -1,7 +1,7 @@
 use {
     serde::{Deserialize, Serialize},
-    solana_config_program::ConfigState,
-    solana_sdk::{
+    trezoa_config_program::ConfigState,
+    trezoa_sdk::{
         hash::Hash,
         pubkey::Pubkey,
         signature::{Signable, Signature},

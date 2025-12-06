@@ -10,7 +10,7 @@ use {
 };
 
 /// The ending 8 bytes of a valid tiered account storage file.
-pub const FILE_MAGIC_NUMBER: u64 = u64::from_le_bytes(*b"AnzaTech");
+pub const FILE_MAGIC_NUMBER: u64 = u64::from_le_bytes(*b"TrezoaTech");
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Pod, Zeroable)]
 #[repr(C)]

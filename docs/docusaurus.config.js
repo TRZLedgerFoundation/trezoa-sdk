@@ -1,14 +1,14 @@
 const math = require("remark-math");
 const katex = require("rehype-katex");
 module.exports = {
-  title: "Solana Validator",
+  title: "Trezoa Validator",
   tagline:
-    "Solana is an open source project implementing a new, high-performance, permissionless blockchain.",
-  url: "https://docs.solanalabs.com",
+    "Trezoa is an open source project implementing a new, high-performance, permissionless blockchain.",
+  url: "https://docs.trezoa.xyz",
   baseUrl: "/",
   favicon: "img/favicon.ico",
-  organizationName: "solana-labs", // Usually your GitHub org/user name.
-  projectName: "solana", // Usually your repo name.
+  organizationName: "trezoa-team", // Usually your GitHub org/user name.
+  projectName: "trezoa", // Usually your repo name.
   onBrokenLinks: "throw",
   stylesheets: [
     {
@@ -50,7 +50,7 @@ module.exports = {
     },
     navbar: {
       logo: {
-        alt: "Solana Logo",
+        alt: "Trezoa Logo",
         src: "img/logo-horizontal.svg",
         srcDark: "img/logo-horizontal-dark.svg",
       },
@@ -76,8 +76,8 @@ module.exports = {
           items: [
             { label: "Proposals", to: "proposals" },
             {
-              href: "https://spl.solana.com",
-              label: "Solana Program Library",
+              href: "https://tpl.trezoa.com",
+              label: "Trezoa Program Library",
             },
           ],
         },
@@ -86,14 +86,14 @@ module.exports = {
           position: "right",
         },
         {
-          href: "https://solana.com/discord",
+          href: "https://trezoa.com/discord",
           // label: "Discord",
           className: "header-link-icon header-discord-link",
-          "aria-label": "Solana Discord",
+          "aria-label": "trezoa Discord",
           position: "right",
         },
         {
-          href: "https://github.com/solana-labs/solana",
+          href: "https://github.com/Trezoa-team/trezoa",
           // label: "GitHub",
           className: "header-link-icon header-github-link",
           "aria-label": "GitHub repository",
@@ -105,7 +105,7 @@ module.exports = {
       // This API key is "search-only" and safe to be published
       apiKey: "011e01358301f5023b02da5db6af7f4d",
       appId: "FQ12ISJR4B",
-      indexName: "solana",
+      indexName: "trezoa",
       contextualSearch: true,
     },
     footer: {
@@ -116,7 +116,7 @@ module.exports = {
           items: [
             {
               label: "Developers »",
-              href: "https://solana.com/developers",
+              href: "https://trezoa.com/developers",
             },
             {
               label: "Running a Validator",
@@ -137,23 +137,23 @@ module.exports = {
           items: [
             {
               label: "Stack Exchange »",
-              href: "https://solana.stackexchange.com/",
+              href: "https://trezoa.stackexchange.com/",
             },
             {
               label: "GitHub »",
-              href: "https://github.com/solana-labs/solana",
+              href: "https://github.com/Trezoa-team/trezoa",
             },
             {
               label: "Discord »",
-              href: "https://solana.com/discord",
+              href: "https://trezoa.com/discord",
             },
             {
               label: "Twitter »",
-              href: "https://solana.com/twitter",
+              href: "https://trezoa.com/twitter",
             },
             {
               label: "Forum »",
-              href: "https://forum.solana.com",
+              href: "https://forum.trezoa.com",
             },
           ],
         },
@@ -162,20 +162,20 @@ module.exports = {
           items: [
             {
               label: "Terminology »",
-              href: "https://solana.com/docs/terminology",
+              href: "https://trezoa.com/docs/terminology",
             },
             {
               label: "Proposals",
               to: "proposals",
             },
             {
-              href: "https://spl.solana.com",
-              label: "Solana Program Library »",
+              href: "https://tpl.trezoa.com",
+              label: "trezoa Program Library »",
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Solana Labs`,
+      copyright: `Copyright © ${new Date().getFullYear()} Trezoa-team`,
     },
   },
   presets: [

@@ -1,7 +1,7 @@
 [package]
-name = "solana-version"
-description = "Solana Version"
-documentation = "https://docs.rs/solana-version"
+name = "trezoa-version"
+description = "Trezoa Version"
+documentation = "https://docs.rs/trezoa-version"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,15 +14,15 @@ log = { workspace = true }
 semver = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
-solana-frozen-abi = { workspace = true }
-solana-frozen-abi-macro = { workspace = true }
-solana-sdk = { workspace = true }
+trezoa-frozen-abi = { workspace = true }
+trezoa-frozen-abi-macro = { workspace = true }
+trezoa-sdk = { workspace = true }
 
 [features]
 dummy-for-ci-check = []
 
 [lib]
-name = "solana_version"
+name = "trezoa_version"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

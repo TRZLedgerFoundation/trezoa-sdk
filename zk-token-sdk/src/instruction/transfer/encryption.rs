@@ -1,4 +1,4 @@
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 use crate::encryption::{
     elgamal::{DecryptHandle, ElGamalPubkey},
     grouped_elgamal::{GroupedElGamal, GroupedElGamalCiphertext},
@@ -7,10 +7,10 @@ use crate::encryption::{
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub struct TransferAmountCiphertext(pub(crate) GroupedElGamalCiphertext<3>);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl TransferAmountCiphertext {
     pub fn new(
         amount: u64,
@@ -53,10 +53,10 @@ impl TransferAmountCiphertext {
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(C)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub struct FeeEncryption(pub(crate) GroupedElGamalCiphertext<2>);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl FeeEncryption {
     pub fn new(
         amount: u64,

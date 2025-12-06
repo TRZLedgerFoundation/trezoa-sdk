@@ -1,8 +1,8 @@
 use {
     crossbeam_channel::{Receiver, RecvTimeoutError, Sender},
-    solana_entry::entry::EntrySummary,
-    solana_ledger::entry_notifier_service::{EntryNotification, EntryNotifierSender},
-    solana_poh::poh_recorder::WorkingBankEntry,
+    trezoa_entry::entry::EntrySummary,
+    trezoa_ledger::entry_notifier_service::{EntryNotification, EntryNotifierSender},
+    trezoa_poh::poh_recorder::WorkingBankEntry,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},
@@ -25,7 +25,7 @@ impl TpuEntryNotifier {
         exit: Arc<AtomicBool>,
     ) -> Self {
         let thread_hdl = Builder::new()
-            .name("solTpuEntry".to_string())
+            .name("trzTpuEntry".to_string())
             .spawn(move || {
                 let mut current_slot = 0;
                 let mut current_index = 0;

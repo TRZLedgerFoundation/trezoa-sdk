@@ -1,13 +1,13 @@
 use {
     crate::parse_token::UiAccountState,
-    solana_sdk::clock::UnixTimestamp,
-    spl_token_2022::{
+    trezoa_sdk::clock::UnixTimestamp,
+    tpl_token_2022::{
         extension::{self, BaseState, BaseStateWithExtensions, ExtensionType, StateWithExtensions},
-        solana_program::pubkey::Pubkey,
-        solana_zk_token_sdk::zk_token_elgamal::pod::ElGamalPubkey,
+        trezoa_program::pubkey::Pubkey,
+        trezoa_zk_token_sdk::zk_token_elgamal::pod::ElGamalPubkey,
     },
-    spl_token_group_interface::state::{TokenGroup, TokenGroupMember},
-    spl_token_metadata_interface::state::TokenMetadata,
+    tpl_token_group_interface::state::{TokenGroup, TokenGroupMember},
+    tpl_token_metadata_interface::state::TokenMetadata,
 };
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
@@ -217,7 +217,7 @@ pub struct UiDefaultAccountState {
 impl From<extension::default_account_state::DefaultAccountState> for UiDefaultAccountState {
     fn from(default_account_state: extension::default_account_state::DefaultAccountState) -> Self {
         let account_state =
-            spl_token_2022::state::AccountState::try_from(default_account_state.state)
+            tpl_token_2022::state::AccountState::try_from(default_account_state.state)
                 .unwrap_or_default();
         Self {
             account_state: account_state.into(),

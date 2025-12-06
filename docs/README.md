@@ -1,20 +1,20 @@
-# Solana Validator Docs Readme
+# Trezoa Validator Docs Readme
 
 This validator's documentation is built using [Docusaurus v2](https://v2.docusaurus.io/) with `npm`.
 Static content delivery is handled using `vercel`.
 
 > Note: The documentation within this repo is specifically focused on the
-> Solana validator client maintained by Solana Labs. The more "common"
-> documentation, which is generalized to the Solana protocol as a whole and applies
-> to all Solana validator implementations, is maintained within the
-> [`developer-content`](https://github.com/solana-foundation/developer-content/)
-> repo. Those "common docs" are managed by the Solana Foundation within their
+> Trezoa validator client maintained by Trezoa-team. The more "common"
+> documentation, which is generalized to the Trezoa protocol as a whole and applies
+> to all Trezoa validator implementations, is maintained within the
+> [`developer-content`](https://github.com/trezoa-foundation/developer-content/)
+> repo. Those "common docs" are managed by the TRZ Ledger Foundation within their
 > GitHub organization and are publicly accessible via
-> [solana.com/docs](https://solana.com/docs)
+> [trezoa.com/docs](https://trezoa.com/docs)
 
 ## Local Development
 
-To set up the Solana Validator Docs site locally:
+To set up the Trezoa Validator Docs site locally:
 
 - install dependencies using `npm`
 - build locally via `./build.sh`
@@ -39,11 +39,11 @@ The build script generates static content into the `build` directory and can be 
 ./build.sh
 ```
 
-Running this build script requires **Docker**, and will auto fetch the [solanalabs/rust](https://hub.docker.com/r/solanalabs/rust) image from Docker hub to compile the desired version of the [Solana CLI](https://docs.solanalabs.com/cli) from source.
+Running this build script requires **Docker**, and will auto fetch the [trezoa-team/rust](https://hub.docker.com/r/trezoa-team/rust) image from Docker hub to compile the desired version of the [Trezoa CLI](https://docs.trezoa-team.com/cli) from source.
 
 This build script will also:
 
-- generate the `cli/usage.md` document from the output of each of the Solana CLI commands and sub-commands
+- generate the `cli/usage.md` document from the output of each of the Trezoa CLI commands and sub-commands
 - convert each of the `art/*.bob` files into SVG images used throughout the docs
 - generate the language [Translations](#translations)
 
@@ -84,7 +84,7 @@ npm run crowdin:upload
 ```
 
 > Translations are only included when deploying the `STABLE` channel of the docs
-> (via `build.sh`). Resulting in only the `docs.solanalabs.com` documentation
+> (via `build.sh`). Resulting in only the `docs.trezoa-team.com` documentation
 > site to include translated content. Therefore, the `edge` and `beta` docs
 > sites are not expected to include translated content, even though the language
 > selector will still be present.
@@ -113,7 +113,7 @@ generating the static version of the docs.
 
 There are several known locales that fail to build the current documentation.
 They are listed in the commented out `localesNotBuilding` attribute in the
-[`docusaurus.config.js`](https://github.com/solana-labs/solana/blob/master/docs/docusaurus.config.js)
+[`docusaurus.config.js`](https://github.com/trezoa-team/trezoa/blob/master/docs/docusaurus.config.js)
 
 ## CI Build Flow
 
@@ -121,9 +121,9 @@ The docs are built and published in Travis CI with the `./build.sh` script. On e
 
 In each post-commit build, docs are built and published using `vercel` to their respective domain depending on the build branch.
 
-- Master branch docs are published to `edge.docs.solanalabs.com`
-- Beta branch docs are published to `beta.docs.solanalabs.com`
-- Latest release tag docs are published to `docs.solanalabs.com`
+- Master branch docs are published to `edge.docs.trezoa-team.com`
+- Beta branch docs are published to `beta.docs.trezoa-team.com`
+- Latest release tag docs are published to `docs.trezoa-team.com`
 
 ## Common Issues
 

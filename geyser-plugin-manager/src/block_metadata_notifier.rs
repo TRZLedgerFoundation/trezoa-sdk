@@ -4,13 +4,13 @@ use {
         geyser_plugin_manager::GeyserPluginManager,
     },
     log::*,
-    solana_geyser_plugin_interface::geyser_plugin_interface::{
+    trezoa_geyser_plugin_interface::geyser_plugin_interface::{
         ReplicaBlockInfoV3, ReplicaBlockInfoVersions,
     },
-    solana_measure::measure::Measure,
-    solana_metrics::*,
-    solana_sdk::{clock::UnixTimestamp, pubkey::Pubkey, reward_info::RewardInfo},
-    solana_transaction_status::{Reward, Rewards},
+    trezoa_measure::measure::Measure,
+    trezoa_metrics::*,
+    trezoa_sdk::{clock::UnixTimestamp, pubkey::Pubkey, reward_info::RewardInfo},
+    trezoa_transaction_status::{Reward, Rewards},
     std::sync::{Arc, RwLock},
 };
 

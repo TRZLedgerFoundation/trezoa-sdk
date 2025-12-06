@@ -41,10 +41,10 @@ C_FLAGS := \
   $(addprefix -I,$(STD_INC_DIRS)) \
   $(addprefix -I,$(INC_DIRS)) \
 
-ifeq ($(SOL_SBFV2),1)
+ifeq ($(TRZ_SBFV2),1)
 C_FLAGS := \
   $(C_FLAGS) \
-  -DSOL_SBFV2=1
+  -DTRZ_SBFV2=1
 endif
 
 CXX_FLAGS := \
@@ -55,7 +55,7 @@ BPF_C_FLAGS := \
   $(C_FLAGS) \
   -target bpf \
   -fPIC \
-  -march=bpfel+solana
+  -march=bpfel+trezoa
 
 BPF_CXX_FLAGS := \
   $(CXX_FLAGS) \
@@ -65,7 +65,7 @@ BPF_CXX_FLAGS := \
   -fno-exceptions \
   -fno-asynchronous-unwind-tables \
   -fno-unwind-tables \
-  -march=bpfel+solana
+  -march=bpfel+trezoa
 
 BPF_LLD_FLAGS := \
   -z notext \
@@ -76,7 +76,7 @@ BPF_LLD_FLAGS := \
   -L $(STD_LIB_DIRS) \
   -lc \
 
-ifeq ($(SOL_SBFV2),1)
+ifeq ($(TRZ_SBFV2),1)
 BPF_LLD_FLAGS := \
   $(BPF_LLD_FLAGS) \
   --pack-dyn-relocs=relr
@@ -91,7 +91,7 @@ READ_ELF_FLAGS := \
 
 TESTFRAMEWORK_RPATH := $(abspath $(LOCAL_PATH)../dependencies/criterion/lib)
 TESTFRAMEWORK_FLAGS := \
-  -DSOL_TEST \
+  -DTRZ_TEST \
   -isystem $(LOCAL_PATH)../dependencies/criterion/include \
   -L $(LOCAL_PATH)../dependencies/criterion/lib \
   -rpath $(TESTFRAMEWORK_RPATH) \
@@ -205,10 +205,10 @@ $1: $2
 	$(_@)mkdir -p $(dir $1)
 	$(_@)$(LLD) $(BPF_LLD_FLAGS) -o $1 $2 $(COMPILER_RT_DIR)/libcompiler_builtins-*.rlib
 ifeq (,$(wildcard $(subst .so,-keypair.json,$1)))
-	$(_@)solana-keygen new --no-passphrase --silent -o $(subst .so,-keypair.json,$1)
+	$(_@)trezoa-keygen new --no-passphrase --silent -o $(subst .so,-keypair.json,$1)
 endif
 	@echo To deploy this program:
-	@echo $$$$ solana program deploy $(abspath $1)
+	@echo $$$$ trezoa program deploy $(abspath $1)
 endef
 
 define TEST_C_RULE

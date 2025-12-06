@@ -1,8 +1,8 @@
 use {
     assert_matches::assert_matches,
-    solana_banks_client::BanksClientError,
-    solana_program_test::{processor, ProgramTest},
-    solana_sdk::{
+    trezoa_banks_client::BanksClientError,
+    trezoa_program_test::{processor, ProgramTest},
+    trezoa_sdk::{
         account_info::{next_account_info, AccountInfo},
         commitment_config::CommitmentLevel,
         entrypoint::ProgramResult,

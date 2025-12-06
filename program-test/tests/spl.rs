@@ -1,6 +1,6 @@
 use {
-    solana_program_test::{programs::spl_programs, ProgramTest},
-    solana_sdk::{
+    trezoa_program_test::{programs::tpl_programs, ProgramTest},
+    trezoa_sdk::{
         bpf_loader, bpf_loader_upgradeable,
         instruction::{AccountMeta, Instruction},
         pubkey::Pubkey,
@@ -20,7 +20,7 @@ async fn programs_present() {
     let (token_2022_programdata_id, _) =
         Pubkey::find_program_address(&[token_2022_id.as_ref()], &bpf_loader_upgradeable::id());
 
-    for (program_id, _) in spl_programs(&rent) {
+    for (program_id, _) in tpl_programs(&rent) {
         let program_account = banks_client.get_account(program_id).await.unwrap().unwrap();
         if program_id == token_2022_id || program_id == token_2022_programdata_id {
             assert_eq!(program_account.owner, bpf_loader_upgradeable::id());

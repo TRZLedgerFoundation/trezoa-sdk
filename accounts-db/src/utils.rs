@@ -1,7 +1,7 @@
 use {
     lazy_static,
     log::*,
-    solana_measure::measure,
+    trezoa_measure::measure,
     std::{
         collections::HashSet,
         fs,
@@ -118,7 +118,7 @@ pub fn move_and_async_delete_path(path: impl AsRef<Path>) {
     lock.insert(path_delete.clone());
     drop(lock);
     thread::Builder::new()
-        .name("solDeletePath".to_string())
+        .name("trzDeletePath".to_string())
         .spawn(move || {
             trace!("background deleting {}...", path_delete.display());
             let (result, measure_delete) = measure!(fs::remove_dir_all(&path_delete));

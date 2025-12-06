@@ -1,6 +1,6 @@
 use {
-    solana_metrics::MovingStat,
-    solana_sdk::transport::Result as TransportResult,
+    trezoa_metrics::MovingStat,
+    trezoa_sdk::transport::Result as TransportResult,
     std::{net::SocketAddr, sync::atomic::AtomicU64},
 };
 

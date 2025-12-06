@@ -2,18 +2,18 @@ use {
     bincode::{deserialize, serialize},
     crossbeam_channel::{unbounded, Receiver, Sender},
     futures::{future, prelude::stream::StreamExt},
-    solana_banks_interface::{
+    trezoa_banks_interface::{
         Banks, BanksRequest, BanksResponse, BanksTransactionResultWithMetadata,
         BanksTransactionResultWithSimulation, TransactionConfirmationStatus, TransactionMetadata,
         TransactionSimulationDetails, TransactionStatus,
     },
-    solana_client::connection_cache::ConnectionCache,
-    solana_runtime::{
+    trezoa_client::connection_cache::ConnectionCache,
+    trezoa_runtime::{
         bank::{Bank, TransactionSimulationResult},
         bank_forks::BankForks,
         commitment::BlockCommitmentCache,
     },
-    solana_sdk::{
+    trezoa_sdk::{
         account::Account,
         clock::Slot,
         commitment_config::CommitmentLevel,
@@ -25,11 +25,11 @@ use {
         signature::Signature,
         transaction::{self, MessageHash, SanitizedTransaction, VersionedTransaction},
     },
-    solana_send_transaction_service::{
+    trezoa_send_transaction_service::{
         send_transaction_service::{SendTransactionService, TransactionInfo},
         tpu_info::NullTpuInfo,
     },
-    solana_svm::transaction_results::TransactionExecutionResult,
+    trezoa_svm::transaction_results::TransactionExecutionResult,
     std::{
         io,
         net::{Ipv4Addr, SocketAddr},
@@ -116,7 +116,7 @@ impl BanksServer {
         }
         let server_bank_forks = bank_forks.clone();
         Builder::new()
-            .name("solBankForksCli".to_string())
+            .name("trzBankForksCli".to_string())
             .spawn(move || Self::run(server_bank_forks, transaction_receiver))
             .unwrap();
         Self::new(

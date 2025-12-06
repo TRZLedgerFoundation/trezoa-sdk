@@ -5,11 +5,11 @@ use {
     },
     chrono::DateTime,
     clap::ArgMatches,
-    solana_sdk::{
+    trezoa_sdk::{
         clock::UnixTimestamp,
         commitment_config::CommitmentConfig,
         genesis_config::ClusterType,
-        native_token::sol_to_lamports,
+        native_token::trz_to_lamports,
         pubkey::{Pubkey, MAX_SEED_LEN},
         signature::{read_keypair_file, Keypair, Signer},
     },
@@ -19,7 +19,7 @@ use {
 pub mod signer;
 #[deprecated(
     since = "1.17.0",
-    note = "Please use the functions in `solana_clap_v3_utils::input_parsers::signer` directly instead"
+    note = "Please use the functions in `trezoa_clap_v3_utils::input_parsers::signer` directly instead"
 )]
 pub use signer::{
     pubkey_of_signer, pubkeys_of_multiple_signers, pubkeys_sigs_of, resolve_signer, signer_of,
@@ -64,7 +64,7 @@ pub fn unix_timestamp_from_rfc3339_datetime(
     note = "please use `Amount::parse_decimal` and `Amount::sol_to_lamport` instead"
 )]
 pub fn lamports_of_sol(matches: &ArgMatches, name: &str) -> Option<u64> {
-    value_of(matches, name).map(sol_to_lamports)
+    value_of(matches, name).map(trz_to_lamports)
 }
 
 pub fn cluster_type_of(matches: &ArgMatches, name: &str) -> Option<ClusterType> {
@@ -160,8 +160,8 @@ impl Amount {
     }
 
     pub fn sol_to_lamport(&self) -> Amount {
-        const NATIVE_SOL_DECIMALS: u8 = 9;
-        self.to_raw_amount(NATIVE_SOL_DECIMALS)
+        const NATIVE_TRZ_DECIMALS: u8 = 9;
+        self.to_raw_amount(NATIVE_TRZ_DECIMALS)
     }
 }
 
@@ -299,7 +299,7 @@ mod tests {
     use {
         super::*,
         clap::{Arg, Command},
-        solana_sdk::{hash::Hash, pubkey::Pubkey},
+        trezoa_sdk::{hash::Hash, pubkey::Pubkey},
     };
 
     fn app<'ab>() -> Command<'ab> {
@@ -321,8 +321,8 @@ mod tests {
         assert_eq!(values_of(&matches, "multiple"), Some(vec![50, 39]));
         assert_eq!(values_of::<u64>(&matches, "single"), None);
 
-        let pubkey0 = solana_sdk::pubkey::new_rand();
-        let pubkey1 = solana_sdk::pubkey::new_rand();
+        let pubkey0 = trezoa_sdk::pubkey::new_rand();
+        let pubkey1 = trezoa_sdk::pubkey::new_rand();
         let matches = app().get_matches_from(vec![
             "test",
             "--multiple",
@@ -342,7 +342,7 @@ mod tests {
         assert_eq!(value_of(&matches, "single"), Some(50));
         assert_eq!(value_of::<u64>(&matches, "multiple"), None);
 
-        let pubkey = solana_sdk::pubkey::new_rand();
+        let pubkey = trezoa_sdk::pubkey::new_rand();
         let matches = app().get_matches_from(vec!["test", "--single", &pubkey.to_string()]);
         assert_eq!(value_of(&matches, "single"), Some(pubkey));
     }
@@ -486,7 +486,7 @@ mod tests {
     }
 
     #[test]
-    fn test_sol_to_lamports() {
+    fn test_trz_to_lamports() {
         let command = Command::new("test").arg(
             Arg::new("amount")
                 .long("amount")
@@ -509,7 +509,7 @@ mod tests {
                 matches
                     .get_one::<Amount>("amount")
                     .unwrap()
-                    .sol_to_lamport(),
+                    .trz_to_lamport(),
                 Amount::Raw(expected_lamport),
             );
         }

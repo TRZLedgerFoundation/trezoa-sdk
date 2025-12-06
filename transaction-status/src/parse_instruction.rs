@@ -1,8 +1,8 @@
 use {
     crate::{
-        extract_memos::{spl_memo_id_v1, spl_memo_id_v3},
+        extract_memos::{tpl_memo_id_v1, tpl_memo_id_v3},
         parse_address_lookup_table::parse_address_lookup_table,
-        parse_associated_token::{parse_associated_token, spl_associated_token_id},
+        parse_associated_token::{parse_associated_token, tpl_associated_token_id},
         parse_bpf_loader::{parse_bpf_loader, parse_bpf_upgradeable_loader},
         parse_stake::parse_stake,
         parse_system::parse_system,
@@ -11,8 +11,8 @@ use {
     },
     inflector::Inflector,
     serde_json::Value,
-    solana_account_decoder::parse_token::spl_token_ids,
-    solana_sdk::{
+    trezoa_account_decoder::parse_token::tpl_token_ids,
+    trezoa_sdk::{
         address_lookup_table, instruction::CompiledInstruction, message::AccountKeys,
         pubkey::Pubkey, stake, system_program, vote,
     },
@@ -25,11 +25,11 @@ use {
 
 lazy_static! {
     static ref ADDRESS_LOOKUP_PROGRAM_ID: Pubkey = address_lookup_table::program::id();
-    static ref ASSOCIATED_TOKEN_PROGRAM_ID: Pubkey = spl_associated_token_id();
-    static ref BPF_LOADER_PROGRAM_ID: Pubkey = solana_sdk::bpf_loader::id();
-    static ref BPF_UPGRADEABLE_LOADER_PROGRAM_ID: Pubkey = solana_sdk::bpf_loader_upgradeable::id();
-    static ref MEMO_V1_PROGRAM_ID: Pubkey = spl_memo_id_v1();
-    static ref MEMO_V3_PROGRAM_ID: Pubkey = spl_memo_id_v3();
+    static ref ASSOCIATED_TOKEN_PROGRAM_ID: Pubkey = tpl_associated_token_id();
+    static ref BPF_LOADER_PROGRAM_ID: Pubkey = trezoa_sdk::bpf_loader::id();
+    static ref BPF_UPGRADEABLE_LOADER_PROGRAM_ID: Pubkey = trezoa_sdk::bpf_loader_upgradeable::id();
+    static ref MEMO_V1_PROGRAM_ID: Pubkey = tpl_memo_id_v1();
+    static ref MEMO_V3_PROGRAM_ID: Pubkey = tpl_memo_id_v3();
     static ref STAKE_PROGRAM_ID: Pubkey = stake::program::id();
     static ref SYSTEM_PROGRAM_ID: Pubkey = system_program::id();
     static ref VOTE_PROGRAM_ID: Pubkey = vote::program::id();
@@ -45,8 +45,8 @@ lazy_static! {
         );
         m.insert(*MEMO_V1_PROGRAM_ID, ParsableProgram::SplMemo);
         m.insert(*MEMO_V3_PROGRAM_ID, ParsableProgram::SplMemo);
-        for spl_token_id in spl_token_ids() {
-            m.insert(spl_token_id, ParsableProgram::SplToken);
+        for tpl_token_id in tpl_token_ids() {
+            m.insert(tpl_token_id, ParsableProgram::SplToken);
         }
         m.insert(*BPF_LOADER_PROGRAM_ID, ParsableProgram::BpfLoader);
         m.insert(
@@ -182,7 +182,7 @@ mod test {
         assert_eq!(
             parse(&MEMO_V1_PROGRAM_ID, &memo_instruction, &no_keys, None).unwrap(),
             ParsedInstruction {
-                program: "spl-memo".to_string(),
+                program: "tpl-memo".to_string(),
                 program_id: MEMO_V1_PROGRAM_ID.to_string(),
                 parsed: json!("🦖"),
                 stack_height: None,
@@ -191,7 +191,7 @@ mod test {
         assert_eq!(
             parse(&MEMO_V3_PROGRAM_ID, &memo_instruction, &no_keys, Some(1)).unwrap(),
             ParsedInstruction {
-                program: "spl-memo".to_string(),
+                program: "tpl-memo".to_string(),
                 program_id: MEMO_V3_PROGRAM_ID.to_string(),
                 parsed: json!("🦖"),
                 stack_height: Some(1),

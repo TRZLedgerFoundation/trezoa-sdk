@@ -1,6 +1,6 @@
 [package]
-name = "solana-memory-management"
-description = "Solana memory management"
+name = "trezoa-memory-management"
+description = "Trezoa memory management"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }

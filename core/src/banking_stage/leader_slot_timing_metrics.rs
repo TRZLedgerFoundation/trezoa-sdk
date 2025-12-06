@@ -1,7 +1,7 @@
 use {
-    solana_poh::poh_recorder::RecordTransactionsTimings,
-    solana_program_runtime::timings::ExecuteTimings,
-    solana_sdk::{clock::Slot, saturating_add_assign},
+    trezoa_poh::poh_recorder::RecordTransactionsTimings,
+    trezoa_program_runtime::timings::ExecuteTimings,
+    trezoa_sdk::{clock::Slot, saturating_add_assign},
     std::time::Instant,
 };
 

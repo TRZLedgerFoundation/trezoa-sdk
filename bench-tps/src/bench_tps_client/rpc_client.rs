@@ -1,13 +1,13 @@
 use {
     crate::bench_tps_client::{BenchTpsClient, BenchTpsError, Result},
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::config::RpcBlockConfig,
-    solana_sdk::{
+    trezoa_rpc_client::rpc_client::RpcClient,
+    trezoa_rpc_client_api::config::RpcBlockConfig,
+    trezoa_sdk::{
         account::Account, commitment_config::CommitmentConfig, epoch_info::EpochInfo, hash::Hash,
         message::Message, pubkey::Pubkey, signature::Signature, slot_history::Slot,
         transaction::Transaction,
     },
-    solana_transaction_status::UiConfirmedBlock,
+    trezoa_transaction_status::UiConfirmedBlock,
 };
 
 impl BenchTpsClient for RpcClient {

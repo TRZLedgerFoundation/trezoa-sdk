@@ -1,7 +1,7 @@
 [package]
-name = "solana-net-utils"
-description = "Solana Network Utilities"
-documentation = "https://docs.rs/solana-net-utils"
+name = "trezoa-net-utils"
+description = "Trezoa Network Utilities"
+documentation = "https://docs.rs/trezoa-net-utils"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -19,21 +19,21 @@ rand = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
 socket2 = { workspace = true }
-solana-logger = { workspace = true }
-solana-sdk = { workspace = true }
-solana-version = { workspace = true }
+trezoa-logger = { workspace = true }
+trezoa-sdk = { workspace = true }
+trezoa-version = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 url = { workspace = true }
 
 [lib]
-name = "solana_net_utils"
+name = "trezoa_net_utils"
 
 [[bin]]
-name = "solana-ip-address"
+name = "trezoa-ip-address"
 path = "src/bin/ip_address.rs"
 
 [[bin]]
-name = "solana-ip-address-server"
+name = "trezoa-ip-address-server"
 path = "src/bin/ip_address_server.rs"
 
 [package.metadata.docs.rs]

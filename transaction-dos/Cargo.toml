@@ -1,5 +1,5 @@
 [package]
-name = "solana-transaction-dos"
+name = "trezoa-transaction-dos"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -14,24 +14,24 @@ clap = { workspace = true }
 log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli = { workspace = true }
-solana-client = { workspace = true }
-solana-core = { workspace = true }
-solana-faucet = { workspace = true }
-solana-gossip = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-version = { workspace = true }
+trezoa-clap-utils = { workspace = true }
+trezoa-cli = { workspace = true }
+trezoa-client = { workspace = true }
+trezoa-core = { workspace = true }
+trezoa-faucet = { workspace = true }
+trezoa-gossip = { workspace = true }
+trezoa-logger = { workspace = true }
+trezoa-measure = { workspace = true }
+trezoa-net-utils = { workspace = true }
+trezoa-rpc-client = { workspace = true }
+trezoa-runtime = { workspace = true }
+trezoa-sdk = { workspace = true }
+trezoa-streamer = { workspace = true }
+trezoa-transaction-status = { workspace = true }
+trezoa-version = { workspace = true }
 
 [dev-dependencies]
-solana-local-cluster = { workspace = true }
+trezoa-local-cluster = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

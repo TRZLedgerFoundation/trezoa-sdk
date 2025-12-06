@@ -2,9 +2,9 @@
  * @brief Example C-based SBF program that prints out the parameters
  * passed to it
  */
-#include <sol/types.h>
-#include <sol/log.h>
-#include <sol/deserialize_deprecated.h>
+#include <trz/types.h>
+#include <trz/log.h>
+#include <trz/deserialize_deprecated.h>
 
 extern uint64_t entrypoint(const uint8_t *input) {
   SolAccountInfo ka[1];

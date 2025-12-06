@@ -1,8 +1,8 @@
 #![allow(deprecated)]
 use {
     crate::version_req::VersionReq,
-    solana_sdk::account::{AccountSharedData, ReadableAccount},
-    spl_token_2022::{generic_token_account::GenericTokenAccount, state::Account},
+    trezoa_sdk::account::{AccountSharedData, ReadableAccount},
+    tpl_token_2022::{generic_token_account::GenericTokenAccount, state::Account},
     std::borrow::Cow,
     thiserror::Error,
 };

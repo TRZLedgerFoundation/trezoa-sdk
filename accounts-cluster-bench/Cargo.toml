@@ -1,5 +1,5 @@
 [package]
-name = "solana-accounts-cluster-bench"
+name = "trezoa-accounts-cluster-bench"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -13,29 +13,29 @@ clap = { workspace = true }
 log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
-solana-account-decoder = { workspace = true }
-solana-accounts-db = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-client = { workspace = true }
-solana-faucet = { workspace = true }
-solana-gossip = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-rpc-client = { workspace = true, features = ["default"] }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-version = { workspace = true }
-spl-token = { workspace = true, features = ["no-entrypoint"] }
+trezoa-account-decoder = { workspace = true }
+trezoa-accounts-db = { workspace = true }
+trezoa-clap-utils = { workspace = true }
+trezoa-cli-config = { workspace = true }
+trezoa-client = { workspace = true }
+trezoa-faucet = { workspace = true }
+trezoa-gossip = { workspace = true }
+trezoa-logger = { workspace = true }
+trezoa-measure = { workspace = true }
+trezoa-net-utils = { workspace = true }
+trezoa-rpc-client = { workspace = true, features = ["default"] }
+trezoa-runtime = { workspace = true }
+trezoa-sdk = { workspace = true }
+trezoa-streamer = { workspace = true }
+trezoa-transaction-status = { workspace = true }
+trezoa-version = { workspace = true }
+tpl-token = { workspace = true, features = ["no-entrypoint"] }
 
 [dev-dependencies]
-solana-core = { workspace = true }
-solana-local-cluster = { workspace = true }
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
-solana-test-validator = { workspace = true }
+trezoa-core = { workspace = true }
+trezoa-local-cluster = { workspace = true }
+trezoa-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-test-validator = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

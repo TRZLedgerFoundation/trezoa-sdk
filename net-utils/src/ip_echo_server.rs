@@ -2,7 +2,7 @@ use {
     crate::{HEADER_LENGTH, IP_ECHO_SERVER_RESPONSE_LENGTH},
     log::*,
     serde_derive::{Deserialize, Serialize},
-    solana_sdk::deserialize_utils::default_on_eof,
+    trezoa_sdk::deserialize_utils::default_on_eof,
     std::{
         io,
         net::{IpAddr, SocketAddr},
@@ -174,7 +174,7 @@ pub fn ip_echo_server(
     tcp_listener.set_nonblocking(true).unwrap();
 
     let runtime = tokio::runtime::Builder::new_multi_thread()
-        .thread_name("solIpEchoSrvrRt")
+        .thread_name("trzIpEchoSrvrRt")
         .enable_all()
         .build()
         .expect("new tokio runtime");

@@ -1,7 +1,7 @@
 [package]
-name = "solana-udp-client"
-description = "Solana UDP Client"
-documentation = "https://docs.rs/solana-udp-client"
+name = "trezoa-udp-client"
+description = "Trezoa UDP Client"
+documentation = "https://docs.rs/trezoa-udp-client"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -11,9 +11,9 @@ edition = { workspace = true }
 
 [dependencies]
 async-trait = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
+trezoa-connection-cache = { workspace = true }
+trezoa-net-utils = { workspace = true }
+trezoa-sdk = { workspace = true }
+trezoa-streamer = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }

@@ -6,31 +6,31 @@ use {
     },
     itertools::izip,
     log::*,
-    solana_accounts_db::utils::create_accounts_run_and_snapshot_dirs,
-    solana_client::{
+    trezoa_accounts_db::utils::create_accounts_run_and_snapshot_dirs,
+    trezoa_client::{
         connection_cache::ConnectionCache,
         rpc_client::RpcClient,
         thin_client::ThinClient,
         tpu_client::{QuicTpuClient, TpuClient, TpuClientConfig},
     },
-    solana_core::{
+    trezoa_core::{
         consensus::tower_storage::FileTowerStorage,
         validator::{Validator, ValidatorConfig, ValidatorStartProgress},
     },
-    solana_gossip::{
+    trezoa_gossip::{
         cluster_info::Node,
         contact_info::{ContactInfo, LegacyContactInfo, Protocol},
         gossip_service::discover_cluster,
     },
-    solana_ledger::{create_new_tmp_ledger, shred::Shred},
-    solana_runtime::{
+    trezoa_ledger::{create_new_tmp_ledger, shred::Shred},
+    trezoa_runtime::{
         genesis_utils::{
             create_genesis_config_with_vote_accounts_and_cluster_type, GenesisConfigInfo,
             ValidatorVoteKeypairs,
         },
         snapshot_config::SnapshotConfig,
     },
-    solana_sdk::{
+    trezoa_sdk::{
         account::{Account, AccountSharedData},
         client::SyncClient,
         clock::{DEFAULT_DEV_SLOTS_PER_EPOCH, DEFAULT_TICKS_PER_SLOT},
@@ -49,12 +49,12 @@ use {
         system_transaction,
         transaction::Transaction,
     },
-    solana_stake_program::stake_state,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_tpu_client::tpu_client::{
+    trezoa_stake_program::stake_state,
+    trezoa_streamer::socket::SocketAddrSpace,
+    trezoa_tpu_client::tpu_client::{
         DEFAULT_TPU_CONNECTION_POOL_SIZE, DEFAULT_TPU_ENABLE_UDP, DEFAULT_TPU_USE_QUIC,
     },
-    solana_vote_program::{
+    trezoa_vote_program::{
         vote_instruction,
         vote_state::{self, VoteInit},
     },

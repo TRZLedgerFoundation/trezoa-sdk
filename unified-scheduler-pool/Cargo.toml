@@ -1,7 +1,7 @@
 [package]
-name = "solana-unified-scheduler-pool"
-description = "The Solana unified scheduler pool"
-documentation = "https://docs.rs/solana-unified-scheduler-pool"
+name = "trezoa-unified-scheduler-pool"
+description = "The Trezoa unified scheduler pool"
+documentation = "https://docs.rs/trezoa-unified-scheduler-pool"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,14 +14,14 @@ assert_matches = { workspace = true }
 crossbeam-channel = { workspace = true }
 derivative = { workspace = true }
 log = { workspace = true }
-solana-ledger = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-unified-scheduler-logic = { workspace = true }
-solana-vote = { workspace = true }
+trezoa-ledger = { workspace = true }
+trezoa-program-runtime = { workspace = true }
+trezoa-runtime = { workspace = true }
+trezoa-sdk = { workspace = true }
+trezoa-unified-scheduler-logic = { workspace = true }
+trezoa-vote = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
-solana-logger = { workspace = true }
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-logger = { workspace = true }
+trezoa-runtime = { workspace = true, features = ["dev-context-only-utils"] }

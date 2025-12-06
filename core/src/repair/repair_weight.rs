@@ -9,12 +9,12 @@ use {
         },
         replay_stage::DUPLICATE_THRESHOLD,
     },
-    solana_ledger::{
+    trezoa_ledger::{
         ancestor_iterator::AncestorIterator, blockstore::Blockstore, blockstore_meta::SlotMeta,
     },
-    solana_measure::measure::Measure,
-    solana_runtime::epoch_stakes::EpochStakes,
-    solana_sdk::{
+    trezoa_measure::measure::Measure,
+    trezoa_runtime::epoch_stakes::EpochStakes,
+    trezoa_sdk::{
         clock::Slot,
         epoch_schedule::{Epoch, EpochSchedule},
         hash::Hash,
@@ -978,13 +978,13 @@ mod test {
     use {
         super::*,
         itertools::Itertools,
-        solana_accounts_db::contains::Contains,
-        solana_ledger::{
+        trezoa_accounts_db::contains::Contains,
+        trezoa_ledger::{
             blockstore::{make_chaining_slot_entries, Blockstore},
             get_tmp_ledger_path,
         },
-        solana_runtime::{bank::Bank, bank_utils},
-        solana_sdk::hash::Hash,
+        trezoa_runtime::{bank::Bank, bank_utils},
+        trezoa_sdk::hash::Hash,
         trees::tr,
     };
 

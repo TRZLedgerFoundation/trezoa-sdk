@@ -7,9 +7,9 @@ use {
         bucket_map_holder_stats::BucketMapHolderStats,
         waitable_condvar::WaitableCondvar,
     },
-    solana_bucket_map::bucket_map::{BucketMap, BucketMapConfig},
-    solana_measure::measure::Measure,
-    solana_sdk::{
+    trezoa_bucket_map::bucket_map::{BucketMap, BucketMapConfig},
+    trezoa_measure::measure::Measure,
+    trezoa_sdk::{
         clock::{Slot, DEFAULT_MS_PER_SLOT},
         timing::AtomicInterval,
     },
@@ -235,7 +235,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
                     .map(|config| config.started_from_validator)
                     .unwrap_or_default()
                 {
-                    if let Ok(_limit) = std::env::var("SOLANA_TEST_ACCOUNTS_INDEX_MEMORY_LIMIT_MB")
+                    if let Ok(_limit) = std::env::var("TREZOA_TEST_ACCOUNTS_INDEX_MEMORY_LIMIT_MB")
                     {
                         // Note this env var means the opposite of the default. The default now is disk index is on.
                         // So, if this env var is set, DO NOT allocate with disk buckets if mem budget was not set, we were NOT started from validator, and env var was set
@@ -418,7 +418,7 @@ pub mod tests {
 
     #[test]
     fn test_next_bucket_to_flush() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let bins = 4;
         let test = BucketMapHolder::<u64, u64>::new(bins, &Some(AccountsIndexConfig::default()), 1);
         let visited = (0..bins)
@@ -441,7 +441,7 @@ pub mod tests {
 
     #[test]
     fn test_ages() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let bins = 4;
         let test = BucketMapHolder::<u64, u64>::new(bins, &Some(AccountsIndexConfig::default()), 1);
         assert_eq!(0, test.current_age());
@@ -461,7 +461,7 @@ pub mod tests {
 
     #[test]
     fn test_age_increment() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let bins = 4;
         let test = BucketMapHolder::<u64, u64>::new(bins, &Some(AccountsIndexConfig::default()), 1);
         for age in 0..513 {
@@ -482,7 +482,7 @@ pub mod tests {
 
     #[test]
     fn test_throttle() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let bins = 128;
         let test = BucketMapHolder::<u64, u64>::new(bins, &Some(AccountsIndexConfig::default()), 1);
         let bins = test.bins as u64;
@@ -522,7 +522,7 @@ pub mod tests {
 
     #[test]
     fn test_age_time() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let bins = 1;
         let test = BucketMapHolder::<u64, u64>::new(bins, &Some(AccountsIndexConfig::default()), 1);
         let threads = 2;
@@ -554,7 +554,7 @@ pub mod tests {
 
     #[test]
     fn test_age_broad() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let bins = 4;
         let test = BucketMapHolder::<u64, u64>::new(bins, &Some(AccountsIndexConfig::default()), 1);
         assert_eq!(test.current_age(), 0);

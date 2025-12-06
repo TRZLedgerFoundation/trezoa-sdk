@@ -10,7 +10,7 @@ use {
     crossbeam_channel::{Receiver, RecvTimeoutError, SendError, Sender},
     histogram::Histogram,
     itertools::Itertools,
-    solana_sdk::{packet::Packet, pubkey::Pubkey, timing::timestamp},
+    trezoa_sdk::{packet::Packet, pubkey::Pubkey, timing::timestamp},
     std::{
         cmp::Reverse,
         collections::HashMap,
@@ -389,7 +389,7 @@ pub fn responder(
     stats_reporter_sender: Option<Sender<Box<dyn FnOnce() + Send>>>,
 ) -> JoinHandle<()> {
     Builder::new()
-        .name(format!("solRspndr{name}"))
+        .name(format!("trzRspndr{name}"))
         .spawn(move || {
             let mut errors = 0;
             let mut last_error = None;
@@ -437,7 +437,7 @@ mod test {
             streamer::{receiver, responder},
         },
         crossbeam_channel::unbounded,
-        solana_perf::recycler::Recycler,
+        trezoa_perf::recycler::Recycler,
         std::{
             io,
             io::Write,
@@ -481,7 +481,7 @@ mod test {
         let (s_reader, r_reader) = unbounded();
         let stats = Arc::new(StreamerReceiveStats::new("test"));
         let t_receiver = receiver(
-            "solRcvrTest".to_string(),
+            "trzRcvrTest".to_string(),
             Arc::new(read),
             exit.clone(),
             s_reader,

@@ -1,7 +1,7 @@
 #pragma once
-#include <solana_sdk.h>
+#include <trezoa_sdk.h>
 
-#define memcpy sol_memcpy
-#define memset sol_memset
-#define strlen sol_strlen
+#define memcpy trz_memcpy
+#define memset trz_memset
+#define strlen trz_strlen
 

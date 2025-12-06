@@ -18,30 +18,30 @@ fi
 if [[ $(uname) != Linux ]]; then
   # Protect against unsupported configurations to prevent non-obvious errors
   # later. Arguably these should be fatal errors but for now prefer tolerance.
-  if [[ -n $SOLANA_CUDA ]]; then
+  if [[ -n $TREZOA_CUDA ]]; then
     echo "Warning: CUDA is not supported on $(uname)"
-    SOLANA_CUDA=
+    TREZOA_CUDA=
   fi
 fi
 
-if [[ -n $USE_INSTALL || ! -f "$SOLANA_ROOT"/Cargo.toml ]]; then
-  solana_program() {
+if [[ -n $USE_INSTALL || ! -f "$TREZOA_ROOT"/Cargo.toml ]]; then
+  trezoa_program() {
     declare program="$1"
     if [[ -z $program ]]; then
-      printf "solana"
+      printf "trezoa"
     else
-      printf "solana-%s" "$program"
+      printf "trezoa-%s" "$program"
     fi
   }
 else
-  solana_program() {
+  trezoa_program() {
     declare program="$1"
     declare crate="$program"
     if [[ -z $program ]]; then
       crate="cli"
-      program="solana"
+      program="trezoa"
     else
-      program="solana-$program"
+      program="trezoa-$program"
     fi
 
     if [[ -n $NDEBUG ]]; then
@@ -61,15 +61,15 @@ else
   }
 fi
 
-solana_bench_tps=$(solana_program bench-tps)
-solana_faucet=$(solana_program faucet)
-solana_validator=$(solana_program validator)
-solana_validator_cuda="$solana_validator --cuda"
-solana_genesis=$(solana_program genesis)
-solana_gossip=$(solana_program gossip)
-solana_keygen=$(solana_program keygen)
-solana_ledger_tool=$(solana_program ledger-tool)
-solana_cli=$(solana_program)
+trezoa_bench_tps=$(trezoa_program bench-tps)
+trezoa_faucet=$(trezoa_program faucet)
+trezoa_validator=$(trezoa_program validator)
+trezoa_validator_cuda="$trezoa_validator --cuda"
+trezoa_genesis=$(trezoa_program genesis)
+trezoa_gossip=$(trezoa_program gossip)
+trezoa_keygen=$(trezoa_program keygen)
+trezoa_ledger_tool=$(trezoa_program ledger-tool)
+trezoa_cli=$(trezoa_program)
 
 export RUST_BACKTRACE=1
 

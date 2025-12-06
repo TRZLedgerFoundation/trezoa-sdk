@@ -1,7 +1,7 @@
 //! The `tpu` module implements the Transaction Processing Unit, a
 //! multi-stage transaction processing pipeline in software.
 
-pub use solana_sdk::net::DEFAULT_TPU_COALESCE;
+pub use trezoa_sdk::net::DEFAULT_TPU_COALESCE;
 use {
     crate::{
         banking_stage::BankingStage,
@@ -19,26 +19,26 @@ use {
     },
     bytes::Bytes,
     crossbeam_channel::{unbounded, Receiver},
-    solana_client::connection_cache::ConnectionCache,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::{
+    trezoa_client::connection_cache::ConnectionCache,
+    trezoa_gossip::cluster_info::ClusterInfo,
+    trezoa_ledger::{
         blockstore::Blockstore, blockstore_processor::TransactionStatusSender,
         entry_notifier_service::EntryNotifierSender,
     },
-    solana_poh::poh_recorder::{PohRecorder, WorkingBankEntry},
-    solana_rpc::{
+    trezoa_poh::poh_recorder::{PohRecorder, WorkingBankEntry},
+    trezoa_rpc::{
         optimistically_confirmed_bank_tracker::BankNotificationSender,
         rpc_subscriptions::RpcSubscriptions,
     },
-    solana_runtime::{bank_forks::BankForks, prioritization_fee_cache::PrioritizationFeeCache},
-    solana_sdk::{clock::Slot, pubkey::Pubkey, quic::NotifyKeyUpdate, signature::Keypair},
-    solana_streamer::{
+    trezoa_runtime::{bank_forks::BankForks, prioritization_fee_cache::PrioritizationFeeCache},
+    trezoa_sdk::{clock::Slot, pubkey::Pubkey, quic::NotifyKeyUpdate, signature::Keypair},
+    trezoa_streamer::{
         nonblocking::quic::DEFAULT_WAIT_FOR_CHUNK_TIMEOUT,
         quic::{spawn_server, SpawnServerResult, MAX_STAKED_CONNECTIONS, MAX_UNSTAKED_CONNECTIONS},
         streamer::StakedNodes,
     },
-    solana_turbine::broadcast_stage::{BroadcastStage, BroadcastStageType},
-    solana_vote::vote_sender_types::{ReplayVoteReceiver, ReplayVoteSender},
+    trezoa_turbine::broadcast_stage::{BroadcastStage, BroadcastStageType},
+    trezoa_vote::vote_sender_types::{ReplayVoteReceiver, ReplayVoteSender},
     std::{
         collections::HashMap,
         net::{SocketAddr, UdpSocket},
@@ -153,7 +153,7 @@ impl Tpu {
             thread: tpu_quic_t,
             key_updater,
         } = spawn_server(
-            "solQuicTpu",
+            "trzQuicTpu",
             "quic_streamer_tpu",
             transactions_quic_sockets,
             keypair,
@@ -173,7 +173,7 @@ impl Tpu {
             thread: tpu_forwards_quic_t,
             key_updater: forwards_key_updater,
         } = spawn_server(
-            "solQuicTpuFwd",
+            "trzQuicTpuFwd",
             "quic_streamer_tpu_forwards",
             transactions_forwards_quic_sockets,
             keypair,
@@ -190,7 +190,7 @@ impl Tpu {
 
         let sigverify_stage = {
             let verifier = TransactionSigVerifier::new(non_vote_sender);
-            SigVerifyStage::new(packet_receiver, verifier, "solSigVerTpu", "tpu-verifier")
+            SigVerifyStage::new(packet_receiver, verifier, "trzSigVerTpu", "tpu-verifier")
         };
 
         let (tpu_vote_sender, tpu_vote_receiver) = banking_tracer.create_channel_tpu_vote();
@@ -200,7 +200,7 @@ impl Tpu {
             SigVerifyStage::new(
                 vote_packet_receiver,
                 verifier,
-                "solSigVerTpuVot",
+                "trzSigVerTpuVot",
                 "tpu-vote-verifier",
             )
         };

@@ -1,7 +1,7 @@
 [package]
-name = "solana-cost-model"
-description = "Solana cost model"
-documentation = "https://docs.rs/solana-cost-model"
+name = "trezoa-cost-model"
+description = "Trezoa cost model"
+documentation = "https://docs.rs/trezoa-cost-model"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -12,27 +12,27 @@ edition = { workspace = true }
 [dependencies]
 lazy_static = { workspace = true }
 log = { workspace = true }
-solana-address-lookup-table-program = { workspace = true }
-solana-bpf-loader-program = { workspace = true }
-solana-compute-budget-program = { workspace = true }
-solana-config-program = { workspace = true }
-solana-frozen-abi = { workspace = true }
-solana-frozen-abi-macro = { workspace = true }
-solana-loader-v4-program = { workspace = true }
-solana-metrics = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-stake-program = { workspace = true }
-solana-system-program = { workspace = true }
-solana-vote-program = { workspace = true }
+trezoa-address-lookup-table-program = { workspace = true }
+trezoa-bpf-loader-program = { workspace = true }
+trezoa-compute-budget-program = { workspace = true }
+trezoa-config-program = { workspace = true }
+trezoa-frozen-abi = { workspace = true }
+trezoa-frozen-abi-macro = { workspace = true }
+trezoa-loader-v4-program = { workspace = true }
+trezoa-metrics = { workspace = true }
+trezoa-program-runtime = { workspace = true }
+trezoa-sdk = { workspace = true }
+trezoa-stake-program = { workspace = true }
+trezoa-system-program = { workspace = true }
+trezoa-vote-program = { workspace = true }
 
 [lib]
 crate-type = ["lib"]
-name = "solana_cost_model"
+name = "trezoa_cost_model"
 
 [dev-dependencies]
-solana-logger = { workspace = true }
-solana-sdk = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-logger = { workspace = true }
+trezoa-sdk = { workspace = true, features = ["dev-context-only-utils"] }
 static_assertions = { workspace = true }
 test-case = { workspace = true }
 

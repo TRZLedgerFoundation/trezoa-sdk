@@ -1,4 +1,4 @@
-use solana_sdk::transaction::SanitizedTransaction;
+use trezoa_sdk::transaction::SanitizedTransaction;
 
 pub struct Task {
     transaction: SanitizedTransaction,

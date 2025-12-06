@@ -1,12 +1,12 @@
 use {
-    solana_sdk::{
+    trezoa_sdk::{
         account::{AccountSharedData, ReadableAccount},
         feature_set::FeatureSet,
         hash::Hash,
         pubkey::Pubkey,
         rent_collector::RentCollector,
     },
-    solana_svm::transaction_processor::TransactionProcessingCallback,
+    trezoa_svm::transaction_processor::TransactionProcessingCallback,
     std::{collections::HashMap, sync::Arc},
 };
 

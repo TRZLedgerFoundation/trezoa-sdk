@@ -1,20 +1,20 @@
 use {
-    solana_accounts_db::inline_spl_token,
-    solana_sdk::{
+    trezoa_accounts_db::inline_tpl_token,
+    trezoa_sdk::{
         account::{Account, AccountSharedData},
         feature::{self, Feature},
         feature_set::FeatureSet,
         fee_calculator::FeeRateGovernor,
         genesis_config::{ClusterType, GenesisConfig},
-        native_token::sol_to_lamports,
+        native_token::trz_to_lamports,
         pubkey::Pubkey,
         rent::Rent,
         signature::{Keypair, Signer},
         stake::state::StakeStateV2,
         system_program,
     },
-    solana_stake_program::stake_state,
-    solana_vote_program::vote_state,
+    trezoa_stake_program::stake_state,
+    trezoa_vote_program::vote_state,
     std::borrow::Borrow,
 };
 
@@ -85,7 +85,7 @@ pub fn create_genesis_config(mint_lamports: u64) -> GenesisConfigInfo {
     // accounts-db which in particular will break snapshots test.
     create_genesis_config_with_leader(
         mint_lamports,
-        &solana_sdk::pubkey::new_rand(), // validator_pubkey
+        &trezoa_sdk::pubkey::new_rand(), // validator_pubkey
         0,                               // validator_stake_lamports
     )
 }
@@ -179,7 +179,7 @@ pub fn create_genesis_config_with_leader(
         &mint_keypair.pubkey(),
         validator_pubkey,
         &voting_keypair.pubkey(),
-        &solana_sdk::pubkey::new_rand(),
+        &trezoa_sdk::pubkey::new_rand(),
         validator_stake_lamports,
         VALIDATOR_LAMPORTS,
         FeeRateGovernor::new(0, 0), // most tests can't handle transaction fees
@@ -255,14 +255,14 @@ pub fn create_genesis_config_with_leader_ex(
     initial_accounts.push((*validator_vote_account_pubkey, validator_vote_account));
     initial_accounts.push((*validator_stake_account_pubkey, validator_stake_account));
 
-    let native_mint_account = solana_sdk::account::AccountSharedData::from(Account {
-        owner: inline_spl_token::id(),
-        data: inline_spl_token::native_mint::ACCOUNT_DATA.to_vec(),
-        lamports: sol_to_lamports(1.),
+    let native_mint_account = trezoa_sdk::account::AccountSharedData::from(Account {
+        owner: inline_tpl_token::id(),
+        data: inline_tpl_token::native_mint::ACCOUNT_DATA.to_vec(),
+        lamports: trz_to_lamports(1.),
         executable: false,
         rent_epoch: 1,
     });
-    initial_accounts.push((inline_spl_token::native_mint::id(), native_mint_account));
+    initial_accounts.push((inline_tpl_token::native_mint::id(), native_mint_account));
 
     let mut genesis_config = GenesisConfig {
         accounts: initial_accounts
@@ -276,7 +276,7 @@ pub fn create_genesis_config_with_leader_ex(
         ..GenesisConfig::default()
     };
 
-    solana_stake_program::add_genesis_accounts(&mut genesis_config);
+    trezoa_stake_program::add_genesis_accounts(&mut genesis_config);
     if genesis_config.cluster_type == ClusterType::Development {
         activate_all_features(&mut genesis_config);
     }

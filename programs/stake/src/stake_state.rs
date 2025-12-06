@@ -5,12 +5,12 @@
 
 #[deprecated(
     since = "1.8.0",
-    note = "Please use `solana_sdk::stake::state` or `solana_program::stake::state` instead"
+    note = "Please use `trezoa_sdk::stake::state` or `trezoa_program::stake::state` instead"
 )]
-pub use solana_sdk::stake::state::*;
+pub use trezoa_sdk::stake::state::*;
 use {
-    solana_program_runtime::{ic_msg, invoke_context::InvokeContext},
-    solana_sdk::{
+    trezoa_program_runtime::{ic_msg, invoke_context::InvokeContext},
+    trezoa_sdk::{
         account::{AccountSharedData, ReadableAccount},
         account_utils::StateMut,
         clock::{Clock, Epoch},
@@ -29,7 +29,7 @@ use {
             BorrowedAccount, IndexOfAccount, InstructionContext, TransactionContext,
         },
     },
-    solana_vote_program::vote_state::{self, VoteState, VoteStateVersions},
+    trezoa_vote_program::vote_state::{self, VoteState, VoteStateVersions},
     std::{collections::HashSet, convert::TryFrom},
 };
 
@@ -253,7 +253,7 @@ pub fn delegate(
 ) -> Result<(), InstructionError> {
     let vote_account = instruction_context
         .try_borrow_instruction_account(transaction_context, vote_account_index)?;
-    if *vote_account.get_owner() != solana_vote_program::id() {
+    if *vote_account.get_owner() != trezoa_vote_program::id() {
         return Err(InstructionError::IncorrectProgramId);
     }
     let vote_pubkey = *vote_account.get_key();
@@ -633,11 +633,11 @@ pub fn redelegate(
     // validate the provided vote account
     let vote_account = instruction_context
         .try_borrow_instruction_account(transaction_context, vote_account_index)?;
-    if *vote_account.get_owner() != solana_vote_program::id() {
+    if *vote_account.get_owner() != trezoa_vote_program::id() {
         ic_msg!(
             invoke_context,
             "expected vote account owner to be {}, not {}",
-            solana_vote_program::id(),
+            trezoa_vote_program::id(),
             *vote_account.get_owner()
         );
         return Err(InstructionError::IncorrectProgramId);
@@ -826,7 +826,7 @@ pub(crate) fn deactivate_delinquent(
     )?;
     let delinquent_vote_account = instruction_context
         .try_borrow_instruction_account(transaction_context, delinquent_vote_account_index)?;
-    if *delinquent_vote_account.get_owner() != solana_vote_program::id() {
+    if *delinquent_vote_account.get_owner() != trezoa_vote_program::id() {
         return Err(InstructionError::IncorrectProgramId);
     }
     let delinquent_vote_state = delinquent_vote_account
@@ -835,7 +835,7 @@ pub(crate) fn deactivate_delinquent(
 
     let reference_vote_account = instruction_context
         .try_borrow_instruction_account(transaction_context, reference_vote_account_index)?;
-    if *reference_vote_account.get_owner() != solana_vote_program::id() {
+    if *reference_vote_account.get_owner() != trezoa_vote_program::id() {
         return Err(InstructionError::IncorrectProgramId);
     }
     let reference_vote_state = reference_vote_account
@@ -1359,8 +1359,8 @@ mod tests {
     use {
         super::*,
         proptest::prelude::*,
-        solana_program_runtime::with_mock_invoke_context,
-        solana_sdk::{
+        trezoa_program_runtime::with_mock_invoke_context,
+        trezoa_sdk::{
             account::{create_account_shared_data_for_test, AccountSharedData},
             epoch_schedule::EpochSchedule,
             pubkey::Pubkey,
@@ -1372,7 +1372,7 @@ mod tests {
 
     #[test]
     fn test_authorized_authorize() {
-        let staker = solana_sdk::pubkey::new_rand();
+        let staker = trezoa_sdk::pubkey::new_rand();
         let mut authorized = Authorized::auto(&staker);
         let mut signers = HashSet::new();
         assert_eq!(
@@ -1388,9 +1388,9 @@ mod tests {
 
     #[test]
     fn test_authorized_authorize_with_custodian() {
-        let staker = solana_sdk::pubkey::new_rand();
-        let custodian = solana_sdk::pubkey::new_rand();
-        let invalid_custodian = solana_sdk::pubkey::new_rand();
+        let staker = trezoa_sdk::pubkey::new_rand();
+        let custodian = trezoa_sdk::pubkey::new_rand();
+        let invalid_custodian = trezoa_sdk::pubkey::new_rand();
         let mut authorized = Authorized::auto(&staker);
         let mut signers = HashSet::new();
         signers.insert(staker);
@@ -2086,7 +2086,7 @@ mod tests {
 
     #[test]
     fn test_lockup_is_expired() {
-        let custodian = solana_sdk::pubkey::new_rand();
+        let custodian = trezoa_sdk::pubkey::new_rand();
         let lockup = Lockup {
             epoch: 1,
             unix_timestamp: 1,
@@ -2145,9 +2145,9 @@ mod tests {
     fn test_dbg_stake_minimum_balance() {
         let minimum_balance = Rent::default().minimum_balance(StakeStateV2::size_of());
         panic!(
-            "stake minimum_balance: {} lamports, {} SOL",
+            "stake minimum_balance: {} lamports, {} TRZ",
             minimum_balance,
-            minimum_balance as f64 / solana_sdk::native_token::LAMPORTS_PER_SOL as f64
+            minimum_balance as f64 / trezoa_sdk::native_token::LAMPORTS_PER_TRZ as f64
         );
     }
 

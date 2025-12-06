@@ -3,20 +3,14 @@
 This repo still exists in archived form, feel free to fork any reference
 implementations it still contains.
 
-See Agave, the Solana validator implementation from Anza: https://github.com/anza-xyz/agave
+See Trezoa, the Trezoa validator implementation from Trezoa: https://github.com/trezoa-xyz/trezoa
 
 ---
 
-<p align="center">
-  <a href="https://solana.com">
-    <img alt="Solana" src="https://i.imgur.com/IKyzQ6T.png" width="250" />
-  </a>
-</p>
-
-[![Solana crate](https://img.shields.io/crates/v/solana-core.svg)](https://crates.io/crates/solana-core)
-[![Solana documentation](https://docs.rs/solana-core/badge.svg)](https://docs.rs/solana-core)
-[![Build status](https://badge.buildkite.com/8cc350de251d61483db98bdfc895b9ea0ac8ffa4a32ee850ed.svg?branch=master)](https://buildkite.com/solana-labs/solana/builds?branch=master)
-[![codecov](https://codecov.io/gh/solana-labs/solana/branch/master/graph/badge.svg)](https://codecov.io/gh/solana-labs/solana)
+[![Trezoa crate](https://img.shields.io/crates/v/trezoa-core.svg)](https://crates.io/crates/trezoa-core)
+[![Trezoa documentation](https://docs.rs/trezoa-core/badge.svg)](https://docs.rs/trezoa-core)
+[![Build status](https://badge.buildkite.com/8cc350de251d61483db98bdfc895b9ea0ac8ffa4a32ee850ed.svg?branch=master)](https://buildkite.com/trezoa-team/trezoa/builds?branch=master)
+[![codecov](https://codecov.io/gh/trezoa-team/trezoa/branch/master/graph/badge.svg)](https://codecov.io/gh/trezoa-team/trezoa)
 
 # Building
 
@@ -60,8 +54,8 @@ $ sudo dnf install openssl-devel systemd-devel pkg-config zlib-devel llvm clang 
 ## **2. Download the source code.**
 
 ```bash
-$ git clone https://github.com/solana-labs/solana.git
-$ cd solana
+$ git clone https://github.com/trezoa-team/trezoa.git
+$ cd trezoa
 ```
 
 ## **3. Build.**
@@ -80,12 +74,12 @@ $ ./cargo test
 
 ### Starting a local testnet
 
-Start your own testnet locally, instructions are in the [online docs](https://docs.solanalabs.com/clusters/benchmark).
+Start your own testnet locally, instructions are in the [online docs](https://docs.trezoa.com/clusters/benchmark).
 
 ### Accessing the remote development cluster
 
 - `devnet` - stable public cluster for development accessible via
-  devnet.solana.com. Runs 24/7. Learn more about the [public clusters](https://docs.solanalabs.com/clusters)
+  devnet.trezoa.com. Runs 24/7. Learn more about the [public clusters](https://docs.trezoa.com/clusters)
 
 # Benchmarking
 
@@ -131,7 +125,7 @@ send us that patch!
 
 All claims, content, designs, algorithms, estimates, roadmaps,
 specifications, and performance measurements described in this project
-are done with the Solana Labs, Inc. (“SL”) good faith efforts. It is up to
+are done with the Trezoa-team, Inc. (“SL”) good faith efforts. It is up to
 the reader to check and validate their accuracy and truthfulness.
 Furthermore, nothing in this project constitutes a solicitation for
 investment.
@@ -139,7 +133,7 @@ investment.
 Any content produced by SL or developer resources that SL provides are
 for educational and inspirational purposes only. SL does not encourage,
 induce or sanction the deployment, integration or use of any such
-applications (including the code comprising the Solana blockchain
+applications (including the code comprising the Trezoa blockchain
 protocol) in violation of applicable laws or regulations and hereby
 prohibits any such deployment, integration or use. This includes the use of
 any such applications by the reader (a) in violation of export control

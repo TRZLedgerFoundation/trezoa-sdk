@@ -29,15 +29,15 @@
 //! this instruction must be signed by the context account's owner. This instruction can be used by
 //! the account owner to reclaim lamports for storage.
 //!
-//! [`ZK Token proof`]: https://docs.solanalabs.com/runtime/zk-token-proof
-//! [`context-state`]: https://docs.solanalabs.com/runtime/zk-token-proof#context-data
+//! [`ZK Token proof`]: https://docs.trezoa.xyz/runtime/zk-token-proof
+//! [`context-state`]: https://docs.trezoa.xyz/runtime/zk-token-proof#context-data
 
 pub use crate::instruction::*;
 use {
     bytemuck::bytes_of,
     num_derive::{FromPrimitive, ToPrimitive},
     num_traits::{FromPrimitive, ToPrimitive},
-    solana_program::{
+    trezoa_program::{
         instruction::{AccountMeta, Instruction},
         pubkey::Pubkey,
     },
@@ -76,7 +76,7 @@ pub enum ProofInstruction {
 
     /// Verify a withdraw zero-knowledge proof.
     ///
-    /// This proof is a collection of smaller proofs that are required by the SPL Token 2022
+    /// This proof is a collection of smaller proofs that are required by the TPL Token 2022
     /// confidential extension `Withdraw` instruction.
     ///
     /// Accounts expected by this instruction:
@@ -110,7 +110,7 @@ pub enum ProofInstruction {
 
     /// Verify a transfer zero-knowledge proof.
     ///
-    /// This proof is a collection of smaller proofs that are required by the SPL Token 2022
+    /// This proof is a collection of smaller proofs that are required by the TPL Token 2022
     /// confidential extension `Transfer` instruction with transfer fees.
     ///
     /// Accounts expected by this instruction:
@@ -127,7 +127,7 @@ pub enum ProofInstruction {
 
     /// Verify a transfer with fee zero-knowledge proof.
     ///
-    /// This proof is a collection of smaller proofs that are required by the SPL Token 2022
+    /// This proof is a collection of smaller proofs that are required by the TPL Token 2022
     /// confidential extension `Transfer` instruction without transfer fees.
     ///
     /// Accounts expected by this instruction:
@@ -292,7 +292,7 @@ pub enum ProofInstruction {
 
     /// Verify a fee sigma proof.
     ///
-    /// A fee sigma proof certifies that a Pedersen commitment that encodes a transfer fee for SPL
+    /// A fee sigma proof certifies that a Pedersen commitment that encodes a transfer fee for TPL
     /// Token 2022 is well-formed.
     ///
     /// Accounts expected by this instruction:

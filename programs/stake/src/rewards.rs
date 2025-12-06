@@ -1,12 +1,12 @@
 //! Information about stake and voter rewards based on stake state.
-//! Used by `solana-runtime`.
+//! Used by `trezoa-runtime`.
 
 use {
     crate::points::{
         calculate_stake_points_and_credits, CalculatedStakePoints, InflationPointCalculationEvent,
         PointValue, SkippedReason,
     },
-    solana_sdk::{
+    trezoa_sdk::{
         account::{AccountSharedData, WritableAccount},
         account_utils::StateMut,
         clock::Epoch,
@@ -17,7 +17,7 @@ use {
         },
         stake_history::StakeHistory,
     },
-    solana_vote_program::vote_state::VoteState,
+    trezoa_vote_program::vote_state::VoteState,
 };
 
 #[derive(Debug, PartialEq, Eq)]
@@ -229,7 +229,7 @@ mod tests {
     use {
         super::*,
         crate::{points::null_tracer, stake_state::new_stake},
-        solana_sdk::{native_token, pubkey::Pubkey},
+        trezoa_sdk::{native_token, pubkey::Pubkey},
     };
 
     #[test]
@@ -619,9 +619,9 @@ mod tests {
         let vote_state = VoteState::default();
 
         // bootstrap means fully-vested stake at epoch 0 with
-        //  10_000_000 SOL is a big but not unreasaonable stake
+        //  10_000_000 TRZ is a big but not unreasaonable stake
         let stake = new_stake(
-            native_token::sol_to_lamports(10_000_000f64),
+            native_token::trz_to_lamports(10_000_000f64),
             &Pubkey::default(),
             &vote_state,
             std::u64::MAX,

@@ -2,13 +2,13 @@ use {
     crate::tpu_info::TpuInfo,
     crossbeam_channel::{Receiver, RecvTimeoutError},
     log::*,
-    solana_client::{
+    trezoa_client::{
         connection_cache::{ConnectionCache, Protocol},
         tpu_connection::TpuConnection,
     },
-    solana_measure::measure::Measure,
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
-    solana_sdk::{
+    trezoa_measure::measure::Measure,
+    trezoa_runtime::{bank::Bank, bank_forks::BankForks},
+    trezoa_sdk::{
         clock::Slot, hash::Hash, nonce_account, pubkey::Pubkey, saturating_add_assign,
         signature::Signature, timing::AtomicInterval, transport::TransportError,
     },
@@ -419,7 +419,7 @@ impl SendTransactionService {
             config
         );
         Builder::new()
-            .name("solStxReceive".to_string())
+            .name("trzStxReceive".to_string())
             .spawn(move || loop {
                 let recv_timeout_ms = config.batch_send_rate_ms;
                 let stats = &stats_report.stats;
@@ -522,7 +522,7 @@ impl SendTransactionService {
             config
         );
         Builder::new()
-            .name("solStxRetry".to_string())
+            .name("trzStxRetry".to_string())
             .spawn(move || loop {
                 let retry_interval_ms = config.retry_rate_ms;
                 let stats = &stats_report.stats;
@@ -826,7 +826,7 @@ mod test {
         super::*,
         crate::tpu_info::NullTpuInfo,
         crossbeam_channel::{bounded, unbounded},
-        solana_sdk::{
+        trezoa_sdk::{
             account::AccountSharedData,
             genesis_config::create_genesis_config,
             nonce::{self, state::DurableNonce},
@@ -904,10 +904,10 @@ mod test {
 
     #[test]
     fn process_transactions() {
-        solana_logger::setup();
+        trezoa_logger::setup();
 
         let (mut genesis_config, mint_keypair) = create_genesis_config(4);
-        genesis_config.fee_rate_governor = solana_sdk::fee_calculator::FeeRateGovernor::new(0, 0);
+        genesis_config.fee_rate_governor = trezoa_sdk::fee_calculator::FeeRateGovernor::new(0, 0);
         let (_, bank_forks) = Bank::new_with_bank_forks_for_tests(&genesis_config);
         let tpu_address = "127.0.0.1:0".parse().unwrap();
         let config = Config {
@@ -1180,10 +1180,10 @@ mod test {
 
     #[test]
     fn test_retry_durable_nonce_transactions() {
-        solana_logger::setup();
+        trezoa_logger::setup();
 
         let (mut genesis_config, mint_keypair) = create_genesis_config(4);
-        genesis_config.fee_rate_governor = solana_sdk::fee_calculator::FeeRateGovernor::new(0, 0);
+        genesis_config.fee_rate_governor = trezoa_sdk::fee_calculator::FeeRateGovernor::new(0, 0);
         let (_, bank_forks) = Bank::new_with_bank_forks_for_tests(&genesis_config);
         let tpu_address = "127.0.0.1:0".parse().unwrap();
         let config = Config {

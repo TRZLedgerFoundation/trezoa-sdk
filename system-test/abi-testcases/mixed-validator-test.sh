@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
 # Basic empirical ABI system test - can validators on all supported versions of
-# Solana talk to each other?
+# Trezoa talk to each other?
 #
 
 set -e
 cd "$(dirname "$0")"
-SOLANA_ROOT="$(cd ../..; pwd)"
+TREZOA_ROOT="$(cd ../..; pwd)"
 
 logDir="$PWD"/logs
 ledgerDir="$PWD"/config
@@ -19,35 +19,35 @@ otherVersions=(
   edge
 )
 
-solanaInstallDataDir=$PWD/releases
-solanaInstallGlobalOpts=(
-  --data-dir "$solanaInstallDataDir"
-  --config "$solanaInstallDataDir"/config.yml
+trezoaInstallDataDir=$PWD/releases
+trezoaInstallGlobalOpts=(
+  --data-dir "$trezoaInstallDataDir"
+  --config "$trezoaInstallDataDir"/config.yml
   --no-modify-path
 )
 
-# Install all the solana versions
+# Install all the trezoa versions
 bootstrapInstall() {
   declare v=$1
-  if [[ ! -h $solanaInstallDataDir/active_release ]]; then
-    sh "$SOLANA_ROOT"/install/solana-install-init.sh "$v" "${solanaInstallGlobalOpts[@]}"
+  if [[ ! -h $trezoaInstallDataDir/active_release ]]; then
+    sh "$TREZOA_ROOT"/install/trezoa-install-init.sh "$v" "${trezoaInstallGlobalOpts[@]}"
   fi
-  export PATH="$solanaInstallDataDir/active_release/bin/:$PATH"
+  export PATH="$trezoaInstallDataDir/active_release/bin/:$PATH"
 }
 
 bootstrapInstall "$baselineVersion"
 for v in "${otherVersions[@]}"; do
-  solana-install-init "${solanaInstallGlobalOpts[@]}" "$v"
-  solana -V
+  trezoa-install-init "${trezoaInstallGlobalOpts[@]}" "$v"
+  trezoa -V
 done
 
 
 ORIGINAL_PATH=$PATH
-solanaInstallUse() {
+trezoaInstallUse() {
   declare version=$1
-  echo "--- Now using solana $version"
-  SOLANA_BIN="$solanaInstallDataDir/releases/$version/solana-release/bin"
-  export PATH="$SOLANA_BIN:$ORIGINAL_PATH"
+  echo "--- Now using trezoa $version"
+  TREZOA_BIN="$trezoaInstallDataDir/releases/$version/trezoa-release/bin"
+  export PATH="$TREZOA_BIN:$ORIGINAL_PATH"
 }
 
 killSession() {
@@ -57,14 +57,14 @@ killSession() {
 export RUST_BACKTRACE=1
 
 # Start up the bootstrap validator using the baseline version
-solanaInstallUse "$baselineVersion"
+trezoaInstallUse "$baselineVersion"
 echo "--- Starting $baselineVersion bootstrap validator"
 trap 'killSession' INT TERM ERR EXIT
 killSession
 (
   set -x
   if [[ ! -x baseline-run.sh ]]; then
-    curl https://raw.githubusercontent.com/solana-labs/solana/v"$baselineVersion"/run.sh -o baseline-run.sh
+    curl https://raw.githubusercontent.com/Trezoa-team/trezoa/v"$baselineVersion"/run.sh -o baseline-run.sh
     chmod +x baseline-run.sh
   fi
   tmux new -s abi -d " \
@@ -80,16 +80,16 @@ killSession
     fi
   done
 
-  solana --url http://127.0.0.1:8899 show-validators
+  trezoa --url http://127.0.0.1:8899 show-validators
 )
 
 # Ensure all versions can see the bootstrap validator
 for v in "${otherVersions[@]}"; do
-  solanaInstallUse "$v"
+  trezoaInstallUse "$v"
   echo "--- Looking for bootstrap validator on gossip"
   (
     set -x
-    "$SOLANA_BIN"/solana-gossip spy \
+    "$TREZOA_BIN"/trezoa-gossip spy \
       --entrypoint 127.0.0.1:8001 \
       --num-nodes-exactly 1 \
       --timeout 30
@@ -99,13 +99,13 @@ done
 
 # Start a validator for each version and look for it
 #
-# Once https://github.com/solana-labs/solana/issues/7738 is resolved, remove
+# Once https://github.com/trezoa-team/trezoa/issues/7738 is resolved, remove
 # `--no-snapshot-fetch` when starting the validators
 #
 nodeCount=1
 for v in "${otherVersions[@]}"; do
   nodeCount=$((nodeCount + 1))
-  solanaInstallUse "$v"
+  trezoaInstallUse "$v"
   # start another validator
   ledger="$ledgerDir"/ledger-"$v"
   rm -rf "$ledger"
@@ -113,13 +113,13 @@ for v in "${otherVersions[@]}"; do
   (
     set -x
     tmux new-window -t abi -n "$v" " \
-      $SOLANA_BIN/solana-validator \
+      $TREZOA_BIN/trezoa-validator \
       --ledger $ledger \
       --no-snapshot-fetch \
       --entrypoint 127.0.0.1:8001 \
       -o - 2>&1 | tee $logDir/$v.log \
     "
-    "$SOLANA_BIN"/solana-gossip spy \
+    "$TREZOA_BIN"/trezoa-gossip spy \
       --entrypoint 127.0.0.1:8001 \
       --num-nodes-exactly $nodeCount \
       --timeout 30

@@ -1,13 +1,13 @@
-//! A future Solana message format.
+//! A future Trezoa message format.
 //!
 //! This crate defines two versions of `Message` in their own modules:
-//! [`legacy`] and [`v0`]. `legacy` is the current version as of Solana 1.10.0.
+//! [`legacy`] and [`v0`]. `legacy` is the current version as of Trezoa 1.10.0.
 //! `v0` is a [future message format] that encodes more account keys into a
 //! transaction than the legacy format.
 //!
 //! [`legacy`]: crate::message::legacy
 //! [`v0`]: crate::message::v0
-//! [future message format]: https://docs.solanalabs.com/proposals/versioned-transactions
+//! [future message format]: https://docs.trezoa.xyz/proposals/versioned-transactions
 
 use crate::{
     address_lookup_table_account::AddressLookupTableAccount,
@@ -42,7 +42,7 @@ pub struct MessageAddressTableLookup {
     pub readonly_indexes: Vec<u8>,
 }
 
-/// A Solana transaction message (v0).
+/// A Trezoa transaction message (v0).
 ///
 /// This message format supports succinct account loading with
 /// on-chain address lookup tables.
@@ -179,23 +179,23 @@ impl Message {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_rpc_client`], [`solana_sdk`], and [`anyhow`] crates.
+    /// This example uses the [`trezoa_rpc_client`], [`trezoa_sdk`], and [`anyhow`] crates.
     ///
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
-    /// [`solana_sdk`]: https://docs.rs/solana-sdk
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
+    /// [`trezoa_sdk`]: https://docs.rs/trezoa-sdk
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_program::example_mocks::{
-    /// #     solana_rpc_client,
-    /// #     solana_sdk,
+    /// # use trezoa_program::example_mocks::{
+    /// #     trezoa_rpc_client,
+    /// #     trezoa_sdk,
     /// # };
     /// # use std::borrow::Cow;
-    /// # use solana_sdk::account::Account;
+    /// # use trezoa_sdk::account::Account;
     /// use anyhow::Result;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_program::address_lookup_table::{self, state::{AddressLookupTable, LookupTableMeta}};
-    /// use solana_sdk::{
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_program::address_lookup_table::{self, state::{AddressLookupTable, LookupTableMeta}};
+    /// use trezoa_sdk::{
     ///      address_lookup_table_account::AddressLookupTableAccount,
     ///      instruction::{AccountMeta, Instruction},
     ///      message::{VersionedMessage, v0},

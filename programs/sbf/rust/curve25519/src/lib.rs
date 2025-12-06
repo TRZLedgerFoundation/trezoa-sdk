@@ -1,9 +1,9 @@
 //! @brief curve25519 syscall tests
 
-extern crate solana_program;
+extern crate trezoa_program;
 use {
-    solana_program::{custom_heap_default, custom_panic_default, msg},
-    solana_zk_token_sdk::curve25519::{edwards, ristretto, scalar},
+    trezoa_program::{custom_heap_default, custom_panic_default, msg},
+    trezoa_zk_token_sdk::curve25519::{edwards, ristretto, scalar},
 };
 
 #[no_mangle]

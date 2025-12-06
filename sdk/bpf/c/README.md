@@ -7,13 +7,13 @@ include path/to/bpf.mk
 ```
 and `src/program.c` containing:
 ```c
-#include <solana_sdk.h>
+#include <trezoa_sdk.h>
 
 extern uint64_t entrypoint(const uint8_t *input) {
   SolAccountInfo ka[1];
   SolParameters params = (SolParameters) { .ka = ka };
 
-  if (!sol_deserialize(input, &params, SOL_ARRAY_SIZE(ka))) {
+  if (!sol_deserialize(input, &params, TRZ_ARRAY_SIZE(ka))) {
     return ERROR_INVALID_ARGUMENT;
   }
   return SUCCESS;
@@ -39,4 +39,4 @@ Then run `make test`.
 
 ### Limitations
 * Programs must be fully contained within a single .c file
-* No libc is available but `solana_sdk.h` provides a minimal set of primitives
+* No libc is available but `trezoa_sdk.h` provides a minimal set of primitives

@@ -1,7 +1,7 @@
 use {
     dashmap::{mapref::entry::Entry::Occupied, DashMap},
     log::*,
-    solana_sdk::{pubkey::Pubkey, timing::AtomicInterval},
+    trezoa_sdk::{pubkey::Pubkey, timing::AtomicInterval},
     std::{
         collections::HashSet,
         fmt::Debug,

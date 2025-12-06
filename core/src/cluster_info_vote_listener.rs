@@ -12,24 +12,24 @@ use {
     },
     crossbeam_channel::{unbounded, Receiver, RecvTimeoutError, Select, Sender},
     log::*,
-    solana_gossip::{
+    trezoa_gossip::{
         cluster_info::{ClusterInfo, GOSSIP_SLEEP_MILLIS},
         crds::Cursor,
     },
-    solana_ledger::blockstore::Blockstore,
-    solana_measure::measure::Measure,
-    solana_metrics::inc_new_counter_debug,
-    solana_perf::packet,
-    solana_poh::poh_recorder::PohRecorder,
-    solana_rpc::{
+    trezoa_ledger::blockstore::Blockstore,
+    trezoa_measure::measure::Measure,
+    trezoa_metrics::inc_new_counter_debug,
+    trezoa_perf::packet,
+    trezoa_poh::poh_recorder::PohRecorder,
+    trezoa_rpc::{
         optimistically_confirmed_bank_tracker::{BankNotification, BankNotificationSender},
         rpc_subscriptions::RpcSubscriptions,
     },
-    solana_runtime::{
+    trezoa_runtime::{
         bank::Bank, bank_forks::BankForks, commitment::VOTE_THRESHOLD_SIZE,
         epoch_stakes::EpochStakes,
     },
-    solana_sdk::{
+    trezoa_sdk::{
         clock::{Slot, DEFAULT_MS_PER_SLOT, DEFAULT_TICKS_PER_SLOT},
         hash::Hash,
         pubkey::Pubkey,
@@ -38,7 +38,7 @@ use {
         timing::AtomicInterval,
         transaction::Transaction,
     },
-    solana_vote::{
+    trezoa_vote::{
         vote_parser::{self, ParsedVote},
         vote_sender_types::ReplayVoteReceiver,
         vote_transaction::VoteTransaction,
@@ -253,7 +253,7 @@ impl ClusterInfoVoteListener {
             let exit = exit.clone();
             let bank_forks = bank_forks.clone();
             Builder::new()
-                .name("solCiVoteLstnr".to_string())
+                .name("trzCiVoteLstnr".to_string())
                 .spawn(move || {
                     let _ = Self::recv_loop(
                         exit,
@@ -268,7 +268,7 @@ impl ClusterInfoVoteListener {
         let bank_send_thread = {
             let exit = exit.clone();
             Builder::new()
-                .name("solCiBankSend".to_string())
+                .name("trzCiBankSend".to_string())
                 .spawn(move || {
                     let _ = Self::bank_send_loop(
                         exit,
@@ -281,7 +281,7 @@ impl ClusterInfoVoteListener {
         };
 
         let send_thread = Builder::new()
-            .name("solCiProcVotes".to_string())
+            .name("trzCiProcVotes".to_string())
             .spawn(move || {
                 let _ = Self::process_votes_loop(
                     exit,
@@ -899,22 +899,22 @@ mod tests {
         super::*,
         crate::banking_trace::BankingTracer,
         itertools::Itertools,
-        solana_perf::packet,
-        solana_rpc::optimistically_confirmed_bank_tracker::OptimisticallyConfirmedBank,
-        solana_runtime::{
+        trezoa_perf::packet,
+        trezoa_rpc::optimistically_confirmed_bank_tracker::OptimisticallyConfirmedBank,
+        trezoa_runtime::{
             bank::Bank,
             commitment::BlockCommitmentCache,
             genesis_utils::{
                 self, create_genesis_config, GenesisConfigInfo, ValidatorVoteKeypairs,
             },
         },
-        solana_sdk::{
+        trezoa_sdk::{
             hash::Hash,
             pubkey::Pubkey,
             signature::{Keypair, Signature, Signer},
         },
-        solana_vote::vote_sender_types::ReplayVoteSender,
-        solana_vote_program::{
+        trezoa_vote::vote_sender_types::ReplayVoteSender,
+        trezoa_vote_program::{
             vote_state::{Vote, VoteStateUpdate},
             vote_transaction,
         },
@@ -927,7 +927,7 @@ mod tests {
 
     #[test]
     fn test_max_vote_tx_fits() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let node_keypair = Keypair::new();
         let vote_keypair = Keypair::new();
         let slots: Vec<_> = (0..31).collect();
@@ -955,7 +955,7 @@ mod tests {
         let (vote_tracker, bank, _, _) = setup();
 
         // Check outdated slots are purged with new root
-        let new_voter = solana_sdk::pubkey::new_rand();
+        let new_voter = trezoa_sdk::pubkey::new_rand();
         // Make separate copy so the original doesn't count toward
         // the ref count, which would prevent cleanup
         let new_voter_ = new_voter;
@@ -1620,7 +1620,7 @@ mod tests {
 
     #[test]
     fn test_verify_votes_empty() {
-        solana_logger::setup();
+        trezoa_logger::setup();
         let GenesisConfigInfo { genesis_config, .. } = create_genesis_config(10_000);
         let bank = Bank::new_for_tests(&genesis_config);
         let bank_forks = BankForks::new_rw_arc(bank);

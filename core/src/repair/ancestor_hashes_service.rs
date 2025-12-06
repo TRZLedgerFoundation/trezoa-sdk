@@ -20,14 +20,14 @@ use {
     bincode::serialize,
     crossbeam_channel::{unbounded, Receiver, RecvTimeoutError, Sender},
     dashmap::{mapref::entry::Entry::Occupied, DashMap},
-    solana_gossip::{cluster_info::ClusterInfo, contact_info::Protocol, ping_pong::Pong},
-    solana_ledger::blockstore::Blockstore,
-    solana_perf::{
+    trezoa_gossip::{cluster_info::ClusterInfo, contact_info::Protocol, ping_pong::Pong},
+    trezoa_ledger::blockstore::Blockstore,
+    trezoa_perf::{
         packet::{deserialize_from_with_limit, Packet, PacketBatch},
         recycler::Recycler,
     },
-    solana_runtime::bank::Bank,
-    solana_sdk::{
+    trezoa_runtime::bank::Bank,
+    trezoa_sdk::{
         clock::{Slot, DEFAULT_MS_PER_SLOT},
         genesis_config::ClusterType,
         pubkey::Pubkey,
@@ -35,7 +35,7 @@ use {
         signer::keypair::Keypair,
         timing::timestamp,
     },
-    solana_streamer::streamer::{self, PacketBatchReceiver, StreamerReceiveStats},
+    trezoa_streamer::streamer::{self, PacketBatchReceiver, StreamerReceiveStats},
     std::{
         collections::HashSet,
         io::{Cursor, Read},
@@ -160,7 +160,7 @@ impl AncestorHashesService {
         let outstanding_requests = Arc::<RwLock<OutstandingAncestorHashesRepairs>>::default();
         let (response_sender, response_receiver) = unbounded();
         let t_receiver = streamer::receiver(
-            "solRcvrAncHash".to_string(),
+            "trzRcvrAncHash".to_string(),
             ancestor_hashes_request_socket.clone(),
             exit.clone(),
             response_sender.clone(),
@@ -177,7 +177,7 @@ impl AncestorHashesService {
         let t_receiver_quic = {
             let exit = exit.clone();
             Builder::new()
-                .name(String::from("solAncHashQuic"))
+                .name(String::from("trzAncHashQuic"))
                 .spawn(|| {
                     receive_repair_quic_packets(
                         quic_endpoint_response_receiver,
@@ -244,7 +244,7 @@ impl AncestorHashesService {
         ancestor_socket: Arc<UdpSocket>,
     ) -> JoinHandle<()> {
         Builder::new()
-            .name("solAncHashesSvc".to_string())
+            .name("trzAncHashesSvc".to_string())
             .spawn(move || {
                 let mut last_stats_report = Instant::now();
                 let mut stats = AncestorHashesResponsesStats::default();
@@ -613,7 +613,7 @@ impl AncestorHashesService {
         // to MAX_ANCESTOR_HASHES_SLOT_REQUESTS_PER_SECOND/second
         let mut request_throttle = vec![];
         Builder::new()
-            .name("solManAncReqs".to_string())
+            .name("trzManAncReqs".to_string())
             .spawn(move || loop {
                 if exit.load(Ordering::Relaxed) {
                     return;
@@ -915,20 +915,20 @@ mod test {
             },
             vote_simulator::VoteSimulator,
         },
-        solana_gossip::{
+        trezoa_gossip::{
             cluster_info::{ClusterInfo, Node},
             contact_info::{ContactInfo, Protocol},
         },
-        solana_ledger::{
+        trezoa_ledger::{
             blockstore::make_many_slot_entries, get_tmp_ledger_path,
             get_tmp_ledger_path_auto_delete, shred::Nonce,
         },
-        solana_runtime::{accounts_background_service::AbsRequestSender, bank_forks::BankForks},
-        solana_sdk::{
+        trezoa_runtime::{accounts_background_service::AbsRequestSender, bank_forks::BankForks},
+        trezoa_sdk::{
             hash::Hash,
             signature::{Keypair, Signer},
         },
-        solana_streamer::socket::SocketAddrSpace,
+        trezoa_streamer::socket::SocketAddrSpace,
         std::collections::HashMap,
         trees::tr,
     };
@@ -1295,7 +1295,7 @@ mod test {
 
             // Set up repair request receiver threads
             let t_request_receiver = streamer::receiver(
-                "solRcvrTest".to_string(),
+                "trzRcvrTest".to_string(),
                 Arc::new(responder_node.sockets.serve_repair),
                 exit.clone(),
                 requests_sender,

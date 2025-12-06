@@ -3,16 +3,16 @@
 extern crate test;
 
 use {
-    solana_sdk::{instruction::CompiledInstruction, message::Message, pubkey::Pubkey},
-    solana_transaction_status::extract_memos::{spl_memo_id_v1, spl_memo_id_v3, ExtractMemos},
+    trezoa_sdk::{instruction::CompiledInstruction, message::Message, pubkey::Pubkey},
+    trezoa_transaction_status::extract_memos::{tpl_memo_id_v1, tpl_memo_id_v3, ExtractMemos},
     test::Bencher,
 };
 
 #[bench]
 fn bench_extract_memos(b: &mut Bencher) {
     let mut account_keys: Vec<Pubkey> = (0..64).map(|_| Pubkey::new_unique()).collect();
-    account_keys[62] = spl_memo_id_v1();
-    account_keys[63] = spl_memo_id_v3();
+    account_keys[62] = tpl_memo_id_v1();
+    account_keys[63] = tpl_memo_id_v3();
     let memo = "Test memo";
 
     let instructions: Vec<_> = (0..20)

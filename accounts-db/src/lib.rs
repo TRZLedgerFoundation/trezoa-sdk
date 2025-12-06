@@ -27,8 +27,8 @@ pub mod cache_hash_data_stats;
 pub mod contains;
 pub mod epoch_accounts_hash;
 pub mod hardened_unpack;
-pub mod inline_spl_token;
-pub mod inline_spl_token_2022;
+pub mod inline_tpl_token;
+pub mod inline_tpl_token_2022;
 pub mod partitioned_rewards;
 mod pubkey_bins;
 mod read_only_accounts_cache;
@@ -44,9 +44,9 @@ mod verify_accounts_hash_in_background;
 pub mod waitable_condvar;
 
 #[macro_use]
-extern crate solana_metrics;
+extern crate trezoa_metrics;
 #[macro_use]
 extern crate serde_derive;
 
 #[macro_use]
-extern crate solana_frozen_abi_macro;
+extern crate trezoa_frozen_abi_macro;

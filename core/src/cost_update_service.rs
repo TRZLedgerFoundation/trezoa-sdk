@@ -2,8 +2,8 @@
 
 use {
     crossbeam_channel::Receiver,
-    solana_ledger::blockstore::Blockstore,
-    solana_runtime::bank::Bank,
+    trezoa_ledger::blockstore::Blockstore,
+    trezoa_runtime::bank::Bank,
     std::{
         sync::Arc,
         thread::{self, Builder, JoinHandle},
@@ -22,7 +22,7 @@ pub struct CostUpdateService {
 impl CostUpdateService {
     pub fn new(blockstore: Arc<Blockstore>, cost_update_receiver: CostUpdateReceiver) -> Self {
         let thread_hdl = Builder::new()
-            .name("solCostUpdtSvc".to_string())
+            .name("trzCostUpdtSvc".to_string())
             .spawn(move || {
                 Self::service_loop(blockstore, cost_update_receiver);
             })

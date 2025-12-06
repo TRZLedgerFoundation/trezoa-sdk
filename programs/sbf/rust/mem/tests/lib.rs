@@ -1,9 +1,9 @@
 #![cfg(feature = "test-bpf")]
 
 use {
-    solana_program_test::*,
-    solana_sbf_rust_mem::entrypoint::process_instruction,
-    solana_sdk::{
+    trezoa_program_test::*,
+    trezoa_sbf_rust_mem::entrypoint::process_instruction,
+    trezoa_sdk::{
         instruction::Instruction, pubkey::Pubkey, signature::Signer, transaction::Transaction,
     },
 };
@@ -12,7 +12,7 @@ use {
 async fn test_mem() {
     let program_id = Pubkey::new_unique();
     let program_test = ProgramTest::new(
-        "solana_sbf_rust_mem",
+        "trezoa_sbf_rust_mem",
         program_id,
         processor!(process_instruction),
     );
