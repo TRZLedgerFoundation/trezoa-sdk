@@ -12,4 +12,4 @@ More information about Trezoa is available in the [Trezoa documentation](https:/
 
 The [Trezoa Program Library](https://github.com/trezoa-team/trezoa-program-library) provides examples of how to use this crate.
 
-Still have questions?  Ask us on [Stack Exchange](https://sola.na/sse)
+Still have questions?  Ask us on [Stack Exchange](https://trez.oa/sse)
